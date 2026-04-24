@@ -511,6 +511,22 @@ const DATA = {
         { name:"Book Of Kells",   sire:"Dubawi",          dam:"Rhododendron",    trainer:"Aidan O'Brien", owner:"Coolmore",                family:"Half-brother to Derby and Breeders' Cup Turf winner Auguste Rodin (125)", dateMentioned:"Apr-26" },
         { name:"Costa Brava",     sire:"Starspangledbanner", dam:"Cocoon",       trainer:"Aidan O'Brien",                                  dateMentioned:"Apr-26" },
         { name:"Golden Ring",     sire:"Wootton Bassett", dam:"After",           trainer:"Aidan O'Brien",                                  family:"Armory (G2, 122); Subsequent (113)", dateMentioned:"Apr-26" },
+        { name:"Nikola Tesla",    sire:"Frankel",         dam:"Wading",          damSire:"Montjeu", trainer:"Aidan O'Brien",               family:"Half-brother to G1 winner Twain", dateMentioned:"Apr-26" },
+      ]
+    },
+    {
+      key:"frankel", label:"Frankel 2yo 10-to-Follow",
+      horses: [
+        { name:"Cannes Cannes", sire:"Frankel", dam:"Shambolic", damSire:"Shamardal", trainer:"William Haggas", family:"Full sister to G1 winner Ylang Ylang", notes:"Rank #1 (Elite/Strong)", dateMentioned:"Apr-26" },
+        { name:"Complice", sire:"Frankel", dam:"Incahoots", damSire:"Oasis Dream", trainer:"Yan Barberot", family:"Full brother to Kelina", notes:"Rank #2 (Elite/Strong)", dateMentioned:"Apr-26" },
+        { name:"Loop", sire:"Frankel", dam:"Left Hand", damSire:"Dubawi", trainer:"Andre Fabre", family:"Full brother to Left Sea; family of Gaucher", notes:"Rank #3 (Elite/Strong)", dateMentioned:"Apr-26" },
+        { name:"Porto Vecchio", sire:"Frankel", dam:"Joailliere", damSire:"Dubawi", family:"Full brother to Classic winner Homeless Songs", notes:"Rank #4 (Elite/Strong)", dateMentioned:"Apr-26" },
+        { name:"Unnamed (Attire)", sire:"Frankel", dam:"Attire", damSire:"Danehill Dancer", family:"Half sister to multiple G1 winner Luxembourg", notes:"Rank #5 (Elite/Strong)", dateMentioned:"Apr-26" },
+        { name:"Unnamed (Siyarafina)", sire:"Frankel", dam:"Siyarafina", damSire:"Pivotal", trainer:"Francis Henri Graffard", notes:"Rank #6 (Elite/Strong)", dateMentioned:"Apr-26" },
+        { name:"Unnamed (Anna Law)", sire:"Frankel", dam:"Anna Law", damSire:"Lawman", trainer:"In Japan", family:"Half brother to champion sprinter Battaash", notes:"Rank #7 (Elite/Strong)", dateMentioned:"Apr-26" },
+        { name:"Nikola Tesla", sire:"Frankel", dam:"Wading", damSire:"Montjeu", trainer:"Aidan O'Brien", family:"Half brother to G1 winner Twain", notes:"Rank #8 (Elite/Strong)", dateMentioned:"Apr-26" },
+        { name:"New Love", sire:"Frankel", dam:"Castellar", damSire:"American Post", trainer:"Nicolas Clement & F Hermans", family:"Family includes Latakia", notes:"Rank #9 (Elite/Strong)", dateMentioned:"Apr-26" },
+        { name:"Venerable", sire:"Frankel", dam:"Emollient", damSire:"Empire Maker", family:"Full sibling to Licence, Raclette and Ardent", notes:"Rank #10 (Elite/Strong)", dateMentioned:"Apr-26" },
       ]
     },
     {
@@ -622,7 +638,7 @@ function renderTabs() {
 
 function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTrainer = true) {
   const hasRecord = h.runs !== undefined;
-  const isAidan = sectionKey === 'aidan';
+  const isFamilyTab = sectionKey === 'aidan' || sectionKey === 'frankel';
   const wins   = Number(h.wins)||0;
   const places = Number(h.places)||0;
   const runs   = Number(h.runs)||0;
@@ -645,7 +661,7 @@ function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTra
   <td class="td-name">${h.name}${sourceTag}</td>
   <td class="breeding">${breeding}</td>
   ${showLot ? `<td class="lot">${h.lot||'—'}</td>` : ''}
-  <td class="${isAidan ? 'owner' : `price${h.ns?' ns':''}`}">${isAidan ? familyInfo : (h.price||'—')}</td>
+  <td class="${isFamilyTab ? 'owner' : `price${h.ns?' ns':''}`}">${isFamilyTab ? familyInfo : (h.price||'—')}</td>
   ${showOwner ? `<td class="owner">${h.owner||'—'}</td>` : ''}
   ${showTrainer ? `<td class="trainer">${h.trainer||'—'}</td>` : ''}
   <td class="record">${recHtml}</td>
@@ -682,9 +698,9 @@ function renderSections() {
         <th style="width:30px">#</th>
         <th>Horse</th>
         <th>Breeding</th>
-        ${(s.key === 'runners' || s.key === 'aidan') ? '' : '<th>Lot</th>'}
-        <th>${s.key === 'aidan' ? 'Family / Relatives' : 'Price / Sale'}</th>
-        ${s.key === 'aidan' ? '' : '<th>Owner / Purchaser</th>'}
+        ${(s.key === 'runners' || s.key === 'aidan' || s.key === 'frankel') ? '' : '<th>Lot</th>'}
+        <th>${(s.key === 'aidan' || s.key === 'frankel') ? 'Family / Relatives' : 'Price / Sale'}</th>
+        ${(s.key === 'aidan' || s.key === 'frankel') ? '' : '<th>Owner / Purchaser</th>'}
         ${(s.key === 'goffs' || s.key === 'tattersalls') ? '' : '<th>Trainer</th>'}
         <th>Record (W/P/R)</th>
         <th>Level</th>
@@ -694,8 +710,8 @@ function renderSections() {
         h,
         i,
         s.key,
-        !(s.key === 'runners' || s.key === 'aidan'),
-        s.key !== 'aidan',
+        !(s.key === 'runners' || s.key === 'aidan' || s.key === 'frankel'),
+        !(s.key === 'aidan' || s.key === 'frankel'),
         !(s.key === 'goffs' || s.key === 'tattersalls')
       )).join('')}</tbody>
     </table>
