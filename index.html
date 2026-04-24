@@ -1,0 +1,771 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1"/>
+  <title>Alexander's Playbook · 2026 Tracker</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg:       #0a0f0c;
+      --bg2:      #0f1712;
+      --bg3:      #141d17;
+      --bg4:      #1a2620;
+      --line:     #1f2e24;
+      --line2:    #2a3d30;
+      --gold:     #d4a843;
+      --gold2:    #f0c860;
+      --gold-dim: rgba(212,168,67,0.08);
+      --gold-mid: rgba(212,168,67,0.18);
+      --green:    #2ecc71;
+      --red:      #e74c3c;
+      --blue:     #5dade2;
+      --text:     #e6f3e9;
+      --text2:    #b6ccb9;
+      --text3:    #86a78f;
+      --g1:       #d4a843;
+      --g2:       #9ab0b8;
+      --g3:       #b87a3a;
+      --mono:     'IBM Plex Mono', monospace;
+      --sans:     'IBM Plex Sans', sans-serif;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin:0; padding:0; }
+    html { font-size: 13px; }
+    body {
+      font-family: var(--mono);
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding-bottom: 44px;
+    }
+    body::after {
+      content:'';
+      position:fixed; inset:0;
+      background: repeating-linear-gradient(0deg,transparent,transparent 2px,rgba(0,0,0,0.025) 2px,rgba(0,0,0,0.025) 4px);
+      pointer-events:none; z-index:999;
+    }
+
+    /* TOP BAR */
+    .topbar {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+      padding: 0 20px;
+      display: flex;
+      align-items: center;
+      height: 36px;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+    .topbar-brand {
+      font-size: 0.75rem;
+      font-weight: 600;
+      color: var(--gold);
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding-right: 20px;
+      border-right: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    .topbar-meta {
+      display: flex;
+      align-items: center;
+      gap: 20px;
+      padding-left: 20px;
+      flex: 1;
+      overflow: hidden;
+    }
+    .topbar-item {
+      font-size: 0.68rem;
+      color: var(--text2);
+      letter-spacing: 0.06em;
+      white-space: nowrap;
+    }
+    .topbar-item span { color: var(--gold); }
+    .topbar-live {
+      margin-left: auto;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 0.65rem;
+      color: var(--green);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      flex-shrink: 0;
+    }
+    .dot-live {
+      width: 5px; height: 5px;
+      background: var(--green);
+      border-radius: 50%;
+      animation: blink 1.4s ease-in-out infinite;
+    }
+    @keyframes blink { 0%,100%{opacity:1;} 50%{opacity:0.2;} }
+
+    /* HEADER */
+    .site-header {
+      padding: 28px 20px 20px;
+      border-bottom: 2px solid var(--line);
+      background: var(--bg2);
+    }
+    .header-row1 { display:flex; align-items:baseline; gap:14px; flex-wrap:wrap; }
+    .header-title {
+      font-family: var(--sans);
+      font-size: clamp(1.5rem, 4vw, 2.4rem);
+      font-weight: 700;
+      color: var(--text);
+      letter-spacing: -0.02em;
+      line-height: 1;
+    }
+    .header-title em { font-style:normal; color:var(--gold); }
+    .header-tag {
+      font-size: 0.65rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text3);
+      border: 1px solid var(--line2);
+      border-radius: 2px;
+      padding: 2px 6px;
+    }
+    .header-desc {
+      margin-top: 8px;
+      font-size: 0.75rem;
+      color: var(--text2);
+      font-style: italic;
+      letter-spacing: 0.03em;
+    }
+
+    /* STATS */
+    .stats-row {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      border-bottom: 1px solid var(--line);
+      background: var(--bg2);
+    }
+    .stat-cell {
+      padding: 14px 16px;
+      border-right: 1px solid var(--line);
+    }
+    .stat-cell:last-child { border-right: none; }
+    .stat-key {
+      font-size: 0.6rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text3);
+      margin-bottom: 4px;
+    }
+    .stat-val {
+      font-size: 1.5rem;
+      font-weight: 600;
+      color: var(--gold);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .stat-val.green { color: var(--green); }
+    .stat-val.dim   { color: var(--text2); font-size: 1.1rem; }
+
+    /* TABS */
+    .section-tabs {
+      display: flex;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+      overflow-x: auto;
+      scrollbar-width: none;
+    }
+    .section-tabs::-webkit-scrollbar { display:none; }
+    .stab {
+      appearance: none;
+      background: transparent;
+      border: none;
+      border-bottom: 2px solid transparent;
+      color: var(--text3);
+      font-family: var(--mono);
+      font-size: 0.68rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      padding: 10px 18px;
+      cursor: pointer;
+      white-space: nowrap;
+      transition: color 0.15s, border-color 0.15s;
+    }
+    .stab:hover { color: var(--text); }
+    .stab.active { color: var(--gold); border-bottom-color: var(--gold); background: var(--gold-dim); }
+    .stab-count {
+      display: inline-block;
+      margin-left: 5px;
+      font-size: 0.6rem;
+      color: var(--text3);
+      background: var(--bg3);
+      border-radius: 2px;
+      padding: 1px 4px;
+    }
+    .stab.active .stab-count { color: var(--gold); background: var(--gold-mid); }
+
+    /* TABLE */
+    .section { display: none; }
+    .section.active { display: block; }
+    .table-wrap {
+      width: 100%;
+      max-width: 100%;
+      overflow-x: auto;
+      overflow-y: hidden;
+      -webkit-overflow-scrolling: touch;
+      scrollbar-gutter: stable both-edges;
+      border-top: 1px solid var(--line);
+    }
+
+    table {
+      width: max-content;
+      min-width: max(100%, 1450px);
+      border-collapse: collapse;
+      font-size: 0.78rem;
+    }
+    .table-wrap::-webkit-scrollbar { height: 10px; }
+    .table-wrap::-webkit-scrollbar-track { background: var(--bg3); }
+    .table-wrap::-webkit-scrollbar-thumb {
+      background: var(--line2);
+      border-radius: 999px;
+      border: 2px solid var(--bg3);
+    }
+    .table-wrap::-webkit-scrollbar-thumb:hover { background: var(--text3); }
+    .bottom-scroll {
+      position: fixed;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      z-index: 120;
+      background: var(--bg2);
+      border-top: 1px solid var(--line2);
+      padding: 6px 12px 8px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+    .bottom-scroll-label {
+      font-size: 0.6rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text3);
+      white-space: nowrap;
+      user-select: none;
+    }
+    .bottom-scroll-range {
+      flex: 1;
+      width: 100%;
+      appearance: none;
+      height: 8px;
+      border-radius: 999px;
+      background: var(--bg3);
+      border: 1px solid var(--line2);
+      outline: none;
+    }
+    .bottom-scroll-range::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--bg2);
+      box-shadow: 0 0 0 1px rgba(212,168,67,0.4);
+      cursor: ew-resize;
+    }
+    .bottom-scroll-range::-moz-range-thumb {
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--gold);
+      border: 2px solid var(--bg2);
+      box-shadow: 0 0 0 1px rgba(212,168,67,0.4);
+      cursor: ew-resize;
+    }
+    .bottom-scroll-range::-moz-range-track {
+      height: 8px;
+      border-radius: 999px;
+      background: var(--bg3);
+      border: 1px solid var(--line2);
+    }
+    thead tr {
+      background: var(--bg3);
+      border-bottom: 1px solid var(--line2);
+    }
+    th {
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text3);
+      text-align: left;
+      padding: 9px 12px;
+      white-space: nowrap;
+      border-right: 1px solid var(--line);
+      user-select: none;
+    }
+    th:last-child { border-right: none; }
+
+    tbody tr {
+      border-bottom: 1px solid var(--line);
+      transition: background 0.1s;
+      cursor: pointer;
+    }
+    tbody tr:nth-child(4n+1) { background: var(--bg); }
+    tbody tr:nth-child(4n+2) { background: var(--bg2); }
+    tbody tr:nth-child(4n+3) { background: var(--bg); }
+    tbody tr:nth-child(4n+4) { background: var(--bg2); }
+    tbody tr.data-row:hover  { background: var(--bg4); }
+    tbody tr.data-row.expanded { background: var(--bg4); border-bottom: none; }
+    tbody tr.expand-row { background: var(--bg3) !important; }
+
+    td {
+      padding: 10px 12px;
+      vertical-align: middle;
+      border-right: 1px solid var(--line);
+      white-space: nowrap;
+    }
+    td:last-child { border-right: none; }
+
+    td.rn { color:var(--text3); font-size:0.6rem; padding-right:6px; min-width:30px; user-select:none; }
+
+    .td-name {
+      font-family: var(--sans);
+      font-weight: 600;
+      font-size: 0.82rem;
+      color: var(--text);
+      min-width: 160px;
+    }
+    .td-name .mentioned {
+      display: block;
+      font-family: var(--mono);
+      font-size: 0.58rem;
+      font-weight: 400;
+      color: var(--text3);
+      margin-top: 1px;
+      letter-spacing: 0.06em;
+    }
+
+    td.breeding { color:var(--text2); font-style:italic; font-size:0.72rem; min-width:180px; white-space:normal; max-width:220px; }
+    td.lot      { color:var(--text3); font-size:0.7rem; min-width:60px; }
+    td.price    { font-weight:600; color:var(--gold); min-width:120px; font-variant-numeric:tabular-nums; }
+    td.price.ns { color:var(--text3); font-weight:400; }
+    td.owner    { color:var(--text2); font-size:0.7rem; min-width:160px; white-space:normal; max-width:200px; }
+    td.trainer  { color:var(--blue); font-size:0.72rem; min-width:130px; }
+    td.record   { font-variant-numeric:tabular-nums; min-width:80px; text-align:center; }
+
+    .rec-nums { color:var(--text2); font-size:0.72rem; }
+    .rec-nums .w { color:var(--green); font-weight:600; }
+
+    .lvl {
+      display: inline-block;
+      padding: 2px 7px;
+      border-radius: 2px;
+      font-size: 0.63rem;
+      font-weight: 600;
+      letter-spacing: 0.08em;
+      border: 1px solid transparent;
+    }
+    .lvl-g1   { color:var(--g1);   border-color:rgba(212,168,67,0.4);  background:rgba(212,168,67,0.1); }
+    .lvl-g2   { color:var(--g2);   border-color:rgba(154,176,184,0.4); background:rgba(154,176,184,0.1); }
+    .lvl-g3   { color:var(--g3);   border-color:rgba(184,122,58,0.4);  background:rgba(184,122,58,0.1); }
+    .lvl-list { color:var(--text2); border-color:var(--line2);          background:var(--bg3); }
+
+    td.toggle-col { width:28px; text-align:center; color:var(--text3); font-size:0.7rem; padding:0 8px; }
+    tr.data-row.expanded td.toggle-col { color:var(--gold); }
+
+    /* EXPANDED ROW */
+    .expand-row { display: none; }
+    .expand-row.open { display: table-row; }
+    .expand-row td {
+      background: var(--bg3) !important;
+      border-bottom: 2px solid var(--line2);
+      padding: 0;
+      white-space: normal;
+    }
+    .expand-inner {
+      padding: 14px 20px 14px 42px;
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(180px,1fr));
+      gap: 12px 24px;
+      border-left: 3px solid var(--gold);
+    }
+    .ei-label {
+      font-size: 0.58rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--text3);
+      margin-bottom: 3px;
+    }
+    .ei-val { font-size: 0.78rem; color: var(--text); line-height: 1.4; }
+    .ei-val.gold  { color: var(--gold); font-weight: 600; }
+    .ei-val.blue  { color: var(--blue); }
+
+    .ei-record { display:flex; gap:8px; flex-wrap:wrap; }
+    .ei-box {
+      text-align: center;
+      background: var(--bg2);
+      border: 1px solid var(--line2);
+      border-radius: 2px;
+      padding: 6px 10px;
+      min-width: 50px;
+    }
+    .ei-box .bv { font-size:1.1rem; font-weight:600; color:var(--text); line-height:1; }
+    .ei-box .bv.g { color:var(--green); }
+    .ei-box .bl { font-size:0.55rem; text-transform:uppercase; letter-spacing:0.08em; color:var(--text3); margin-top:3px; }
+
+    /* FOOTER */
+    .site-footer {
+      padding: 16px 20px;
+      border-top: 1px solid var(--line);
+      background: var(--bg2);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 1px;
+    }
+    .footer-l { font-size: 0.65rem; color: var(--text3); letter-spacing: 0.06em; }
+    .footer-l span { color: var(--text2); }
+
+    /* MOBILE */
+    @media (max-width: 600px) {
+      .stats-row { grid-template-columns: repeat(3,1fr); }
+      .stat-cell:nth-child(3) { border-right: none; }
+      .stat-cell:nth-child(4) { border-right: 1px solid var(--line); }
+      .topbar-meta { display: none; }
+      .expand-inner { grid-template-columns: 1fr 1fr; padding-left: 16px; }
+    }
+
+    /* ANIMATION */
+    .section.active tbody tr {
+      animation: rowIn 0.2s ease both;
+    }
+    @keyframes rowIn {
+      from { opacity:0; transform: translateX(-3px); }
+      to   { opacity:1; transform: translateX(0); }
+    }
+    .section.active tbody tr:nth-child(1)  { animation-delay:.02s }
+    .section.active tbody tr:nth-child(2)  { animation-delay:.04s }
+    .section.active tbody tr:nth-child(3)  { animation-delay:.06s }
+    .section.active tbody tr:nth-child(4)  { animation-delay:.08s }
+    .section.active tbody tr:nth-child(5)  { animation-delay:.10s }
+    .section.active tbody tr:nth-child(6)  { animation-delay:.12s }
+    .section.active tbody tr:nth-child(7)  { animation-delay:.14s }
+    .section.active tbody tr:nth-child(8)  { animation-delay:.16s }
+    .section.active tbody tr:nth-child(n+9) { animation-delay:.18s }
+  </style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-brand">Alexander's Playbook</div>
+  <div class="topbar-meta">
+    <div class="topbar-item">2026 SEASON</div>
+    <div class="topbar-item">TRACKED <span id="tb-total">—</span></div>
+    <div class="topbar-item">WINS <span id="tb-wins">—</span></div>
+    <div class="topbar-item">UPDATED <span id="tb-date">—</span></div>
+  </div>
+  <div class="topbar-live"><span class="dot-live"></span>LIVE</div>
+</div>
+
+<header class="site-header">
+  <div class="header-row1">
+    <div class="header-title"><em>2026</em> Racing Tracker</div>
+    <span class="header-tag">Alexander's Playbook</span>
+  </div>
+  <div class="header-desc">Every horse mentioned. Every result. Called first — tracked all year.</div>
+</header>
+
+<div class="stats-row" id="statsRow"></div>
+<div class="section-tabs" id="sectionTabs"></div>
+<div id="sectionsWrap"></div>
+<div class="bottom-scroll" id="bottomScroll">
+  <div class="bottom-scroll-label">Scroll table</div>
+  <input type="range" id="bottomScrollRange" class="bottom-scroll-range" min="0" max="0" step="1" value="0" />
+</div>
+
+<footer class="site-footer">
+  <div class="footer-l">Alexander's Playbook · <span>2026 Horse Racing Tracker</span></div>
+  <div class="footer-l" id="footerDate"></div>
+</footer>
+
+<script>
+/* =====================================================
+   EDIT ONLY THIS DATA OBJECT TO UPDATE THE TRACKER
+   ===================================================== */
+const DATA = {
+  lastUpdated: "2026-04-24",
+  sections: [
+    { key:"all", label:"All Horses" },
+    {
+      key:"tattersalls", label:"Tattersalls Breeze Up",
+      horses: [
+        { name:"Hello Youmzain", sire:"Youmzain", dam:"Relevant", damSire:"So You Think", lot:"Lot 87", price:"80,000 gns", dateMentioned:"Apr-26" },
+        { name:"WB Filly", sire:"Wootton Bassett", dam:"Flavia Tatiana", lot:"Lot 4", price:"Not Sold", ns:true, dateMentioned:"Apr-26" },
+      ]
+    },
+    {
+      key:"aidan", label:"Aidan O'Brien 2yo Series",
+      horses: [
+        { name:"Victory Speech",  sire:"Wootton Bassett", dam:"Words",          trainer:"Aidan O'Brien", owner:"Smith / Magnier / Tabor", family:"Full brother to 2025 Irish 6f 2yo Group 2 winner / Moyglare Stud Stakes runner-up Beautify (106), and a half-brother to Irish 10f 3yo Listed winner / Irish Oaks third Library (110)", dateMentioned:"Apr-26" },
+        { name:"Book Of Kells",   sire:"Dubawi",          dam:"Rhododendron",    trainer:"Aidan O'Brien", owner:"Coolmore",                family:"Half-brother to Derby and Breeders' Cup Turf winner Auguste Rodin (125)", dateMentioned:"Apr-26" },
+        { name:"Costa Brava",     sire:"Starspangledbanner", dam:"Cocoon",       trainer:"Aidan O'Brien",                                  dateMentioned:"Apr-26" },
+        { name:"Golden Ring",     sire:"Wootton Bassett", dam:"After",           trainer:"Aidan O'Brien",                                  family:"Armory (G2, 122); Subsequent (113)", dateMentioned:"Apr-26" },
+      ]
+    },
+    {
+      key:"goffs", label:"Goffs Sale",
+      horses: [
+        { name:"Mehmas Filly",        sire:"Mehmas",         dam:"Outside Inside",       lot:"Lot 218", price:"€28,000",                  owner:"Abubaker Kadoura",    dateMentioned:"Apr-26" },
+        { name:"Starman Filly",       sire:"Starman",        dam:"Karalara",             lot:"Lot 173", price:"€155,000",                 owner:"Amo Racing",          dateMentioned:"Apr-26" },
+        { name:"Persian Force Filly", sire:"Persian Force",  dam:"Kakashan",             lot:"Lot 172", price:"€95,000",                  owner:"Amo Racing",          dateMentioned:"Apr-26" },
+        { name:"Blue Point Filly",    sire:"Blue Point",     dam:"Intisaar",             lot:"Lot 163", price:"€50,000",                  owner:"Rabbah Bloodstock",   dateMentioned:"Apr-26" },
+        { name:"Lucky Vega Filly",    sire:"Lucky Vega",     dam:"Equanimity",           lot:"Lot 137", price:"Not Sold (58k bid)", ns:true,                           dateMentioned:"Apr-26" },
+        { name:"Havana Grey Filly",   sire:"Havana Grey",    dam:"Aquarius",             lot:"Lot 93",  price:"€70,000",                  owner:"Rabbah Bloodstock",   dateMentioned:"Apr-26" },
+        { name:"Calyx Filly",         sire:"Calyx",          dam:"Via Aurelia",          lot:"Lot 63",  price:"Not Sold (13k bid)", ns:true,                           dateMentioned:"Apr-26" },
+        { name:"Sioux Nation Filly",  sire:"Sioux Nation",   dam:"Cutie Pie",            lot:"Lot 123", price:"Withdrawn",         ns:true,                           dateMentioned:"Apr-26" },
+        { name:"Too Darn Hot Filly",  sire:"Too Darn Hot",   dam:"Frankel Light (Frankel)", lot:"Lot 146", price:"€70,000",            owner:"Highflyer Bloodstock", dateMentioned:"Apr-26" },
+      ]
+    },
+    {
+      key:"runners", label:"Horses That Have Run",
+      horses: [
+        { name:"Poseidons Warrior",  sire:"Sea The Stars",      dam:"Holy Amaretta",           owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:1, wins:0, places:1, dateMentioned:"Apr-26" },
+        { name:"Talk Of New York",   sire:"Wootton Bassett",    dam:"Usherette",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:1, wins:1, places:0, calledIt:true, dateMentioned:"Apr-26" },
+        { name:"Cerro Blanco",       sire:"Wootton Bassett",    dam:"Duneflower",              owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:1, wins:1, places:0, calledIt:true, dateMentioned:"Apr-26" },
+        { name:"Sovereign Bay",      sire:"New Bay",            dam:"Holy Roman Empress",      owner:"China Horse Club International",    trainer:"Dr R Newland & J Insole",  runs:1, wins:0, places:0, dateMentioned:"Apr-26" },
+        { name:"Kings Cavalry",      sire:"Kingman",            dam:"Dynaformer",              owner:"Mr Saeed Manana",                   trainer:"J Tate",                   runs:1, wins:0, places:1, dateMentioned:"Apr-26" },
+        { name:"Beautify",           sire:"Wootton Bassett",    dam:"Words",                   owner:"Smith / Magnier / Tabor",           trainer:"Aidan O'Brien",            runs:1, wins:0, places:0, dateMentioned:"Apr-26" },
+        { name:"Golden Palace",      sire:"Palace Pier",        dam:"Rioticism",               owner:"Sheikh Juma Dalmook Al Maktoum",    trainer:"R A Fahey",                runs:1, wins:0, places:0, price:"175,000 gns yearling", dateMentioned:"Apr-26" },
+        { name:"Star Of Hope",       sire:"Dark Angel",         dam:"Futoon",                  owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:1, wins:0, places:0, price:"2,900,000 gns yearling", notes:"Sister to Charyn", dateMentioned:"Apr-26" },
+        { name:"Thursday Girl",      sire:"Pinatubo",           dam:"Dream Dana",              owner:"Chris Stedman",                     trainer:"E Walker",                 runs:1, wins:0, places:1, price:"240,000 gns foal", dateMentioned:"Apr-26" },
+        { name:"Hawk Mountain",      sire:"Wootton Bassett",    dam:"Hydrangea (Galileo)",     owner:"Smith / Magnier / Tabor",           trainer:"Aidan O'Brien",            runs:0, dateMentioned:"Apr-26" },
+        { name:"Cap Santa Lucia",    sire:"Persian King",       dam:"Cap Verite",              owner:"Sam Sangster And Partner",          trainer:"B J Meehan",               runs:1, wins:0, places:0, price:"€20,000 yearling", dateMentioned:"Apr-26" },
+        { name:"Alfaraz",            sire:"Nathaniel",          dam:"Sequillia",               owner:"Mr Saeed Suhail",                   trainer:"A M Balding",              runs:1, wins:0, places:0, price:"300,000 gns", dateMentioned:"Apr-26" },
+        { name:"Midnight Steppers",  sire:"Blue Point",         dam:"Victoria Regina",         owner:"Mrs Paul Shanahan",                 trainer:"E A L Dunlop",             runs:1, wins:0, places:0, price:"75,000 gns", dateMentioned:"Apr-26" },
+        { name:"Botagoz",            sire:"Mehmas",             dam:"Bocca Baciata",           owner:"Mr Nurlan Bizakov",                 trainer:"R Varian",                 runs:1, wins:1, places:0, calledIt:true, dateMentioned:"Apr-26" },
+        { name:"Siwa Oasis",         sire:"Sottsass",           dam:"Mirage",                  owner:"Mrs Fitri Hay",                     trainer:"C Hills",                  runs:1, wins:0, places:0, dateMentioned:"Apr-26" },
+        { name:"Albert Einstein",    sire:"Wootton Bassett",    dam:"Yet",                     owner:"Smith / Magnier / Tabor / Westerberg", trainer:"Aidan O'Brien",         runs:1, wins:0, places:1, highestLevel:"G3", dateMentioned:"Apr-26" },
+        { name:"According To Mark",  sire:"St Mark's Basilica", dam:"Maimara",                 owner:"Mr Peter Jeffers",                  trainer:"E Bethell",                runs:1, wins:0, places:1, price:"85,000 gns yearling", dateMentioned:"Apr-26" },
+        { name:"Bay Of Myths",       sire:"New Bay",            dam:"Magic Nymph",             owner:"Commercium II & Partners",          trainer:"Dr R Newland & J Insole",  runs:1, wins:0, places:0, price:"€100,000 yearling", dateMentioned:"Apr-26" },
+      ]
+    }
+  ]
+};
+
+/* ===================================================== */
+
+function buildAll() {
+  const all = [];
+  DATA.sections.forEach(s => {
+    if (s.key==='all') return;
+    (s.horses||[]).forEach(h => all.push({...h, _section: s.label}));
+  });
+  DATA.sections[0].horses = all;
+}
+
+function allHorses() {
+  return DATA.sections.flatMap(s => s.key==='all' ? [] : (s.horses||[]));
+}
+
+function fmtDate(raw) {
+  const d = new Date(raw);
+  if (isNaN(d)) return raw;
+  return d.toLocaleDateString('en-GB',{day:'numeric',month:'short',year:'numeric'});
+}
+
+function lvlBadge(l) {
+  if (!l) return '—';
+  const m = {G1:'g1',G2:'g2',G3:'g3',Listed:'list'};
+  return `<span class="lvl lvl-${m[l]||'list'}">${l}</span>`;
+}
+
+function renderStats() {
+  const all = allHorses();
+  const wins   = all.reduce((a,h)=>a+(Number(h.wins)||0),0);
+  const places = all.reduce((a,h)=>a+(Number(h.places)||0),0);
+  const runners = all.filter(h=>Number(h.runs)>0).length;
+  const g1 = all.filter(h=>(h.highestLevel||'').toUpperCase()==='G1').length;
+
+  document.getElementById('tb-total').textContent = all.length;
+  document.getElementById('tb-wins').textContent  = wins;
+  document.getElementById('tb-date').textContent  = fmtDate(DATA.lastUpdated);
+  document.getElementById('footerDate').textContent = `Last updated: ${fmtDate(DATA.lastUpdated)}`;
+
+  const cells = [
+    { k:'Horses Tracked', v: all.length },
+    { k:'Runners',        v: runners },
+    { k:'Wins',           v: wins,   cls:'green' },
+    { k:'Places',         v: places, cls:'dim' },
+    { k:'Group Wins',     v: g1 },
+  ];
+  document.getElementById('statsRow').innerHTML = cells.map(c=>
+    `<div class="stat-cell"><div class="stat-key">${c.k}</div><div class="stat-val ${c.cls||''}">${c.v}</div></div>`
+  ).join('');
+}
+
+function renderTabs() {
+  const el = document.getElementById('sectionTabs');
+  el.innerHTML = DATA.sections.map((s,i)=>
+    `<button class="stab${i===0?' active':''}" data-key="${s.key}">${s.label}<span class="stab-count">${(s.horses||[]).length}</span></button>`
+  ).join('');
+
+  el.addEventListener('click', e => {
+    const btn = e.target.closest('.stab');
+    if (!btn) return;
+    const key = btn.dataset.key;
+    el.querySelectorAll('.stab').forEach(b=>b.classList.toggle('active', b.dataset.key===key));
+    document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active', s.dataset.key===key));
+    syncBottomScrollAfterLayout();
+  });
+}
+
+function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTrainer = true) {
+  const hasRecord = h.runs !== undefined;
+  const isAidan = sectionKey === 'aidan';
+  const wins   = Number(h.wins)||0;
+  const places = Number(h.places)||0;
+  const runs   = Number(h.runs)||0;
+  const breeding = h.sire && h.dam ? `${h.sire} × ${h.dam}` : (h.sire||h.dam||'—');
+  const familyInfo = h.family || h.relatives || h.notes || '—';
+  const rowId = `row-${sectionKey}-${idx}`;
+  const expId = `exp-${sectionKey}-${idx}`;
+
+  const recHtml = hasRecord
+    ? `<span class="rec-nums"><span class="${wins>0?'w':''}">${wins}</span>W&nbsp;${places}P&nbsp;/&nbsp;${runs}R</span>`
+    : `<span style="color:var(--text3)">—</span>`;
+
+  const sourceTag = h._section
+    ? `<span class="mentioned">${h._section.toUpperCase()}</span>`
+    : h.dateMentioned ? `<span class="mentioned">MENTIONED ${h.dateMentioned.toUpperCase()}</span>` : '';
+
+  return `
+<tr class="data-row" id="${rowId}" onclick="toggleRow('${rowId}','${expId}')">
+  <td class="rn">${String(idx+1).padStart(2,'0')}</td>
+  <td class="td-name">${h.name}${sourceTag}</td>
+  <td class="breeding">${breeding}</td>
+  ${showLot ? `<td class="lot">${h.lot||'—'}</td>` : ''}
+  <td class="${isAidan ? 'owner' : `price${h.ns?' ns':''}`}">${isAidan ? familyInfo : (h.price||'—')}</td>
+  ${showOwner ? `<td class="owner">${h.owner||'—'}</td>` : ''}
+  ${showTrainer ? `<td class="trainer">${h.trainer||'—'}</td>` : ''}
+  <td class="record">${recHtml}</td>
+  <td>${lvlBadge(h.highestLevel)}</td>
+  <td class="toggle-col">▾</td>
+</tr>
+<tr class="expand-row" id="${expId}">
+  <td colspan="${7 + (showLot ? 1 : 0) + (showOwner ? 1 : 0) + (showTrainer ? 1 : 0)}">
+    <div class="expand-inner">
+      ${hasRecord ? `<div class="ei-item"><div class="ei-label">Race Record</div><div class="ei-record">
+        <div class="ei-box"><div class="bv">${runs}</div><div class="bl">Runs</div></div>
+        <div class="ei-box"><div class="bv ${wins>0?'g':''}">${wins}</div><div class="bl">Wins</div></div>
+        <div class="ei-box"><div class="bv">${places}</div><div class="bl">Places</div></div>
+        ${h.highestLevel?`<div class="ei-box"><div class="bv" style="font-size:.85rem;color:var(--gold)">${h.highestLevel}</div><div class="bl">Level</div></div>`:''}
+      </div></div>` : ''}
+      ${h.owner   ?`<div class="ei-item"><div class="ei-label">Owner / Purchaser</div><div class="ei-val">${h.owner}</div></div>`:''}
+      ${h.trainer ?`<div class="ei-item"><div class="ei-label">Trainer</div><div class="ei-val blue">${h.trainer}</div></div>`:''}
+      ${h.price && !h.ns ?`<div class="ei-item"><div class="ei-label">Sale Price</div><div class="ei-val gold">${h.price}</div></div>`:''}
+      ${h.sire    ?`<div class="ei-item"><div class="ei-label">Sire</div><div class="ei-val">${h.sire}</div></div>`:''}
+      ${h.dam     ?`<div class="ei-item"><div class="ei-label">Dam</div><div class="ei-val">${h.dam}${h.damSire?` (${h.damSire})`:''}</div></div>`:''}
+      ${h.dateMentioned?`<div class="ei-item"><div class="ei-label">Date Mentioned</div><div class="ei-val">${h.dateMentioned}</div></div>`:''}
+      ${h.notes   ?`<div class="ei-item" style="grid-column:1/-1"><div class="ei-label">Notes</div><div class="ei-val">${h.notes}</div></div>`:''}
+    </div>
+  </td>
+</tr>`;
+}
+
+function renderSections() {
+  document.getElementById('sectionsWrap').innerHTML = DATA.sections.map((s,si)=>`
+<div class="section${si===0?' active':''}" data-key="${s.key}">
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th style="width:30px">#</th>
+        <th>Horse</th>
+        <th>Breeding</th>
+        ${(s.key === 'runners' || s.key === 'aidan') ? '' : '<th>Lot</th>'}
+        <th>${s.key === 'aidan' ? 'Family / Relatives' : 'Price / Sale'}</th>
+        ${s.key === 'aidan' ? '' : '<th>Owner / Purchaser</th>'}
+        ${(s.key === 'goffs' || s.key === 'tattersalls') ? '' : '<th>Trainer</th>'}
+        <th>Record (W/P/R)</th>
+        <th>Level</th>
+        <th style="width:28px"></th>
+      </tr></thead>
+      <tbody>${(s.horses||[]).map((h,i)=>renderRow(
+        h,
+        i,
+        s.key,
+        !(s.key === 'runners' || s.key === 'aidan'),
+        s.key !== 'aidan',
+        !(s.key === 'goffs' || s.key === 'tattersalls')
+      )).join('')}</tbody>
+    </table>
+  </div>
+</div>`).join('');
+  bindTableScrolls();
+  syncBottomScrollAfterLayout();
+}
+
+function toggleRow(rowId, expId) {
+  const row = document.getElementById(rowId);
+  const exp = document.getElementById(expId);
+  const isOpen = exp.classList.contains('open');
+  const table = row.closest('table');
+  table.querySelectorAll('.data-row.expanded').forEach(r=>r.classList.remove('expanded'));
+  table.querySelectorAll('.expand-row.open').forEach(r=>r.classList.remove('open'));
+  if (!isOpen) { row.classList.add('expanded'); exp.classList.add('open'); }
+}
+
+let syncingBottom = false;
+function activeTableWrap() {
+  return document.querySelector('.section.active .table-wrap');
+}
+
+function syncBottomScroll() {
+  const wrap = activeTableWrap();
+  const range = document.getElementById('bottomScrollRange');
+  if (!wrap || !range) return;
+  const max = Math.max(0, wrap.scrollWidth - wrap.clientWidth);
+  range.max = String(max);
+  range.value = String(Math.min(max, wrap.scrollLeft));
+}
+
+function syncBottomScrollAfterLayout() {
+  window.requestAnimationFrame(() => {
+    window.requestAnimationFrame(syncBottomScroll);
+  });
+}
+
+function bindTableScrolls() {
+  document.querySelectorAll('.table-wrap').forEach(wrap => {
+    wrap.addEventListener('scroll', () => {
+      if (syncingBottom) return;
+      const active = activeTableWrap();
+      if (wrap !== active) return;
+      const range = document.getElementById('bottomScrollRange');
+      syncingBottom = true;
+      range.value = String(wrap.scrollLeft);
+      syncingBottom = false;
+    });
+  });
+}
+
+document.getElementById('bottomScrollRange').addEventListener('input', e => {
+  if (syncingBottom) return;
+  const wrap = activeTableWrap();
+  if (!wrap) return;
+  syncingBottom = true;
+  wrap.scrollLeft = Number(e.target.value || 0);
+  syncingBottom = false;
+});
+
+window.addEventListener('resize', syncBottomScrollAfterLayout);
+window.addEventListener('load', syncBottomScrollAfterLayout);
+
+buildAll();
+renderStats();
+renderTabs();
+renderSections();
+syncBottomScrollAfterLayout();
+</script>
+</body>
+</html>
