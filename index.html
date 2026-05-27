@@ -139,7 +139,7 @@
     /* STATS */
     .stats-row {
       display: grid;
-      grid-template-columns: repeat(5, 1fr);
+      grid-template-columns: repeat(6, 1fr);
       border-bottom: 1px solid var(--line);
       background: var(--bg2);
     }
@@ -164,6 +164,15 @@
     }
     .stat-val.green { color: var(--green); }
     .stat-val.dim   { color: var(--text2); font-size: 1.1rem; }
+    .stat-sub {
+      font-size: 0.62rem;
+      color: var(--text3);
+      margin-top: 4px;
+      letter-spacing: 0.04em;
+      line-height: 1.35;
+    }
+    .stat-sub span { color: var(--text2); }
+    .stat-sub.dim-line { margin-top: 2px; font-size: 0.58rem; }
 
     /* TABS */
     .section-tabs {
@@ -432,8 +441,8 @@
     /* MOBILE */
     @media (max-width: 600px) {
       .stats-row { grid-template-columns: repeat(3,1fr); }
-      .stat-cell:nth-child(3) { border-right: none; }
-      .stat-cell:nth-child(4) { border-right: 1px solid var(--line); }
+      .stat-cell:nth-child(3),
+      .stat-cell:nth-child(6) { border-right: none; }
       .topbar-meta { display: none; }
       .expand-inner { grid-template-columns: 1fr 1fr; padding-left: 16px; }
     }
@@ -498,6 +507,8 @@
    ===================================================== */
 const DATA = {
   lastUpdated: "2026-05-19",
+  rprClaimPct: 39,
+  rprMinRuns: 2,
   sections: [
     { key:"all", label:"All Horses" },
     {
@@ -506,14 +517,14 @@ const DATA = {
         { name:"Poseidons Warrior",  sire:"Sea The Stars",      dam:"Holy Amaretta",           owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:0, places:1, highestRpr:106, dateMentioned:"Apr-26" },
         { name:"Talk Of New York",   sire:"Wootton Bassett",    dam:"Usherette",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:1, wins:1, places:0, highestRpr:105, calledIt:true, dateMentioned:"Apr-26" },
         { name:"Cerro Blanco",       sire:"Wootton Bassett",    dam:"Duneflower",              owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:1, places:1, highestLevel:"Listed", highestRpr:101, calledIt:true, dateMentioned:"Apr-26" },
-        { name:"Sovereign Bay",      sire:"New Bay",            dam:"Holy Roman Empress",      owner:"China Horse Club International",    trainer:"Dr R Newland & J Insole",  runs:1, wins:0, places:0, highestRpr:66, dateMentioned:"Apr-26" },
+        { name:"Sovereign Bay",      sire:"New Bay",            dam:"Holy Roman Empress",      owner:"China Horse Club International",    trainer:"Dr R Newland & J Insole",  runs:2, wins:0, places:0, highestRpr:73, dateMentioned:"Apr-26" },
         { name:"Kings Cavalry",      sire:"Kingman",            dam:"Dynaformer",              owner:"Mr Saeed Manana",                   trainer:"J Tate",                   runs:2, wins:1, places:1, highestRpr:82, notes:"Latest run: won (1st) for £6,281.00.", dateMentioned:"Apr-26" },
         { name:"Beautify",           sire:"Wootton Bassett",    dam:"Words",                   owner:"Smith / Magnier / Tabor",           trainer:"Aidan O'Brien",            runs:1, wins:0, places:0, highestRpr:107, dateMentioned:"Apr-26" },
         { name:"Golden Palace",      sire:"Palace Pier",        dam:"Rioticism",               owner:"Sheikh Juma Dalmook Al Maktoum",    trainer:"R A Fahey",                runs:1, wins:0, places:0, highestRpr:93, price:"175,000 gns yearling", dateMentioned:"Apr-26" },
         { name:"Star Of Hope",       sire:"Dark Angel",         dam:"Futoon",                  owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:1, wins:0, places:0, highestRpr:61, price:"2,900,000 gns yearling", notes:"Sister to Charyn", dateMentioned:"Apr-26" },
         { name:"Thursday Girl",      sire:"Pinatubo",           dam:"Dream Dana",              owner:"Chris Stedman",                     trainer:"E Walker",                 runs:2, wins:0, places:2, highestRpr:70, price:"240,000 gns foal", dateMentioned:"Apr-26" },
         { name:"Hawk Mountain",      sire:"Wootton Bassett",    dam:"Hydrangea (Galileo)",     owner:"Smith / Magnier / Tabor",           trainer:"Aidan O'Brien",            runs:1, wins:1, places:0, highestLevel:"G3", highestRpr:116, dateMentioned:"Apr-26" },
-        { name:"Cap Santa Lucia",    sire:"Persian King",       dam:"Cap Verite",              owner:"Sam Sangster And Partner",          trainer:"B J Meehan",               runs:2, wins:1, places:0, highestRpr:63, price:"€20,000 yearling", dateMentioned:"Apr-26" },
+        { name:"Cap Santa Lucia",    sire:"Persian King",       dam:"Cap Verite",              owner:"Sam Sangster And Partner",          trainer:"B J Meehan",               runs:2, wins:1, places:0, highestRpr:80, price:"€20,000 yearling", dateMentioned:"Apr-26" },
         { name:"Alfaraz",            sire:"Nathaniel",          dam:"Sequillia",               owner:"Mr Saeed Suhail",                   trainer:"A M Balding",              runs:1, wins:0, places:0, highestRpr:92, price:"300,000 gns", dateMentioned:"Apr-26" },
         { name:"Midnight Steppers",  sire:"Blue Point",         dam:"Victoria Regina",         owner:"Mrs Paul Shanahan",                 trainer:"E A L Dunlop",             runs:3, wins:0, places:0, highestRpr:5, price:"75,000 gns", dateMentioned:"Apr-26" },
         { name:"Botagoz",            sire:"Mehmas",             dam:"Bocca Baciata",           owner:"Mr Nurlan Bizakov",                 trainer:"R Varian",                 runs:2, wins:1, places:1, highestLevel:"Listed", highestRpr:97, calledIt:true, notes:"Black type — placed in Listed race.", dateMentioned:"Apr-26" },
@@ -531,7 +542,7 @@ const DATA = {
         { name:"Pure Moon Sea",      sire:"Sea The Moon",       dam:"Pure Line",                owner:"Hambleton Racing LVII & Mrs G Jarvis", trainer:"Tom Clover",             runs:1, wins:0, places:0, highestRpr:74, price:"35,000 gns yearling", dateMentioned:"May-26" },
         { name:"Lyneham",            sire:"Wootton Bassett",    dam:"The Tooth Fairy",          owner:"Amo Racing",                        trainer:"Ralph Beckett",            runs:1, wins:0, places:0, highestRpr:95, price:"425,000 gns", notes:"Listed run, unplaced", dateMentioned:"May-26" },
         { name:"Victorious (IRE)",   sire:"Wootton Bassett",    dam:"Heaven On Earth",         damSire:"Galileo", owner:"Smith / Magnier / Tabor", trainer:"Aidan O'Brien", runs:2, wins:2, places:0, highestLevel:"G3", highestRpr:81, family:"From the Minding / Tuesday / Empress Josephine family; half-sister to G3 winner Sugar Island; close relation to Babouche", notes:"Black type — won Group 3.", dateMentioned:"Apr-26" },
-        { name:"Crownright",         sire:"Frankel",            dam:"Environs",                 owner:"Juddmonte",                         trainer:"Ralph Beckett",            runs:1, wins:0, places:1, highestRpr:84, dateMentioned:"May-26" },
+        { name:"Crownright",         sire:"Frankel",            dam:"Environs",                 owner:"Juddmonte",                         trainer:"Ralph Beckett",            runs:2, wins:0, places:2, highestRpr:84, dateMentioned:"May-26" },
         { name:"Archers Bay",        sire:"Wootton Bassett",    dam:"Foxtrot Liv",              owner:"Walter Moraes & Ajay Anne",         trainer:"Marco Botti",              runs:1, wins:0, places:0, highestRpr:99, dateMentioned:"May-26" },
         { name:"Jazzy Blue (IRE)",   sire:"Showcasing",         dam:"Jasmine Blue",             damSire:"Galileo", owner:"The Legacy Group Racing Club", trainer:"Charlie Fellowes", runs:1, wins:0, places:0, highestRpr:37, price:"€20,000", notes:"Dam a Listed-placed 10f winner. Grandam half-sister to Secret Garden (106) — dam of Irish 2000 Guineas winner Roderic O'Connor (119).", dateMentioned:"May-26" },
         { name:"Lady Blanche (IRE)", sire:"Persian Force",      dam:"Hawafez",                  damSire:"Shamardal", owner:"Amo Racing", trainer:"Karl Burke", runs:3, wins:1, places:1, highestRpr:80, notes:"Early speed, Guineas miler profile.", dateMentioned:"May-26" },
@@ -545,6 +556,13 @@ const DATA = {
         { name:"Imperial Nation",      sire:"Sioux Nation",       dam:"Roman Gal",                owner:"Mr Saeed Suhail",                   trainer:"Andrew Balding",           runs:1, wins:0, places:0, highestRpr:63, price:"150,000 gns", dateMentioned:"May-26" },
         { name:"Celtic Charioteer",    sire:"Mondialiste",        dam:"Just Jealous",             owner:"Ms L Mars",                         trainer:"J Ferguson",               runs:1, wins:0, places:0, dateMentioned:"May-26" },
         { name:"Dark Sovereign",       sire:"Dark Angel",         dam:"Mulkeyya",                 owner:"Valmont",                           trainer:"Ralph Beckett",            runs:1, wins:0, places:1, price:"145,000 gns yearling", dateMentioned:"May-26" },
+        { name:"Havana Lightning",     sire:"Havana Grey",        dam:"Persaria",                 owner:"Shapoor Mistry",                    trainer:"George Boughey",           runs:1, wins:1, places:0, highestRpr:83, dateMentioned:"May-26" },
+        { name:"Regal Desire",         sire:"Masar",              dam:"Just Jealous",             owner:"Elwick Stud",                       trainer:"Brian Ellison",            runs:1, wins:0, places:1, highestRpr:76, dateMentioned:"May-26" },
+        { name:"Mussab",               sire:"Ten Sovereigns",     dam:"Excuding",                 owner:"D J And Mrs Deer",                  trainer:"Richard & Peter Fahey",    runs:1, wins:0, places:1, highestRpr:81, dateMentioned:"May-26" },
+        { name:"Captaincy",            sire:"Havana Grey",        dam:"Electric Love",            owner:"Isa Salman Al Khalifa",             trainer:"Clive Cox",                  runs:1, wins:0, places:1, dateMentioned:"May-26" },
+        { name:"Cheeky Chesca",        sire:"Invincible Army",    dam:"Bear Cheek",               owner:"Reality Partnerships XIV",           trainer:"Tim Easterby",              runs:1, wins:0, places:1, dateMentioned:"May-26" },
+        { name:"Asset",                sire:"Wootton Bassett",    dam:"Assisi",                   owner:"Gestuet Schlenderhan GmbH u. Co. KG", trainer:"Sir Mark Prescott",        runs:1, wins:0, places:1, dateMentioned:"May-26" },
+        { name:"Kentucky Rain",        sire:"Lucky Vega",         dam:"Equanimity",               owner:"LDS Bloodstock Ltd",                  trainer:"Lemos De Souza",           runs:1, wins:0, places:1, highestRpr:78, lot:"Lot 137", price:"Not Sold (58k bid)", notes:"Goffs Sale.", dateMentioned:"Apr-26" },
       ]
     },
     {
@@ -553,9 +571,9 @@ const DATA = {
         { name:"Mehmas Filly",        sire:"Mehmas",         dam:"Outside Inside",       lot:"Lot 218", price:"€28,000",                  owner:"Abubaker Kadoura",    dateMentioned:"Apr-26" },
         { name:"Glamorize (IRE)",     sire:"Starman",        dam:"Karalara",             lot:"Lot 173", price:"€155,000",                 owner:"Amo Racing",          trainer:"George Boughey",     dateMentioned:"Apr-26" },
         { name:"Persian Force Filly", sire:"Persian Force",  dam:"Kakashan",             lot:"Lot 172", price:"€95,000",                  owner:"Amo Racing",          dateMentioned:"Apr-26" },
-        { name:"Blue Point Filly",    sire:"Blue Point",     dam:"Intisaar",             lot:"Lot 163", price:"€50,000",                  owner:"Rabbah Bloodstock",   dateMentioned:"Apr-26" },
-        { name:"Lucky Vega Filly",    sire:"Lucky Vega",     dam:"Equanimity",           lot:"Lot 137", price:"Not Sold (58k bid)", ns:true,                           dateMentioned:"Apr-26" },
-        { name:"Havana Grey Filly",   sire:"Havana Grey",    dam:"Aquarius",             lot:"Lot 93",  price:"€70,000",                  owner:"Rabbah Bloodstock",   dateMentioned:"Apr-26" },
+        { name:"Blue Sign",           sire:"Blue Point",     dam:"Intisaar",             lot:"Lot 163", price:"€50,000",                  owner:"Mr Abdulla Al Mansoori", trainer:"Ismail Mohammed", notes:"Purchased by Rabbah Bloodstock.", dateMentioned:"Apr-26" },
+        { name:"Kentucky Rain",       sire:"Lucky Vega",     dam:"Equanimity",           lot:"Lot 137", price:"Not Sold (58k bid)", ns:true, owner:"LDS Bloodstock Ltd", trainer:"Lemos De Souza", notes:"Goffs Sale · formerly Lucky Vega filly.", dateMentioned:"Apr-26" },
+        { name:"Adeel",               sire:"Havana Grey",    dam:"Aquarius",             lot:"Lot 93",  price:"€70,000",                  owner:"Mr Abdulla Al Mansoori", trainer:"Ismail Mohammed", notes:"Purchased by Rabbah Bloodstock.", dateMentioned:"Apr-26" },
         { name:"Calyx Filly",         sire:"Calyx",          dam:"Via Aurelia",          lot:"Lot 63",  price:"Not Sold (13k bid)", ns:true,                           dateMentioned:"Apr-26" },
         { name:"Sioux Nation Filly",  sire:"Sioux Nation",   dam:"Cutie Pie",            lot:"Lot 123", price:"Withdrawn",         ns:true,                           dateMentioned:"Apr-26" },
         { name:"Too Darn Hot Filly",  sire:"Too Darn Hot",   dam:"Frankel Light (Frankel)", lot:"Lot 146", price:"€70,000",            owner:"Highflyer Bloodstock", dateMentioned:"Apr-26" },
@@ -575,6 +593,17 @@ const DATA = {
         { name:"Lot 121", sire:"Study Of Man (IRE)", dam:"So In Love (GB)", damSire:"Smart Strike", lot:"Lot 121", price:"Withdrawn", ns:true, notes:"Arqana Breeze Up Sale", dateMentioned:"May-26" },
         { name:"Lot 154", sire:"Lope de Vega (IRE)", dam:"What Say You (IRE)", damSire:"Galileo (IRE)", lot:"Lot 154", price:"Withdrawn", ns:true, notes:"Arqana Breeze Up Sale", dateMentioned:"May-26" },
         { name:"Lot 179", sire:"Sioux Nation", dam:"Braided", damSire:"Elusive Quality", lot:"Lot 179", price:"€130,000", owner:"Sackville Donald", notes:"Colt · Arqana Breeze Up Sale", dateMentioned:"May-26" },
+      ]
+    },
+    {
+      key:"tattersalls-ire", label:"Tattersalls Ireland Breeze Up Sale 2026",
+      horses: [
+        { name:"Lot 31", sire:"Invincible Army", dam:"Inca Husky", lot:"Lot 31", price:"€65,000", owner:"Vendor buy-back", notes:"Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
+        { name:"Lot 35", sire:"Cotai Glory", dam:"Inuk", lot:"Lot 35", price:"€26,000", owner:"Martul CB", notes:"Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
+        { name:"Lot 36", sire:"Churchill", dam:"Isanous", lot:"Lot 36", price:"€42,000", owner:"Apollo Bloodstock", notes:"Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
+        { name:"Lot 40", sire:"Sioux Nation", dam:"Jira", lot:"Lot 40", price:"€72,000", owner:"Stroud Coleman Bloodstock / James Keane", notes:"Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
+        { name:"Lot 46", sire:"Kodiac", dam:"Kissepal", lot:"Lot 46", price:"€58,000", owner:"Brian Grassick Bloodstock", notes:"Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
+        { name:"Lot 76", sire:"Blue Point", dam:"Mudawanah", lot:"Lot 76", price:"€15,000", owner:"Redmond McGrath (post-sale)", notes:"Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
       ]
     }
   ]
@@ -676,6 +705,13 @@ function rprCell(h) {
   return { text: '—', cls: '' };
 }
 
+function horseRpr(h) {
+  const v = h.highestRpr;
+  if (v === undefined || v === null || String(v).trim() === '') return null;
+  const n = Number(v);
+  return isNaN(n) ? null : n;
+}
+
 function renderStats() {
   const all = DATA.sections[0].horses && DATA.sections[0].horses.length
     ? DATA.sections[0].horses
@@ -687,6 +723,20 @@ function renderStats() {
   const groupWins = all.filter(h =>
     (Number(h.wins)||0) > 0 && (lvlU(h)==='G1' || lvlU(h)==='G2' || lvlU(h)==='G3')
   ).length;
+  const hasRun = h => Number(h.runs) > 0;
+  const ran = all.filter(hasRun);
+  const minRuns = Math.max(1, Number(DATA.rprMinRuns) || 2);
+  const mature = ran.filter(h => Number(h.runs) >= minRuns);
+  const at90In = list => list.filter(h => {
+    const r = horseRpr(h);
+    return r !== null && r >= 90;
+  }).length;
+  const at90Mature = at90In(mature);
+  const at90All = at90In(ran);
+  const pctMature = mature.length ? Math.round((at90Mature / mature.length) * 1000) / 10 : 0;
+  const pctAll = ran.length ? Math.round((at90All / ran.length) * 1000) / 10 : 0;
+  const developing = ran.filter(h => Number(h.runs) < minRuns).length;
+  const claim = Number(DATA.rprClaimPct) || 39;
 
   document.getElementById('tb-total').textContent = all.length;
   document.getElementById('tb-wins').textContent  = wins;
@@ -699,9 +749,18 @@ function renderStats() {
     { k:'Wins',           v: wins,   cls:'green' },
     { k:'Places',         v: places, cls:'dim' },
     { k:'Group Wins',     v: groupWins },
+    {
+      k:`90+ RPR (${minRuns}+ runs)`,
+      v: `${pctMature}%`,
+      cls: pctMature >= claim ? 'green' : '',
+      sub: `${at90Mature} of ${mature.length} · ${claim}% claim`,
+      sub2: developing
+        ? `${pctAll}% all runners · ${developing} still on run 1`
+        : `${pctAll}% all runners`,
+    },
   ];
   document.getElementById('statsRow').innerHTML = cells.map(c=>
-    `<div class="stat-cell"><div class="stat-key">${c.k}</div><div class="stat-val ${c.cls||''}">${c.v}</div></div>`
+    `<div class="stat-cell"><div class="stat-key">${c.k}</div><div class="stat-val ${c.cls||''}">${c.v}</div>${c.sub ? `<div class="stat-sub">${c.sub}</div>` : ''}${c.sub2 ? `<div class="stat-sub dim-line">${c.sub2}</div>` : ''}</div>`
   ).join('');
 }
 
@@ -796,7 +855,7 @@ function renderSections() {
         ${(s.key === 'runners') ? '' : '<th>Lot</th>'}
         <th>Price / Sale</th>
         <th>Owner / Purchaser</th>
-        ${(s.key === 'goffs' || s.key === 'tattersalls') ? '' : '<th>Trainer</th>'}
+        ${(s.key === 'goffs' || s.key === 'tattersalls' || s.key === 'arqana' || s.key === 'tattersalls-ire') ? '' : '<th>Trainer</th>'}
         <th>Record (W/P/R)</th>
         <th>Level</th>
         <th>Highest RPR</th>
@@ -808,7 +867,7 @@ function renderSections() {
         s.key,
         !(s.key === 'runners'),
         true,
-        !(s.key === 'goffs' || s.key === 'tattersalls')
+        !(s.key === 'goffs' || s.key === 'tattersalls' || s.key === 'arqana' || s.key === 'tattersalls-ire')
       )).join('')}</tbody>
     </table>
   </div>
