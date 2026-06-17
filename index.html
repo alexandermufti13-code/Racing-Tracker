@@ -211,6 +211,132 @@
     }
     .stab.active .stab-count { color: var(--gold); background: var(--gold-mid); }
 
+    /* SALES CALL BAND */
+    .sales-call-band {
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+      padding: 18px 20px 16px 23px;
+      border-left: 3px solid var(--gold);
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 12px 24px;
+      align-items: start;
+    }
+    .sales-call-main { min-width: 0; }
+    .sales-call-kicker {
+      font-size: 0.58rem;
+      font-weight: 500;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-bottom: 6px;
+    }
+    .sales-call-kicker span { color: var(--text2); }
+    .sales-call-horse {
+      font-family: var(--sans);
+      font-size: 1rem;
+      font-weight: 600;
+      color: var(--text);
+      line-height: 1.2;
+      margin-bottom: 2px;
+    }
+    .sales-call-breeding {
+      font-size: 0.7rem;
+      color: var(--text3);
+      font-style: italic;
+      margin-bottom: 14px;
+    }
+    .sales-call-timeline {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+      max-width: 640px;
+    }
+    .sales-call-step {
+      display: grid;
+      grid-template-columns: 82px 1fr;
+      gap: 12px;
+      font-size: 0.72rem;
+      line-height: 1.45;
+      color: var(--text2);
+    }
+    .sales-call-step .dt {
+      color: var(--text3);
+      font-variant-numeric: tabular-nums;
+      white-space: nowrap;
+    }
+    .sales-call-step .dd { color: var(--text2); }
+    .sales-call-step .dd em { color: var(--text); font-style: normal; }
+    .sales-call-aside {
+      text-align: right;
+      padding-top: 2px;
+    }
+    .sales-call-rerate {
+      font-size: 1.35rem;
+      font-weight: 600;
+      color: var(--green);
+      line-height: 1;
+      font-variant-numeric: tabular-nums;
+    }
+    .sales-call-rerate-label {
+      font-size: 0.58rem;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text3);
+      margin-top: 4px;
+    }
+    .sales-call-meta {
+      margin-top: 12px;
+      font-size: 0.68rem;
+      color: var(--text3);
+      line-height: 1.45;
+      max-width: 640px;
+    }
+    .sales-call-foot {
+      grid-column: 1 / -1;
+      display: flex;
+      align-items: center;
+      gap: 18px;
+      flex-wrap: wrap;
+      padding-top: 12px;
+      margin-top: 4px;
+      border-top: 1px solid var(--line);
+    }
+    .sales-call-link {
+      appearance: none;
+      background: none;
+      border: none;
+      padding: 0;
+      font-family: var(--mono);
+      font-size: 0.62rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      color: var(--text3);
+      cursor: pointer;
+    }
+    .sales-call-link:hover { color: var(--text); }
+
+    .sales-section-intro {
+      padding: 12px 20px;
+      background: var(--bg2);
+      border-bottom: 1px solid var(--line);
+      font-size: 0.7rem;
+      color: var(--text3);
+      letter-spacing: 0.03em;
+      line-height: 1.45;
+    }
+
+    td.rerate { font-variant-numeric: tabular-nums; text-align: right; min-width: 88px; font-weight: 500; font-size: 0.76rem; }
+    td.rerate.up { color: var(--green); }
+    td.rerate.down { color: var(--red); }
+    td.rerate.flat { color: var(--text3); font-weight: 400; }
+    td.called-date { color: var(--text2); font-size: 0.72rem; min-width: 88px; }
+    td.market-col { color: var(--gold); font-variant-numeric: tabular-nums; font-size: 0.74rem; }
+    td.owner-change { font-size: 0.7rem; color: var(--text2); white-space: normal; min-width: 200px; max-width: 240px; line-height: 1.35; }
+    td.owner-change .owner-was { color: var(--text3); }
+    td.owner-change .owner-arrow { color: var(--text3); }
+    td.owner-change .owner-now { color: var(--text); }
+
     /* SORT BAR */
     .sort-bar {
       display: flex;
@@ -263,7 +389,7 @@
 
     table {
       width: max-content;
-      min-width: max(100%, 1530px);
+      min-width: max(100%, 1570px);
       border-collapse: collapse;
       font-size: 0.78rem;
     }
@@ -397,6 +523,8 @@
     td.owner    { color:var(--text2); font-size:0.7rem; min-width:160px; white-space:normal; max-width:200px; }
     td.trainer  { color:var(--blue); font-size:0.72rem; min-width:130px; }
     td.record   { font-variant-numeric:tabular-nums; min-width:80px; text-align:center; }
+    td.gender   { text-align:center; min-width:36px; font-size:0.72rem; font-weight:600; color:var(--text2); letter-spacing:0.06em; }
+    td.gender.na { color:var(--text3); font-weight:400; }
     td.rpr      { font-variant-numeric:tabular-nums; min-width:76px; text-align:center; color:var(--text2); font-size:0.74rem; }
     td.rpr.na   { color:var(--text3); font-style:italic; font-weight:400; }
 
@@ -482,6 +610,8 @@
       .stat-cell:nth-child(6) { border-right: none; }
       .topbar-meta { display: none; }
       .expand-inner { grid-template-columns: 1fr 1fr; padding-left: 16px; }
+      .sales-call-band { grid-template-columns: 1fr; }
+      .sales-call-aside { text-align: left; display: flex; align-items: baseline; gap: 8px; }
     }
 
     /* ANIMATION */
@@ -525,6 +655,7 @@
 </header>
 
 <div class="stats-row" id="statsRow"></div>
+<div class="sales-call-band" id="salesCallBand"></div>
 <div class="section-tabs" id="sectionTabs"></div>
 <div class="sort-bar" id="sortBar">
   <span class="sort-bar-label">Sort</span>
@@ -545,19 +676,23 @@
 <script>
 /* =====================================================
    EDIT ONLY THIS DATA OBJECT TO UPDATE THE TRACKER
-   Optional per horse: highestRpr (number); shown when set (or in race record when runs > 0)
+   Optional per horse: highestRpr, gender (C/F/M/H/G), salesLedger entry (sale re-rate since flagged)
    ===================================================== */
 const DATA = {
-  lastUpdated: "2026-06-11",
+  lastUpdated: "2026-06-17",
   rprClaimPct: 39,
   rprMinRuns: 2,
+  salesLedger: [
+    { name:"Kentucky Rain", sire:"Lucky Vega", dam:"Equanimity", calledDate:"22 Apr 2026", saleDate:"15 Jun 2026", flaggedAt:58000, marketAt:380000, flaggedVenue:"Goffs · Lot 137", marketVenue:"London Sale", ownerThen:"LDS Bloodstock Ltd", ownerNow:"Amo Racing", hero:true },
+  ],
   sections: [
     { key:"all", label:"All Horses" },
+    { key:"sales-calls", label:"Sales Calls" },
     {
       key:"runners", label:"Horses That Have Run",
       horses: [
         { name:"Poseidons Warrior",  sire:"Sea The Stars",      dam:"Holy Amaretta",           owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:0, places:1, highestRpr:106, dateMentioned:"Apr-26" },
-        { name:"Talk Of New York",   sire:"Wootton Bassett",    dam:"Usherette",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:2, places:0, highestLevel:"Listed", highestRpr:116, calledIt:true, notes:"Black type — won Listed race.", dateMentioned:"Apr-26" },
+        { name:"Talk Of New York",   sire:"Wootton Bassett",    dam:"Usherette",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:3, wins:2, places:1, highestLevel:"G1", highestRpr:116, gender:"C", calledIt:true, notes:"Black type — won Listed race. 3rd in G1 St James's Palace Stakes.", dateMentioned:"Apr-26" },
         { name:"Cerro Blanco",       sire:"Wootton Bassett",    dam:"Duneflower",              owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:1, places:1, highestLevel:"Listed", highestRpr:101, calledIt:true, dateMentioned:"Apr-26" },
         { name:"Sovereign Bay",      sire:"New Bay",            dam:"Holy Roman Empress",      owner:"China Horse Club International",    trainer:"Dr R Newland & J Insole",  runs:3, wins:0, places:0, highestRpr:73, dateMentioned:"Apr-26" },
         { name:"Kings Cavalry",      sire:"Kingman",            dam:"Dynaformer",              owner:"Mr Saeed Manana",                   trainer:"J Tate",                   runs:3, wins:2, places:1, highestRpr:91, dateMentioned:"Apr-26" },
@@ -574,7 +709,7 @@ const DATA = {
         { name:"Albert Einstein",    sire:"Wootton Bassett",    dam:"Yet",                     owner:"Smith / Magnier / Tabor / Westerberg", trainer:"Aidan O'Brien",         runs:1, wins:0, places:1, highestRpr:105, dateMentioned:"Apr-26" },
         { name:"According To Mark",  sire:"St Mark's Basilica", dam:"Maimara",                 owner:"Mr Peter Jeffers",                  trainer:"E Bethell",                runs:2, wins:0, places:2, highestRpr:84, price:"85,000 gns yearling", dateMentioned:"Apr-26" },
         { name:"Bay Of Myths",       sire:"New Bay",            dam:"Magic Nymph",             owner:"Commercium II & Partners",          trainer:"Dr R Newland & J Insole",  runs:1, wins:0, places:0, highestRpr:77, price:"€100,000 yearling", dateMentioned:"Apr-26" },
-        { name:"Cold Fish",          sire:"No Nay Never",       dam:"Emotion",                 owner:"Nibras Racing",                     trainer:"H Kobeissi",               runs:2, wins:0, places:2, highestRpr:73, price:"40,000 gns yearling", dateMentioned:"May-26" },
+        { name:"Cold Fish",          sire:"No Nay Never",       dam:"Emotion",                 owner:"Nibras Racing",                     trainer:"H Kobeissi",               runs:3, wins:0, places:3, highestRpr:73, price:"40,000 gns yearling", dateMentioned:"May-26" },
         { name:"Big Eagle",          sire:"Sioux Nation",       dam:"Gather",                  owner:"Jim and Claire Limited",            trainer:"W Greatrex",               runs:1, wins:0, places:0, highestRpr:79, dateMentioned:"May-26" },
         { name:"Menzies",            sire:"Australia",          dam:"Voice Of Truth",           owner:"OTI Racing",                        trainer:"Harry Eustance",           runs:1, wins:0, places:0, highestRpr:80, notes:"Listed run, unplaced", dateMentioned:"May-26" },
         { name:"Martagny",           sire:"Zarak",              dam:"Montviette",               owner:"G. Augustin-Normand",               trainer:"J. Reynier",               runs:1, wins:0, places:0, highestRpr:95, notes:"Listed run, unplaced", dateMentioned:"May-26" },
@@ -600,12 +735,12 @@ const DATA = {
         { name:"Dark Sovereign",       sire:"Dark Angel",         dam:"Mulkeyya",                 owner:"Valmont",                           trainer:"Ralph Beckett",            runs:1, wins:0, places:1, price:"145,000 gns yearling", dateMentioned:"May-26" },
         { name:"Havana Lightning",     sire:"Havana Grey",        dam:"Persaria",                 owner:"Shapoor Mistry",                    trainer:"George Boughey",           runs:1, wins:1, places:0, highestRpr:83, dateMentioned:"May-26" },
         { name:"Regal Desire",         sire:"Masar",              dam:"Just Jealous",             owner:"Elwick Stud",                       trainer:"Brian Ellison",            runs:1, wins:0, places:1, highestRpr:76, dateMentioned:"May-26" },
-        { name:"Mussab",               sire:"Ten Sovereigns",     dam:"Excuding",                 owner:"D J And Mrs Deer",                  trainer:"Richard & Peter Fahey",    runs:1, wins:0, places:1, highestRpr:81, dateMentioned:"May-26" },
+        { name:"Mussab",               sire:"Ten Sovereigns",     dam:"Excuding",                 owner:"D J And Mrs Deer",                  trainer:"Richard & Peter Fahey",    runs:1, wins:0, places:1, highestRpr:81, gender:"C", dateMentioned:"May-26" },
         { name:"Captaincy",            sire:"Havana Grey",        dam:"Electric Love",            owner:"Isa Salman Al Khalifa",             trainer:"Clive Cox",                  runs:1, wins:0, places:1, dateMentioned:"May-26" },
         { name:"Cheeky Chesca",        sire:"Invincible Army",    dam:"Bear Cheek",               owner:"Reality Partnerships XIV",           trainer:"Tim Easterby",              runs:2, wins:0, places:2, highestRpr:67, dateMentioned:"May-26" },
         { name:"Asset",                sire:"Wootton Bassett",    dam:"Assisi",                   owner:"Gestuet Schlenderhan GmbH u. Co. KG", trainer:"Sir Mark Prescott",        runs:1, wins:0, places:1, dateMentioned:"May-26" },
-        { name:"Kentucky Rain",        sire:"Lucky Vega",         dam:"Equanimity",               owner:"LDS Bloodstock Ltd",                  trainer:"Lemos De Souza",           runs:1, wins:0, places:1, highestRpr:78, lot:"Lot 137", price:"Not Sold (58k bid)", notes:"Goffs Sale.", dateMentioned:"Apr-26" },
-        { name:"Blue Sign",            sire:"Blue Point",         dam:"Intisaar",                 owner:"Mr Abdulla Al Mansoori",             trainer:"Ismail Mohammed",          runs:1, wins:0, places:0, highestRpr:59, price:"€50,000", notes:"Purchased by Rabbah Bloodstock (Goffs Lot 163).", dateMentioned:"Apr-26" },
+        { name:"Kentucky Rain",        sire:"Lucky Vega",         dam:"Equanimity",               owner:"Amo Racing",                        trainer:"Lemos De Souza",           runs:1, wins:0, places:1, highestRpr:78, gender:"F", lot:"Lot 137", price:"£380,000", calledIt:true, notes:"Flagged at Goffs 22 Apr when passed unsold (58k bid). London Sale 15 Jun — £380,000 to Amo Racing, eve of Royal Ascot, after 1 run (RPR 78). Ascot entry. Top speed 44.4 mph — joint fastest 2yo at the track this year.", dateMentioned:"Apr-26" },
+        { name:"Blue Sign",            sire:"Blue Point",         dam:"Intisaar",                 owner:"Mr Abdulla Al Mansoori",             trainer:"Ismail Mohammed",          runs:1, wins:0, places:0, highestRpr:59, gender:"F", price:"€50,000", notes:"Purchased by Rabbah Bloodstock (Goffs Lot 163).", dateMentioned:"Apr-26" },
         { name:"Thankfully",           sire:"St Mark's Basilica", dam:"Drumfad Bay",               owner:"Mrs Tabor, Mrs MV Magnier, Mrs Shanahan", trainer:"Karl Burke",          runs:2, wins:1, places:0, highestRpr:83, dateMentioned:"Jun-26" },
         { name:"Sunshine Star",        sire:"Sea The Stars",      dam:"Dream Peace",              owner:"Lady Bamford",                      trainer:"John & Thady Gosden",    runs:2, wins:1, places:0, highestRpr:83, dateMentioned:"Jun-26" },
         { name:"Musical Accord",       sire:"Camelot",            dam:"Bonhomie",                 owner:"Mrs Doreen Tabor",                  trainer:"Ralph Beckett",            runs:2, wins:0, places:0, highestRpr:68, dateMentioned:"Jun-26" },
@@ -615,6 +750,9 @@ const DATA = {
         { name:"Delightfully Hot",     sire:"Too Darn Hot",       dam:"Reassure",                 owner:"Mrs S Nicholls",                    trainer:"James Owen",               runs:1, wins:0, places:0, highestRpr:52, dateMentioned:"Jun-26" },
         { name:"Light of Dawn",        sire:"Showcasing",         dam:"An Ghalanta",              owner:"Wathnan Racing",                    trainer:"Karl Burke",               runs:1, wins:1, places:0, highestRpr:81, price:"€625,000", lot:"Lot 166", notes:"Arqana Breeze Up Sale.", dateMentioned:"June-26" },
         { name:"Regal Tiger",          sire:"Kingman",            dam:"Tiger Eye",                owner:"Roudee Racing 20 & Mrs E Palmer",   runs:1, wins:0, places:0, price:"£50,000 (Sackville Donald/Manor House Stables)", dateMentioned:"June-26" },
+        { name:"Osterode",             sire:"Profitable",         dam:"Ostatnia",                 owner:"Michael Rosenfeld",                 trainer:"W McCreery",               runs:1, wins:0, places:0, highestRpr:68, gender:"F", dateMentioned:"June-26" },
+        { name:"Baby G",               sire:"Havana Grey",        dam:"Despacito",                owner:"Mr Salvo Giannini",                 trainer:"A W Carroll",              runs:1, wins:0, places:0, gender:"F", dateMentioned:"June-26" },
+        { name:"Drazinda",             sire:"Sioux Nation",       dam:"Darbanza",                 owner:"Princess Zahra Aga Khan",           trainer:"F Graffard",               runs:1, wins:1, places:0, dateMentioned:"June-26" },
       ]
     },
     { key:"unraced", label:"Unraced" },
@@ -622,11 +760,11 @@ const DATA = {
       key:"goffs", label:"Goffs Sale",
       horses: [
         { name:"Mehmas Filly",        sire:"Mehmas",         dam:"Outside Inside",       lot:"Lot 218", price:"€28,000",                  owner:"Abubaker Kadoura",    dateMentioned:"Apr-26" },
-        { name:"Glamorize (IRE)",     sire:"Starman",        dam:"Karalara",             lot:"Lot 173", price:"€155,000",                 owner:"Amo Racing",          trainer:"George Boughey",     runs:1, wins:0, places:1, highestRpr:71, dateMentioned:"Apr-26" },
-        { name:"Persian Force Filly", sire:"Persian Force",  dam:"Kakashan",             lot:"Lot 172", price:"€95,000",                  owner:"Amo Racing",          dateMentioned:"Apr-26" },
-        { name:"Blue Sign",           sire:"Blue Point",     dam:"Intisaar",             lot:"Lot 163", price:"€50,000",                  owner:"Mr Abdulla Al Mansoori", trainer:"Ismail Mohammed", runs:1, wins:0, places:0, highestRpr:59, notes:"Purchased by Rabbah Bloodstock.", dateMentioned:"Apr-26" },
-        { name:"Kentucky Rain",       sire:"Lucky Vega",     dam:"Equanimity",           lot:"Lot 137", price:"Not Sold (58k bid)", ns:true, owner:"LDS Bloodstock Ltd", trainer:"Lemos De Souza", notes:"Goffs Sale · formerly Lucky Vega filly.", dateMentioned:"Apr-26" },
-        { name:"Adeel",               sire:"Havana Grey",    dam:"Aquarius",             lot:"Lot 93",  price:"€70,000",                  owner:"Mr Abdulla Al Mansoori", trainer:"Ismail Mohammed", notes:"Purchased by Rabbah Bloodstock.", dateMentioned:"Apr-26" },
+        { name:"Glamorize (IRE)",     sire:"Starman",        dam:"Karalara",             lot:"Lot 173", price:"€155,000",                 owner:"Amo Racing",          trainer:"George Boughey",     runs:1, wins:0, places:1, highestRpr:71, gender:"F", dateMentioned:"Apr-26" },
+        { name:"Nicely",              sire:"Persian Force",  dam:"Kakashan",             lot:"Lot 172", price:"€95,000",                  owner:"Amo Racing",          trainer:"Kevin Philippart de Foy", notes:"Goffs Sale · formerly Persian Force filly.", dateMentioned:"Apr-26" },
+        { name:"Blue Sign",           sire:"Blue Point",     dam:"Intisaar",             lot:"Lot 163", price:"€50,000",                  owner:"Mr Abdulla Al Mansoori", trainer:"Ismail Mohammed", runs:1, wins:0, places:0, highestRpr:59, gender:"F", notes:"Purchased by Rabbah Bloodstock.", dateMentioned:"Apr-26" },
+        { name:"Kentucky Rain",       sire:"Lucky Vega",     dam:"Equanimity",           lot:"Lot 137", price:"Not Sold (58k bid)", ns:true, owner:"LDS Bloodstock Ltd", trainer:"Lemos De Souza", gender:"F", notes:"Goffs Sale · 22 Apr 2026 · formerly Lucky Vega filly. Later £380,000 at London Sale (15 Jun 26).", dateMentioned:"Apr-26" },
+        { name:"Adeel",               sire:"Havana Grey",    dam:"Aquarius",             lot:"Lot 93",  price:"€70,000",                  owner:"Mr Abdulla Al Mansoori", trainer:"Ismail Mohammed", gender:"C", notes:"Purchased by Rabbah Bloodstock.", dateMentioned:"Apr-26" },
         { name:"Calyx Colt",          sire:"Calyx",          dam:"Via Aurelia",          lot:"Lot 63",  price:"Not Sold (13k bid)", ns:true,                           dateMentioned:"Apr-26" },
         { name:"Sioux Nation Filly",  sire:"Sioux Nation",   dam:"Cutie Pie",            lot:"Lot 123", price:"Withdrawn",         ns:true,                           dateMentioned:"Apr-26" },
         { name:"Too Darn Hot Filly",  sire:"Too Darn Hot",   dam:"Frankel Light (Frankel)", lot:"Lot 146", price:"€70,000",            owner:"Highflyer Bloodstock", dateMentioned:"Apr-26" },
@@ -697,7 +835,7 @@ const BUNDLE_ONLY_ALL = [
       { name:"Partying",           sire:"Frankel",            dam:"Aljazzi", damSire:"Shamardal", owner:"Amo Racing",                   trainer:"Kevin Philippart de Foy",  runs:0, notes:"Flagship — elite Classic model", dateMentioned:"May-26" },
       { name:"Sea The Stars Colt", sire:"Sea The Stars",      dam:"Baino Hope", damSire:"Jeremy", owner:"Amo Racing",                   trainer:"Kevin Philippart de Foy",  runs:0, notes:"Stamina, late developer", dateMentioned:"May-26" },
       { name:"Wootton Bassett Colt", sire:"Wootton Bassett",  dam:"Luna Mare", damSire:"Galileo", owner:"Amo Racing",                   trainer:"Kevin Philippart de Foy",  runs:0, notes:"Mile+ upside, sleeper", dateMentioned:"May-26" },
-      { name:"Spring Sprinter",    sire:"Elzaam",             dam:"Windsor Royal",            owner:"Mrs Margaret O'Rourke",              trainer:"A Slattery",               runs:0, notes:"Unraced.", dateMentioned:"May-26" },
+      { name:"Spring Sprinter",    sire:"Elzaam",             dam:"Windsor Royal",            owner:"Mrs Margaret O'Rourke",              trainer:"A Slattery",               runs:2, wins:0, places:0, highestRpr:50, dateMentioned:"May-26" },
       { name:"Apasionata",         sire:"Golden Horn",        dam:"Allegretto",               damSire:"Galileo", owner:"Cheveley Park Stud", trainer:"Sir Mark Prescott", runs:0, notes:"Three-year-old project. Daughter of Prix Royal-Oak winner Allegretto; Golden Horn × Galileo cross produced stayers (Gregory, East India Dock, Stag Horn).", dateMentioned:"May-26" },
       { name:"War Chest",          sire:"Saxon Warrior",      dam:"Some Spirit",              damSire:"Invincible Spirit", owner:"First of Many", trainer:"Eve Johnson Houghton", runs:0, price:"5,500 gns", notes:"Half-brother to French 9.5f Listed winner Some Skye (98). Dam a Group 3-placed Irish 7f winner (106).", dateMentioned:"May-26" },
       { name:"Rough Guess",        sire:"Siyouni",            dam:"Estimate",                 damSire:"Monsun", owner:"His Majesty The King", runs:0, dateMentioned:"May-26" },
@@ -709,24 +847,27 @@ const BUNDLE_ONLY_ALL = [
       { name:"Gonewittheflag (IRE)", sire:"Starspangledbanner", dam:"Tarasila",               damSire:"Shamardal", owner:"Commercium & Partners", trainer:"Jamie Insole", runs:0, price:"55,000 gns (Houldsworth/Insole)", notes:"Unraced. Trained with half an eye towards his three-year-old campaign.", dateMentioned:"May-26" },
       { name:"Ever Flowing",         sire:"Australia",          dam:"Blazing Beau",           owner:"Merry Fox Stud Limited", trainer:"Harry Charlton", runs:0, notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Royal Artisan",        sire:"Camelot",            dam:"Honey Hunter",           owner:"Valmont", trainer:"George Scott", runs:0, price:"120,000 gns (A C Elliott, Agent)", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Blue Flight",          sire:"Blue Point",         dam:"Spatial",                owner:"Cheveley Park Stud", trainer:"J R Fanshawe", runs:0, notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Blue Flight",          sire:"Blue Point",         dam:"Spatial",                owner:"Cheveley Park Stud", trainer:"J R Fanshawe", runs:0, gender:"F", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Show The Sky",         sire:"Showcasing",         dam:"Astrologer",             owner:"Cheveley Park Stud", trainer:"David O'Meara", runs:0, notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Sayaarr",              sire:"Dark Angel",         dam:"Nawassi",                owner:"Sheikh Ahmed Al Maktoum", trainer:"E Bethell", runs:0, price:"170,000 gns (Federico Barberini)", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Sayaarr",              sire:"Dark Angel",         dam:"Nawassi",                owner:"Sheikh Ahmed Al Maktoum", trainer:"E Bethell", runs:0, gender:"C", price:"170,000 gns (Federico Barberini)", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Too Darn Regal",       sire:"Too Darn Hot",       dam:"My Twinkle",             owner:"Gullwing Enterprises W.L.L.", trainer:"Harry Eustance", runs:0, price:"180,000 gns (Harry Eustace Racing)", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Wunderschon",          sire:"Sea The Moon",       dam:"Wonderful Filly",        owner:"Omega Racing & Seamus McGowan & Niall McInerney", trainer:"Jessica Harrington", runs:0, price:"65,000 gns (Omega Racing)", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Chymbulak",            sire:"Dark Angel",         dam:"Futoon",                 owner:"Mr Nurlan Bizakov", trainer:"R Varian", runs:0, price:"450,000 gns (Sumbe)", family:"Full brother to triple 1m Group 1 winner Charyn (127).", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Miss Miniver",         sire:"Wootton Bassett",    dam:"Jawlaat",                owner:"Godolphin", trainer:"R Varian", runs:0, price:"800,000 gns (Godolphin)", family:"Closely related to UAE 1m 1f Group 1 winner Facteur Cheval (122; by Ribchester).", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"River Glen",           sire:"Gleneagles",         dam:"Enjoy Life",             owner:"Mrs Christie Thompson", trainer:"Rebecca Menzies", runs:0, price:"€33,000 (Stroud Coleman Bloodstock/Rebecca Menzies)", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Buxted Flyer",         sire:"Muhaarar",           dam:"Varega",                 owner:"Buxted Partnership", trainer:"Andrew Balding", runs:0, price:"160,000 gns (Richard Ryan)", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Chymbulak",            sire:"Dark Angel",         dam:"Futoon",                 owner:"Mr Nurlan Bizakov", trainer:"R Varian", runs:0, gender:"C", price:"450,000 gns (Sumbe)", family:"Full brother to triple 1m Group 1 winner Charyn (127).", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Miss Miniver",         sire:"Wootton Bassett",    dam:"Jawlaat",                owner:"Godolphin", trainer:"R Varian", runs:0, gender:"F", price:"800,000 gns (Godolphin)", family:"Closely related to UAE 1m 1f Group 1 winner Facteur Cheval (122; by Ribchester).", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"River Glen",           sire:"Gleneagles",         dam:"Enjoy Life",             owner:"Mrs Christie Thompson", trainer:"Rebecca Menzies", runs:0, gender:"C", price:"€33,000 (Stroud Coleman Bloodstock/Rebecca Menzies)", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Buxted Flyer",         sire:"Muhaarar",           dam:"Varega",                 owner:"Buxted Partnership", trainer:"Andrew Balding", runs:0, gender:"C", price:"160,000 gns (Richard Ryan)", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Drink Free",           sire:"No Nay Never",       dam:"Plying",                 owner:"Forz Europe Ltd", trainer:"Andrew Balding", runs:0, family:"Full sister to four-time 6f/1m Group 1 winner Alcohol Free (123).", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Forbidden Fire",       sire:"No Nay Never",       dam:"Arabian Queen",          owner:"J C Smith", trainer:"Andrew Balding", runs:0, family:"Half-sister to 2025 10.5f Group 2 winner See The Fire (116).", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Forbidden Fire",       sire:"No Nay Never",       dam:"Arabian Queen",          owner:"J C Smith", trainer:"Andrew Balding", runs:0, gender:"F", family:"Half-sister to 2025 10.5f Group 2 winner See The Fire (116).", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Decem Carolinae",      sire:"Showcasing",         dam:"Carolinae",              owner:"Mr Jack Jones", trainer:"Jack Jones", runs:0, notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Glory Of Legend",      sire:"Blackbeard",         dam:"Gouache",                owner:"Millennium Stud SP.ZO.O", trainer:"Joseph O'Brien", runs:0, price:"290,000 gns (Not Sold)", ns:true, family:"Half-sister to King George winner Goliath (127).", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Suomenlinna",          sire:"Too Darn Hot",       dam:"Quads",                  owner:"Wells Watson", trainer:"Joseph O'Brien", runs:0, price:"€350,000 (Cary Bloodstock for Wells Watson)", family:"Dam an unraced half-sister to Sussex Stakes winner Here Comes When (121).", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Snow Warrior",         sire:"Sioux Nation",       dam:"Crystal Snowflake",      owner:"SVG & Exact Lifestyle Partnership", trainer:"Hugo Palmer", runs:0, price:"110,000 gns (Sackville Donald/Manor House Stables)", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"High Tower",           sire:"Havana Grey",        dam:"Abraj Dubai",            owner:"Teme Valley", trainer:"George Boughey", runs:0, price:"55,000 gns (Richard Ryan)", family:"Full brother to 5.5f Listed winner Star of Lady M (108).", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Jimtrott",             sire:"No Nay Never",       dam:"Aspirante",              owner:"HVO Property Investments", trainer:"Eve Johnson Houghton", runs:1, wins:0, places:1, price:"110,000 gns (Highflyer Bloodstock/Eve Johnson Houghton)", dateMentioned:"June-26" },
-      { name:"Percy Shaw",           sire:"Bated Breath",       dam:"Cats Eyes",              owner:"Rosehill Racing Iv", trainer:"Charlie Hills", runs:1, wins:0, places:0, price:"40,000 gns", dateMentioned:"June-26" },
+      { name:"Jimtrott",             sire:"No Nay Never",       dam:"Aspirante",              owner:"HVO Property Investments", trainer:"Eve Johnson Houghton", runs:1, wins:0, places:1, highestRpr:77, price:"110,000 gns (Highflyer Bloodstock/Eve Johnson Houghton)", dateMentioned:"June-26" },
+      { name:"Percy Shaw",           sire:"Bated Breath",       dam:"Cats Eyes",              owner:"Rosehill Racing Iv", trainer:"Charlie Hills", runs:1, wins:0, places:0, highestRpr:53, price:"40,000 gns", dateMentioned:"June-26" },
+      { name:"Unnamed (Precieuse)",  sire:"Frankel",            dam:"Precieuse",              owner:"Mr Saeed Suhail", trainer:"Andrew Balding", runs:0, gender:"C", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Unnamed (Maid To Master)", sire:"Sioux Nation",   dam:"Maid To Master",         owner:"Ziad A Galadari", trainer:"E Bethell", runs:0, gender:"F", price:"70,000 gns (Ziad A Galadari)", family:"Half-sister to 14f 3yo winner Sefton Warrior (71). Dam a maiden (73p) sister to four-time 6f-1m Group 1 winner Mastercraftsman (129) and Group 1-placed Irish 7f 2yo winner Famous (102) and close relation to US 1m Grade 3 winner Genuine Devotion (110).", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Unnamed (Miss Sienna)",  sire:"Havana Grey",      dam:"Miss Sienna",            owner:"Shapoor Mistry", trainer:"Joseph O'Brien", runs:0, gender:"F", price:"€150,000 (Stroud Coleman Bloodstock)", notes:"Unraced.", dateMentioned:"June-26" },
     ]
   }
 ];
@@ -737,7 +878,7 @@ const BUNDLE_ONLY_ALL = [
 function buildAll() {
   const all = [];
   DATA.sections.forEach(s => {
-    if (s.key === 'all' || s.key === 'unraced') return;
+    if (s.key === 'all' || s.key === 'unraced' || s.key === 'sales-calls') return;
     (s.horses||[]).forEach(h => all.push({...h, _section: s.label}));
   });
   BUNDLE_ONLY_ALL.forEach(b => {
@@ -760,6 +901,24 @@ function buildAll() {
   if (unracedSection) {
     unracedSection.horses = DATA.sections[0].horses.filter(h => !hasRun(h));
   }
+  buildSalesCalls();
+}
+
+function horseKey(h) {
+  return `${h.name}|${h.sire||''}|${h.dam||''}`;
+}
+
+function buildSalesCalls() {
+  const section = DATA.sections.find(s => s.key === 'sales-calls');
+  const all = DATA.sections[0].horses || [];
+  if (!section || !DATA.salesLedger) return;
+  const byKey = new Map(all.map(h => [horseKey(h), h]));
+  section.horses = DATA.salesLedger.map(entry => {
+    const base = byKey.get(horseKey(entry)) || entry;
+    const flaggedAt = Number(entry.flaggedAt) || 0;
+    const marketAt = Number(entry.marketAt) || 0;
+    return { ...base, ...entry, flaggedAt, marketAt, reRate: marketAt - flaggedAt };
+  }).sort((a, b) => b.reRate - a.reRate);
 }
 
 let sortMode = 'name';
@@ -784,7 +943,92 @@ function sortHorses(list) {
 }
 
 function isRunnerStyleTab(key) {
-  return key === 'runners' || key === 'unraced';
+  return key === 'runners' || key === 'unraced' || key === 'sales-calls';
+}
+
+function fmtMoneyShort(n) {
+  const abs = Math.abs(Number(n) || 0);
+  if (abs >= 1000000) return `£${(abs / 1000000).toFixed(1)}m`;
+  if (abs >= 1000) return `£${Math.round(abs / 1000)}k`;
+  return `£${abs}`;
+}
+
+function fmtReRate(n) {
+  const v = Number(n) || 0;
+  if (v === 0) return { text: '—', cls: 'flat' };
+  const sign = v > 0 ? '+' : '−';
+  return { text: `${sign}${fmtMoneyShort(v)}`, cls: v > 0 ? 'up' : 'down' };
+}
+
+function ownerChangeCell(h) {
+  const was = h.ownerThen;
+  const now = h.ownerNow || h.owner;
+  if (!was && !now) return '—';
+  if (was && now && was !== now) {
+    return `<span class="owner-was">${was}</span><span class="owner-arrow"> → </span><span class="owner-now">${now}</span>`;
+  }
+  return now || was;
+}
+
+function heroSale() {
+  return (DATA.salesLedger || []).find(e => e.hero) || (DATA.salesLedger || [])[0];
+}
+
+function renderSalesCallBand() {
+  const el = document.getElementById('salesCallBand');
+  const hero = heroSale();
+  const total = (DATA.sections[0].horses && DATA.sections[0].horses.length) || 0;
+  if (!hero || !el) { if (el) el.style.display = 'none'; return; }
+  el.style.display = '';
+  const h = (DATA.sections[0].horses || []).find(x => horseKey(x) === horseKey(hero)) || hero;
+  const breeding = h.sire && h.dam ? `${h.sire} × ${h.dam}` : '';
+  const re = fmtReRate((hero.marketAt || 0) - (hero.flaggedAt || 0));
+  const flaggedLine = hero.flaggedVenue || 'Goffs · Lot 137';
+  const marketLine = hero.marketVenue || 'London Sale';
+  el.innerHTML = `
+    <div class="sales-call-main">
+      <div class="sales-call-kicker">Sales <span>·</span> called first</div>
+      <div class="sales-call-horse">${h.name}</div>
+      <div class="sales-call-breeding">${breeding}</div>
+      <div class="sales-call-timeline">
+        <div class="sales-call-step">
+          <div class="dt">${hero.calledDate || '—'}</div>
+          <div class="dd">${flaggedLine} — passed unsold at <em>${fmtMoneyShort(hero.flaggedAt)}</em></div>
+        </div>
+        <div class="sales-call-step">
+          <div class="dt">${hero.saleDate || '—'}</div>
+          <div class="dd">${marketLine} — <em>${fmtMoneyShort(hero.marketAt)}</em>${hero.ownerThen && hero.ownerNow ? ` · ${hero.ownerThen} → ${hero.ownerNow}` : ''}${h.runs ? `, after ${h.runs} run${Number(h.runs) > 1 ? 's' : ''}` : ''}${h.highestRpr ? `, RPR ${h.highestRpr}` : ''}</div>
+        </div>
+      </div>
+      <div class="sales-call-meta">Tracked from the ring. Top speed 44.4 mph — joint fastest 2yo at the track this year. Royal Ascot entry.</div>
+      <div class="sales-call-foot">
+        <button type="button" class="sales-call-link" data-goto-tab="sales-calls">Sales ledger</button>
+        <button type="button" class="sales-call-link" data-goto-tab="all">Full record (${total})</button>
+      </div>
+    </div>
+    <div class="sales-call-aside">
+      <div class="sales-call-rerate">${re.text}</div>
+      <div class="sales-call-rerate-label">since flagged</div>
+    </div>`;
+}
+
+function switchTab(key) {
+  activeTabKey = key;
+  document.querySelectorAll('.stab').forEach(b => b.classList.toggle('active', b.dataset.key === key));
+  document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.dataset.key === key));
+  document.getElementById('sortBar').style.display = key === 'sales-calls' ? 'none' : 'flex';
+  syncBottomScrollAfterLayout();
+}
+
+function bindSalesCallBand() {
+  document.getElementById('salesCallBand').addEventListener('click', e => {
+    const btn = e.target.closest('[data-goto-tab]');
+    if (!btn) return;
+    switchTab(btn.dataset.gotoTab);
+    document.getElementById('sectionTabs').querySelectorAll('.stab').forEach(b => {
+      b.classList.toggle('active', b.dataset.key === btn.dataset.gotoTab);
+    });
+  });
 }
 
 function allHorses() {
@@ -801,6 +1045,30 @@ function lvlBadge(l) {
   if (!l) return '—';
   const m = {G1:'g1',G2:'g2',G3:'g3',Listed:'list'};
   return `<span class="lvl lvl-${m[l]||'list'}">${l}</span>`;
+}
+
+const GENDER_LABELS = { C:'Colt', F:'Filly', M:'Mare', H:'Horse', G:'Gelding' };
+
+function horseGender(h) {
+  const raw = h.gender;
+  if (raw != null && String(raw).trim() !== '') {
+    const g = String(raw).trim().toUpperCase();
+    if (GENDER_LABELS[g]) return g;
+  }
+  const name = (h.name || '').toLowerCase();
+  const notes = (h.notes || '').toLowerCase();
+  if (/\bfilly\b/.test(name) || /\bfilly\b/.test(notes)) return 'F';
+  if (/\bcolt\b/.test(name) || /\bcolt\b/.test(notes)) return 'C';
+  if (/\bgelding\b/.test(name) || /\bgelding\b/.test(notes)) return 'G';
+  if (/\bmare\b/.test(name) || /\bmare\b/.test(notes)) return 'M';
+  if (/\bhorse\b/.test(name) || /\bhorse\b/.test(notes)) return 'H';
+  return null;
+}
+
+function genderCell(h) {
+  const g = horseGender(h);
+  if (!g) return { letter: '—', label: '', cls: 'na' };
+  return { letter: g, label: GENDER_LABELS[g], cls: '' };
 }
 
 function rprCell(h) {
@@ -888,17 +1156,62 @@ function bindTabs() {
   el.addEventListener('click', e => {
     const btn = e.target.closest('.stab');
     if (!btn) return;
-    activeTabKey = btn.dataset.key;
-    el.querySelectorAll('.stab').forEach(b=>b.classList.toggle('active', b.dataset.key===activeTabKey));
-    document.querySelectorAll('.section').forEach(s=>s.classList.toggle('active', s.dataset.key===activeTabKey));
-    syncBottomScrollAfterLayout();
+    switchTab(btn.dataset.key);
   });
+}
+
+function renderSalesRow(h, idx, sectionKey) {
+  const wins = Number(h.wins) || 0;
+  const places = Number(h.places) || 0;
+  const runs = Number(h.runs) || 0;
+  const breeding = h.sire && h.dam ? `${h.sire} × ${h.dam}` : (h.sire || h.dam || '—');
+  const rowId = `row-${sectionKey}-${idx}`;
+  const expId = `exp-${sectionKey}-${idx}`;
+  const rpr = rprCell(h);
+  const gender = genderCell(h);
+  const re = fmtReRate(h.reRate);
+  const recHtml = h.runs !== undefined
+    ? `<span class="rec-nums"><span class="${wins>0?'w':''}">${wins}</span>W&nbsp;${places}P&nbsp;/&nbsp;${runs}R</span>`
+    : `<span style="color:var(--text3)">—</span>`;
+
+  return `
+<tr class="data-row" id="${rowId}" onclick="toggleRow('${rowId}','${expId}')">
+  <td class="rn">${String(idx+1).padStart(2,'0')}</td>
+  <td class="td-name">${h.name}</td>
+  <td class="breeding">${breeding}</td>
+  <td class="gender ${gender.cls}" title="${gender.label}">${gender.letter}</td>
+  <td class="called-date">${h.calledDate || '—'}</td>
+  <td class="market-col" style="color:var(--text2)">${fmtMoneyShort(h.flaggedAt)}</td>
+  <td>${h.flaggedVenue || h.lot || '—'}</td>
+  <td class="called-date">${h.saleDate || '—'}</td>
+  <td class="market-col">${fmtMoneyShort(h.marketAt)}</td>
+  <td>${h.marketVenue || '—'}</td>
+  <td class="owner-change">${ownerChangeCell(h)}</td>
+  <td class="rerate ${re.cls}">${re.text}</td>
+  <td class="record">${recHtml}</td>
+  <td class="rpr ${rpr.cls}">${rpr.text}</td>
+  <td class="toggle-col">▾</td>
+</tr>
+<tr class="expand-row" id="${expId}">
+  <td colspan="15">
+    <div class="expand-inner">
+      <div class="ei-item"><div class="ei-label">Flagged</div><div class="ei-val">${h.calledDate || '—'} · ${fmtMoneyShort(h.flaggedAt)} · ${h.flaggedVenue || h.lot || '—'}</div></div>
+      <div class="ei-item"><div class="ei-label">Resold</div><div class="ei-val">${h.saleDate || '—'} · ${fmtMoneyShort(h.marketAt)} · ${h.marketVenue || '—'}</div></div>
+      ${h.ownerThen && h.ownerNow ? `<div class="ei-item"><div class="ei-label">Ownership</div><div class="ei-val">${h.ownerThen} → ${h.ownerNow}</div></div>` : ''}
+      <div class="ei-item"><div class="ei-label">Re-rate</div><div class="ei-val gold">${re.text}</div></div>
+      ${runs ? `<div class="ei-item"><div class="ei-label">Since flagged</div><div class="ei-val">${wins}W ${places}P / ${runs}R · RPR ${h.highestRpr || '—'}</div></div>` : ''}
+      ${h.trainer ? `<div class="ei-item"><div class="ei-label">Trainer</div><div class="ei-val blue">${h.trainer}</div></div>` : ''}
+      ${h.notes ? `<div class="ei-item" style="grid-column:1/-1"><div class="ei-label">Notes</div><div class="ei-val">${h.notes}</div></div>` : ''}
+    </div>
+  </td>
+</tr>`;
 }
 
 function sectionHorses(s) {
   let list = s.horses || [];
   if (s.key === 'runners') list = list.filter(h => (Number(h.runs) || 0) >= 1);
   else if (s.key === 'unraced') list = list.filter(h => (Number(h.runs) || 0) === 0);
+  else if (s.key === 'sales-calls') return list;
   return sortHorses(list);
 }
 
@@ -922,12 +1235,14 @@ function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTra
     : h.dateMentioned ? `<span class="mentioned">MENTIONED ${h.dateMentioned.toUpperCase()}</span>` : '';
 
   const rpr = rprCell(h);
+  const gender = genderCell(h);
 
   return `
 <tr class="data-row" id="${rowId}" onclick="toggleRow('${rowId}','${expId}')">
   <td class="rn">${String(idx+1).padStart(2,'0')}</td>
   <td class="td-name">${h.name}${sourceTag}</td>
   <td class="breeding">${breeding}</td>
+  <td class="gender ${gender.cls}" title="${gender.label}">${gender.letter}</td>
   ${showLot ? `<td class="lot">${h.lot||'—'}</td>` : ''}
   <td class="${isFamilyTab ? 'owner' : `price${h.ns?' ns':''}`}">${isFamilyTab ? familyInfo : (h.price||'—')}</td>
   ${showOwner ? `<td class="owner">${h.owner||'—'}</td>` : ''}
@@ -938,7 +1253,7 @@ function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTra
   <td class="toggle-col">▾</td>
 </tr>
 <tr class="expand-row" id="${expId}">
-  <td colspan="${8 + (showLot ? 1 : 0) + (showOwner ? 1 : 0) + (showTrainer ? 1 : 0)}">
+  <td colspan="${9 + (showLot ? 1 : 0) + (showOwner ? 1 : 0) + (showTrainer ? 1 : 0)}">
     <div class="expand-inner">
       ${hasRecord ? `<div class="ei-item"><div class="ei-label">Race Record</div><div class="ei-record">
         <div class="ei-box"><div class="bv">${runs}</div><div class="bl">Runs</div></div>
@@ -951,6 +1266,7 @@ function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTra
       ${h.price && !h.ns ?`<div class="ei-item"><div class="ei-label">Sale Price</div><div class="ei-val gold">${h.price}</div></div>`:''}
       ${h.sire    ?`<div class="ei-item"><div class="ei-label">Sire</div><div class="ei-val">${h.sire}</div></div>`:''}
       ${h.dam     ?`<div class="ei-item"><div class="ei-label">Dam</div><div class="ei-val">${h.dam}${h.damSire?` (${h.damSire})`:''}</div></div>`:''}
+      ${gender.label ?`<div class="ei-item"><div class="ei-label">Gender</div><div class="ei-val">${gender.label} (${gender.letter})</div></div>`:''}
       ${h.dateMentioned?`<div class="ei-item"><div class="ei-label">Date Mentioned</div><div class="ei-val">${h.dateMentioned}</div></div>`:''}
       ${((Number(h.runs)||0) > 0 || (h.highestRpr != null && String(h.highestRpr).trim() !== '')) ? `<div class="ei-item"><div class="ei-label">Highest RPR</div><div class="ei-val">${h.highestRpr != null && String(h.highestRpr).trim() !== '' ? String(h.highestRpr).trim() : '—'}</div></div>` : ''}
       ${h.notes   ?`<div class="ei-item" style="grid-column:1/-1"><div class="ei-label">Notes</div><div class="ei-val">${h.notes}</div></div>`:''}
@@ -960,7 +1276,36 @@ function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTra
 }
 
 function renderSections() {
-  document.getElementById('sectionsWrap').innerHTML = DATA.sections.map(s=>`
+  document.getElementById('sectionsWrap').innerHTML = DATA.sections.map(s => {
+    if (s.key === 'sales-calls') {
+      return `
+<div class="section${s.key===activeTabKey?' active':''}" data-key="${s.key}">
+  <div class="sales-section-intro">Horses flagged at sale before resale. Re-rate = movement from flagged price to subsequent sale price.</div>
+  <div class="table-wrap">
+    <table>
+      <thead><tr>
+        <th style="width:30px">#</th>
+        <th>Horse</th>
+        <th>Breeding</th>
+        <th>Sex</th>
+        <th>Flagged</th>
+        <th>Then</th>
+        <th>Sale</th>
+        <th>Resold</th>
+        <th>Now</th>
+        <th>Sale</th>
+        <th>Ownership</th>
+        <th>Re-rate</th>
+        <th>Record</th>
+        <th>RPR</th>
+        <th style="width:28px"></th>
+      </tr></thead>
+      <tbody>${sectionHorses(s).map((h,i)=>renderSalesRow(h,i,s.key)).join('')}</tbody>
+    </table>
+  </div>
+</div>`;
+    }
+    return `
 <div class="section${s.key===activeTabKey?' active':''}" data-key="${s.key}">
   <div class="table-wrap">
     <table>
@@ -968,6 +1313,7 @@ function renderSections() {
         <th style="width:30px">#</th>
         <th>Horse</th>
         <th>Breeding</th>
+        <th>Sex</th>
         ${isRunnerStyleTab(s.key) ? '' : '<th>Lot</th>'}
         <th>Price / Sale</th>
         <th>Owner / Purchaser</th>
@@ -987,7 +1333,8 @@ function renderSections() {
       )).join('')}</tbody>
     </table>
   </div>
-</div>`).join('');
+</div>`;
+  }).join('');
   bindTableScrolls();
   syncBottomScrollAfterLayout();
 }
@@ -1062,15 +1409,19 @@ function bindSortBar() {
     updateSortButtons();
     renderTabs();
     renderSections();
+    document.getElementById('sortBar').style.display = activeTabKey === 'sales-calls' ? 'none' : 'flex';
   });
 }
 
 buildAll();
 renderStats();
+renderSalesCallBand();
+bindSalesCallBand();
 bindSortBar();
 bindTabs();
 renderTabs();
 renderSections();
+document.getElementById('sortBar').style.display = activeTabKey === 'sales-calls' ? 'none' : 'flex';
 syncBottomScrollAfterLayout();
 </script>
 </body>
