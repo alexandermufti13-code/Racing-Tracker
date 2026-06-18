@@ -6,7 +6,15 @@
   <title>Alexander's Playbook · 2026 Tracker</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=IBM+Plex+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,400;0,500;1,400&family=Instrument+Serif:ital@1&display=swap" rel="stylesheet">
   <style>
+    @font-face {
+      font-family: 'Geist';
+      src: url('https://cdn.jsdelivr.net/npm/geist@1.3.1/dist/fonts/geist-sans/Geist-Bold.woff2') format('woff2');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
     :root {
       --bg:       #0a0f0c;
       --bg2:      #0f1712;
@@ -211,110 +219,166 @@
     }
     .stab.active .stab-count { color: var(--gold); background: var(--gold-mid); }
 
-    /* SALES CALL BAND */
-    .sales-call-band {
-      background: var(--bg2);
-      border-bottom: 1px solid var(--line);
-      padding: 18px 20px 16px 23px;
-      border-left: 3px solid var(--gold);
-      display: grid;
-      grid-template-columns: 1fr auto;
-      gap: 12px 24px;
-      align-items: start;
+    /* CONVICTION BUYS PANEL */
+    .conviction-panel {
+      --cb-bg: #0a130d;
+      --cb-gold: #d8ab4f;
+      --cb-green: #5fae84;
+      --cb-text: #e9ead9;
+      --cb-muted: #8a9a8c;
+      --cb-dim: #566256;
+      background: linear-gradient(135deg, rgba(95,174,132,0.05) 0%, transparent 55%), var(--cb-bg);
+      border: 1px solid rgba(200,180,120,0.22);
+      border-radius: 12px;
+      margin: 16px 20px 16px;
+      padding: 20px 22px 18px;
+      color: var(--cb-text);
+      font-family: 'DM Mono', var(--mono);
     }
-    .sales-call-main { min-width: 0; }
-    .sales-call-kicker {
+    .conviction-head {
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      margin-bottom: 14px;
+    }
+    .conviction-eyebrow {
       font-size: 0.58rem;
       font-weight: 500;
       letter-spacing: 0.14em;
       text-transform: uppercase;
-      color: var(--text3);
-      margin-bottom: 6px;
+      color: var(--cb-gold);
     }
-    .sales-call-kicker span { color: var(--text2); }
-    .sales-call-horse {
-      font-family: var(--sans);
-      font-size: 1rem;
-      font-weight: 600;
-      color: var(--text);
-      line-height: 1.2;
-      margin-bottom: 2px;
-    }
-    .sales-call-breeding {
-      font-size: 0.7rem;
-      color: var(--text3);
-      font-style: italic;
-      margin-bottom: 14px;
-    }
-    .sales-call-timeline {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-      max-width: 640px;
-    }
-    .sales-call-step {
-      display: grid;
-      grid-template-columns: 82px 1fr;
-      gap: 12px;
-      font-size: 0.72rem;
-      line-height: 1.45;
-      color: var(--text2);
-    }
-    .sales-call-step .dt {
-      color: var(--text3);
-      font-variant-numeric: tabular-nums;
+    .conviction-caption {
+      font-size: 0.58rem;
+      letter-spacing: 0.08em;
+      color: var(--cb-muted);
+      text-align: right;
       white-space: nowrap;
     }
-    .sales-call-step .dd { color: var(--text2); }
-    .sales-call-step .dd em { color: var(--text); font-style: normal; }
-    .sales-call-aside {
-      text-align: right;
-      padding-top: 2px;
+    .conviction-lead {
+      font-family: 'Instrument Serif', Georgia, serif;
+      font-size: clamp(1rem, 2.2vw, 1.15rem);
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.5;
+      color: var(--cb-text);
+      margin-bottom: 20px;
+      max-width: 720px;
     }
-    .sales-call-rerate {
-      font-size: 1.35rem;
-      font-weight: 600;
-      color: var(--green);
+    .conviction-lead strong {
+      font-weight: 400;
+      color: var(--cb-gold);
+    }
+    .conviction-scores {
+      display: flex;
+      align-items: flex-end;
+      gap: 14px;
+      flex-wrap: wrap;
+      margin-bottom: 22px;
+      padding-bottom: 20px;
+      border-bottom: 1px solid rgba(200,180,120,0.12);
+    }
+    .conviction-score { min-width: 0; }
+    .conviction-score--slot { opacity: 0.55; }
+    .conviction-figure {
+      font-family: 'Geist', var(--sans);
+      font-size: clamp(2rem, 5vw, 2.6rem);
+      font-weight: 700;
       line-height: 1;
+      color: var(--cb-text);
       font-variant-numeric: tabular-nums;
     }
-    .sales-call-rerate-label {
+    .conviction-figure--green { color: var(--cb-green); }
+    .conviction-figure--dim {
+      color: var(--cb-dim);
+      border: 1px dashed rgba(86,98,86,0.65);
+      border-radius: 8px;
+      width: 2.2em;
+      height: 1.4em;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: clamp(1.6rem, 4vw, 2rem);
+    }
+    .conviction-score-label {
+      margin-top: 6px;
       font-size: 0.58rem;
       letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text3);
-      margin-top: 4px;
+      color: var(--cb-muted);
+      max-width: 120px;
+      line-height: 1.35;
     }
-    .sales-call-meta {
-      margin-top: 12px;
-      font-size: 0.68rem;
-      color: var(--text3);
-      line-height: 1.45;
-      max-width: 640px;
+    .conviction-score--slot .conviction-score-label { color: var(--cb-dim); }
+    .conviction-arrow {
+      font-size: 1.25rem;
+      color: var(--cb-muted);
+      padding-bottom: 22px;
+      line-height: 1;
     }
-    .sales-call-foot {
-      grid-column: 1 / -1;
+    .conviction-arrow--dim { color: var(--cb-dim); opacity: 0.5; }
+    .conviction-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0;
+      margin-bottom: 16px;
+    }
+    .conviction-pick {
       display: flex;
       align-items: center;
-      gap: 18px;
-      flex-wrap: wrap;
-      padding-top: 12px;
-      margin-top: 4px;
-      border-top: 1px solid var(--line);
+      justify-content: space-between;
+      gap: 16px;
+      padding: 11px 0;
+      border-bottom: 1px solid rgba(200,180,120,0.1);
     }
-    .sales-call-link {
-      appearance: none;
-      background: none;
-      border: none;
-      padding: 0;
-      font-family: var(--mono);
-      font-size: 0.62rem;
-      letter-spacing: 0.08em;
+    .conviction-pick:last-child { border-bottom: none; }
+    .conviction-pick--pending { opacity: 0.45; }
+    .conviction-pick-main { min-width: 0; }
+    .conviction-pick-name {
+      display: block;
+      font-size: 0.78rem;
+      font-weight: 500;
+      color: var(--cb-text);
+      margin-bottom: 2px;
+    }
+    .conviction-pick--pending .conviction-pick-name {
+      font-weight: 400;
+      font-size: 0.72rem;
+      color: var(--cb-muted);
+      font-style: italic;
+    }
+    .conviction-pick-detail {
+      display: block;
+      font-size: 0.68rem;
+      color: var(--cb-muted);
+      font-style: italic;
+    }
+    .conviction-badge {
+      flex-shrink: 0;
+      font-size: 0.55rem;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
-      color: var(--text3);
-      cursor: pointer;
+      color: var(--cb-gold);
+      border: 1px solid rgba(216,171,79,0.45);
+      border-radius: 3px;
+      padding: 3px 7px;
+      white-space: nowrap;
     }
-    .sales-call-link:hover { color: var(--text); }
+    .conviction-badge--pending {
+      color: var(--cb-dim);
+      border-style: dashed;
+      border-color: rgba(86,98,86,0.55);
+    }
+    .conviction-footer {
+      font-size: 0.62rem;
+      color: var(--cb-dim);
+      letter-spacing: 0.04em;
+      line-height: 1.5;
+      padding-top: 4px;
+    }
 
     .sales-section-intro {
       padding: 12px 20px;
@@ -610,8 +674,10 @@
       .stat-cell:nth-child(6) { border-right: none; }
       .topbar-meta { display: none; }
       .expand-inner { grid-template-columns: 1fr 1fr; padding-left: 16px; }
-      .sales-call-band { grid-template-columns: 1fr; }
-      .sales-call-aside { text-align: left; display: flex; align-items: baseline; gap: 8px; }
+      .conviction-panel { margin: 12px 12px 0; padding: 16px 14px; }
+      .conviction-caption { text-align: left; white-space: normal; }
+      .conviction-scores { gap: 10px; }
+      .conviction-arrow { padding-bottom: 18px; font-size: 1rem; }
     }
 
     /* ANIMATION */
@@ -655,7 +721,7 @@
 </header>
 
 <div class="stats-row" id="statsRow"></div>
-<div class="sales-call-band" id="salesCallBand"></div>
+<div class="conviction-panel" id="convictionBuysPanel"></div>
 <div class="section-tabs" id="sectionTabs"></div>
 <div class="sort-bar" id="sortBar">
   <span class="sort-bar-label">Sort</span>
@@ -683,8 +749,23 @@ const DATA = {
   rprClaimPct: 39,
   rprMinRuns: 2,
   salesLedger: [
-    { name:"Kentucky Rain", sire:"Lucky Vega", dam:"Equanimity", calledDate:"22 Apr 2026", saleDate:"15 Jun 2026", flaggedAt:58000, marketAt:380000, flaggedVenue:"Goffs · Lot 137", marketVenue:"London Sale", ownerThen:"LDS Bloodstock Ltd", ownerNow:"Amo Racing", hero:true },
+    { name:"Kentucky Rain", sire:"Lucky Vega", dam:"Equanimity", calledDate:"22 Apr 2026", saleDate:"15 Jun 2026", flaggedAt:58000, marketAt:380000, flaggedVenue:"Goffs · Lot 137", marketVenue:"London Sale", ownerThen:"LDS Bloodstock Ltd", ownerNow:"Amo Racing" },
   ],
+  convictionBuys: {
+    eyebrow: "CONVICTION BUYS · GOFFS UK DONCASTER BREEZE-UP",
+    caption: "complete record · n=3 · every pick shown",
+    leadBefore: "Every horse I picked from the Doncaster Breeze-Up that had run before Royal Ascot ",
+    leadStrong: "made it to the meeting",
+    leadAfter: " — three from three.",
+    picked: 3,
+    ranAtMeeting: 3,
+    footer: "Picked from one sale · claim is precise — ran at the meeting, not won there · sample stated on purpose.",
+    picks: [
+      { name:"Blue Sign", sire:"Blue Point", dam:"Intisaar", lot:"Lot 163" },
+      { name:"Kentucky Rain", sire:"Lucky Vega", dam:"Equanimity", lot:"Lot 137", extra:"later sold £380k" },
+      { name:"Glamorize (IRE)", sire:"Starman", dam:"Karalara", lot:"Lot 173" },
+    ],
+  },
   sections: [
     { key:"all", label:"All Horses" },
     { key:"sales-calls", label:"Sales Calls" },
@@ -692,7 +773,7 @@ const DATA = {
       key:"runners", label:"Horses That Have Run",
       horses: [
         { name:"Poseidons Warrior",  sire:"Sea The Stars",      dam:"Holy Amaretta",           owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:0, places:1, highestRpr:106, dateMentioned:"Apr-26" },
-        { name:"Talk Of New York",   sire:"Wootton Bassett",    dam:"Usherette",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:3, wins:2, places:1, highestLevel:"G1", highestRpr:116, gender:"C", calledIt:true, notes:"Black type — won Listed race. 3rd in G1 St James's Palace Stakes.", dateMentioned:"Apr-26" },
+        { name:"Talk Of New York",   sire:"Wootton Bassett",    dam:"Usherette",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:3, wins:2, places:1, highestLevel:"G1", highestRpr:118, gender:"C", calledIt:true, notes:"Black type — won Listed race. 3rd in G1 St James's Palace Stakes.", dateMentioned:"Apr-26" },
         { name:"Cerro Blanco",       sire:"Wootton Bassett",    dam:"Duneflower",              owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:1, places:1, highestLevel:"Listed", highestRpr:101, calledIt:true, dateMentioned:"Apr-26" },
         { name:"Sovereign Bay",      sire:"New Bay",            dam:"Holy Roman Empress",      owner:"China Horse Club International",    trainer:"Dr R Newland & J Insole",  runs:3, wins:0, places:0, highestRpr:73, dateMentioned:"Apr-26" },
         { name:"Kings Cavalry",      sire:"Kingman",            dam:"Dynaformer",              owner:"Mr Saeed Manana",                   trainer:"J Tate",                   runs:3, wins:2, places:1, highestRpr:91, dateMentioned:"Apr-26" },
@@ -709,7 +790,7 @@ const DATA = {
         { name:"Albert Einstein",    sire:"Wootton Bassett",    dam:"Yet",                     owner:"Smith / Magnier / Tabor / Westerberg", trainer:"Aidan O'Brien",         runs:1, wins:0, places:1, highestRpr:105, dateMentioned:"Apr-26" },
         { name:"According To Mark",  sire:"St Mark's Basilica", dam:"Maimara",                 owner:"Mr Peter Jeffers",                  trainer:"E Bethell",                runs:2, wins:0, places:2, highestRpr:84, price:"85,000 gns yearling", dateMentioned:"Apr-26" },
         { name:"Bay Of Myths",       sire:"New Bay",            dam:"Magic Nymph",             owner:"Commercium II & Partners",          trainer:"Dr R Newland & J Insole",  runs:1, wins:0, places:0, highestRpr:77, price:"€100,000 yearling", dateMentioned:"Apr-26" },
-        { name:"Cold Fish",          sire:"No Nay Never",       dam:"Emotion",                 owner:"Nibras Racing",                     trainer:"H Kobeissi",               runs:3, wins:0, places:3, highestRpr:73, price:"40,000 gns yearling", dateMentioned:"May-26" },
+        { name:"Cold Fish",          sire:"No Nay Never",       dam:"Emotion",                 owner:"Nibras Racing",                     trainer:"H Kobeissi",               runs:3, wins:0, places:3, highestRpr:76, price:"40,000 gns yearling", dateMentioned:"May-26" },
         { name:"Big Eagle",          sire:"Sioux Nation",       dam:"Gather",                  owner:"Jim and Claire Limited",            trainer:"W Greatrex",               runs:1, wins:0, places:0, highestRpr:79, dateMentioned:"May-26" },
         { name:"Menzies",            sire:"Australia",          dam:"Voice Of Truth",           owner:"OTI Racing",                        trainer:"Harry Eustance",           runs:1, wins:0, places:0, highestRpr:80, notes:"Listed run, unplaced", dateMentioned:"May-26" },
         { name:"Martagny",           sire:"Zarak",              dam:"Montviette",               owner:"G. Augustin-Normand",               trainer:"J. Reynier",               runs:1, wins:0, places:0, highestRpr:95, notes:"Listed run, unplaced", dateMentioned:"May-26" },
@@ -718,7 +799,7 @@ const DATA = {
         { name:"Brave New World",    sire:"Siyouni",            dam:"Walk In Beauty",           owner:"TBT Racing",                        trainer:"Ed Walker",                runs:2, wins:0, places:0, highestRpr:53, price:"220,000 gns yearling", dateMentioned:"May-26" },
         { name:"Pure Moon Sea",      sire:"Sea The Moon",       dam:"Pure Line",                owner:"Hambleton Racing LVII & Mrs G Jarvis", trainer:"Tom Clover",             runs:1, wins:0, places:0, highestRpr:74, price:"35,000 gns yearling", dateMentioned:"May-26" },
         { name:"Lyneham",            sire:"Wootton Bassett",    dam:"The Tooth Fairy",          owner:"Amo Racing",                        trainer:"Ralph Beckett",            runs:1, wins:0, places:0, highestRpr:95, price:"425,000 gns", notes:"Listed run, unplaced", dateMentioned:"May-26" },
-        { name:"Victorious (IRE)",   sire:"Wootton Bassett",    dam:"Heaven On Earth",         damSire:"Galileo", owner:"Smith / Magnier / Tabor", trainer:"Aidan O'Brien", runs:2, wins:2, places:0, highestLevel:"G3", highestRpr:81, family:"From the Minding / Tuesday / Empress Josephine family; half-sister to G3 winner Sugar Island; close relation to Babouche", notes:"Black type — won Group 3.", dateMentioned:"Apr-26" },
+        { name:"Victorious (IRE)",   sire:"Wootton Bassett",    dam:"Heaven On Earth",         damSire:"Galileo", owner:"Smith / Magnier / Tabor", trainer:"Aidan O'Brien", runs:3, wins:3, places:0, highestLevel:"G2", highestRpr:97, family:"From the Minding / Tuesday / Empress Josephine family; half-sister to G3 winner Sugar Island; close relation to Babouche", notes:"Black type — won Group 3; won Queen Mary G2, Royal Ascot. RPR will rise further.", dateMentioned:"Apr-26" },
         { name:"Crownright",         sire:"Frankel",            dam:"Environs",                 owner:"Juddmonte",                         trainer:"Ralph Beckett",            runs:2, wins:0, places:2, highestRpr:84, dateMentioned:"May-26" },
         { name:"Archers Bay",        sire:"Wootton Bassett",    dam:"Foxtrot Liv",              owner:"Walter Moraes & Ajay Anne",         trainer:"Marco Botti",              runs:1, wins:0, places:0, highestRpr:99, dateMentioned:"May-26" },
         { name:"Jazzy Blue (IRE)",   sire:"Showcasing",         dam:"Jasmine Blue",             damSire:"Galileo", owner:"The Legacy Group Racing Club", trainer:"Charlie Fellowes", runs:2, wins:0, places:1, highestRpr:74, price:"€20,000", notes:"Dam a Listed-placed 10f winner. Grandam half-sister to Secret Garden (106) — dam of Irish 2000 Guineas winner Roderic O'Connor (119).", dateMentioned:"May-26" },
@@ -733,13 +814,13 @@ const DATA = {
         { name:"Imperial Nation",      sire:"Sioux Nation",       dam:"Roman Gal",                owner:"Mr Saeed Suhail",                   trainer:"Andrew Balding",           runs:1, wins:0, places:0, highestRpr:63, price:"150,000 gns", dateMentioned:"May-26" },
         { name:"Celtic Charioteer",    sire:"Mondialiste",        dam:"Just Jealous",             owner:"Ms L Mars",                         trainer:"J Ferguson",               runs:2, wins:1, places:0, highestRpr:84, dateMentioned:"May-26" },
         { name:"Dark Sovereign",       sire:"Dark Angel",         dam:"Mulkeyya",                 owner:"Valmont",                           trainer:"Ralph Beckett",            runs:1, wins:0, places:1, price:"145,000 gns yearling", dateMentioned:"May-26" },
-        { name:"Havana Lightning",     sire:"Havana Grey",        dam:"Persaria",                 owner:"Shapoor Mistry",                    trainer:"George Boughey",           runs:1, wins:1, places:0, highestRpr:83, dateMentioned:"May-26" },
+        { name:"Havana Lightning",     sire:"Havana Grey",        dam:"Persaria",                 owner:"Shapoor Mistry",                    trainer:"George Boughey",           runs:2, wins:1, places:0, highestLevel:"G2", highestRpr:83, notes:"Queen Mary G2, Royal Ascot — 18th, unplaced.", dateMentioned:"May-26" },
         { name:"Regal Desire",         sire:"Masar",              dam:"Just Jealous",             owner:"Elwick Stud",                       trainer:"Brian Ellison",            runs:1, wins:0, places:1, highestRpr:76, dateMentioned:"May-26" },
         { name:"Mussab",               sire:"Ten Sovereigns",     dam:"Excuding",                 owner:"D J And Mrs Deer",                  trainer:"Richard & Peter Fahey",    runs:1, wins:0, places:1, highestRpr:81, gender:"C", dateMentioned:"May-26" },
         { name:"Captaincy",            sire:"Havana Grey",        dam:"Electric Love",            owner:"Isa Salman Al Khalifa",             trainer:"Clive Cox",                  runs:1, wins:0, places:1, dateMentioned:"May-26" },
-        { name:"Cheeky Chesca",        sire:"Invincible Army",    dam:"Bear Cheek",               owner:"Reality Partnerships XIV",           trainer:"Tim Easterby",              runs:2, wins:0, places:2, highestRpr:67, dateMentioned:"May-26" },
+        { name:"Cheeky Chesca",        sire:"Invincible Army",    dam:"Bear Cheek",               owner:"Reality Partnerships XIV",           trainer:"Tim Easterby",              runs:3, wins:0, places:2, highestRpr:67, dateMentioned:"May-26" },
         { name:"Asset",                sire:"Wootton Bassett",    dam:"Assisi",                   owner:"Gestuet Schlenderhan GmbH u. Co. KG", trainer:"Sir Mark Prescott",        runs:1, wins:0, places:1, dateMentioned:"May-26" },
-        { name:"Kentucky Rain",        sire:"Lucky Vega",         dam:"Equanimity",               owner:"Amo Racing",                        trainer:"Lemos De Souza",           runs:1, wins:0, places:1, highestRpr:78, gender:"F", lot:"Lot 137", price:"£380,000", calledIt:true, notes:"Flagged at Goffs 22 Apr when passed unsold (58k bid). London Sale 15 Jun — £380,000 to Amo Racing, eve of Royal Ascot, after 1 run (RPR 78). Ascot entry. Top speed 44.4 mph — joint fastest 2yo at the track this year.", dateMentioned:"Apr-26" },
+        { name:"Kentucky Rain",        sire:"Lucky Vega",         dam:"Equanimity",               owner:"Amo Racing",                        trainer:"Lemos De Souza",           runs:2, wins:0, places:1, highestLevel:"G2", highestRpr:78, gender:"F", lot:"Lot 137", price:"£380,000", calledIt:true, notes:"Flagged at Goffs 22 Apr when passed unsold (58k bid). London Sale 15 Jun — £380,000 to Amo Racing. Queen Mary G2, Royal Ascot — 16th, unplaced. Top speed 44.4 mph — joint fastest 2yo at the track this year.", dateMentioned:"Apr-26" },
         { name:"Blue Sign",            sire:"Blue Point",         dam:"Intisaar",                 owner:"Mr Abdulla Al Mansoori",             trainer:"Ismail Mohammed",          runs:1, wins:0, places:0, highestRpr:59, gender:"F", price:"€50,000", notes:"Purchased by Rabbah Bloodstock (Goffs Lot 163).", dateMentioned:"Apr-26" },
         { name:"Thankfully",           sire:"St Mark's Basilica", dam:"Drumfad Bay",               owner:"Mrs Tabor, Mrs MV Magnier, Mrs Shanahan", trainer:"Karl Burke",          runs:2, wins:1, places:0, highestRpr:83, dateMentioned:"Jun-26" },
         { name:"Sunshine Star",        sire:"Sea The Stars",      dam:"Dream Peace",              owner:"Lady Bamford",                      trainer:"John & Thady Gosden",    runs:2, wins:1, places:0, highestRpr:83, dateMentioned:"Jun-26" },
@@ -752,7 +833,7 @@ const DATA = {
         { name:"Regal Tiger",          sire:"Kingman",            dam:"Tiger Eye",                owner:"Roudee Racing 20 & Mrs E Palmer",   runs:1, wins:0, places:0, price:"£50,000 (Sackville Donald/Manor House Stables)", dateMentioned:"June-26" },
         { name:"Osterode",             sire:"Profitable",         dam:"Ostatnia",                 owner:"Michael Rosenfeld",                 trainer:"W McCreery",               runs:1, wins:0, places:0, highestRpr:68, gender:"F", dateMentioned:"June-26" },
         { name:"Baby G",               sire:"Havana Grey",        dam:"Despacito",                owner:"Mr Salvo Giannini",                 trainer:"A W Carroll",              runs:1, wins:0, places:0, gender:"F", dateMentioned:"June-26" },
-        { name:"Drazinda",             sire:"Sioux Nation",       dam:"Darbanza",                 owner:"Princess Zahra Aga Khan",           trainer:"F Graffard",               runs:1, wins:1, places:0, dateMentioned:"June-26" },
+        { name:"Drazinda",             sire:"Sioux Nation",       dam:"Darbanza",                 owner:"Princess Zahra Aga Khan",           trainer:"F Graffard",               runs:2, wins:1, places:0, highestLevel:"G2", notes:"Queen Mary G2, Royal Ascot — 12th, unplaced.", dateMentioned:"June-26" },
       ]
     },
     { key:"unraced", label:"Unraced" },
@@ -970,46 +1051,41 @@ function ownerChangeCell(h) {
   return now || was;
 }
 
-function heroSale() {
-  return (DATA.salesLedger || []).find(e => e.hero) || (DATA.salesLedger || [])[0];
-}
-
-function renderSalesCallBand() {
-  const el = document.getElementById('salesCallBand');
-  const hero = heroSale();
-  const total = (DATA.sections[0].horses && DATA.sections[0].horses.length) || 0;
-  if (!hero || !el) { if (el) el.style.display = 'none'; return; }
-  el.style.display = '';
-  const h = (DATA.sections[0].horses || []).find(x => horseKey(x) === horseKey(hero)) || hero;
-  const breeding = h.sire && h.dam ? `${h.sire} × ${h.dam}` : '';
-  const re = fmtReRate((hero.marketAt || 0) - (hero.flaggedAt || 0));
-  const flaggedLine = hero.flaggedVenue || 'Goffs · Lot 137';
-  const marketLine = hero.marketVenue || 'London Sale';
-  el.innerHTML = `
-    <div class="sales-call-main">
-      <div class="sales-call-kicker">Sales <span>·</span> called first</div>
-      <div class="sales-call-horse">${h.name}</div>
-      <div class="sales-call-breeding">${breeding}</div>
-      <div class="sales-call-timeline">
-        <div class="sales-call-step">
-          <div class="dt">${hero.calledDate || '—'}</div>
-          <div class="dd">${flaggedLine} — passed unsold at <em>${fmtMoneyShort(hero.flaggedAt)}</em></div>
-        </div>
-        <div class="sales-call-step">
-          <div class="dt">${hero.saleDate || '—'}</div>
-          <div class="dd">${marketLine} — <em>${fmtMoneyShort(hero.marketAt)}</em>${hero.ownerThen && hero.ownerNow ? ` · ${hero.ownerThen} → ${hero.ownerNow}` : ''}${h.runs ? `, after ${h.runs} run${Number(h.runs) > 1 ? 's' : ''}` : ''}${h.highestRpr ? `, RPR ${h.highestRpr}` : ''}</div>
-        </div>
+function renderConvictionBuysPanel() {
+  const el = document.getElementById('convictionBuysPanel');
+  const cb = DATA.convictionBuys;
+  if (!el || !cb) return;
+  const pickRows = (cb.picks || []).map(p => {
+    const detail = [p.sire && p.dam ? `${p.sire} × ${p.dam}` : '', p.lot, p.extra].filter(Boolean).join(' · ');
+    return `<li class="conviction-pick">
+      <div class="conviction-pick-main">
+        <span class="conviction-pick-name">${p.name}</span>
+        ${detail ? `<span class="conviction-pick-detail">${detail}</span>` : ''}
       </div>
-      <div class="sales-call-meta">Tracked from the ring. Top speed 44.4 mph — joint fastest 2yo at the track this year. Royal Ascot entry.</div>
-      <div class="sales-call-foot">
-        <button type="button" class="sales-call-link" data-goto-tab="sales-calls">Sales ledger</button>
-        <button type="button" class="sales-call-link" data-goto-tab="all">Full record (${total})</button>
+      <span class="conviction-badge">Royal Ascot ✓</span>
+    </li>`;
+  }).join('');
+  el.innerHTML = `
+    <div class="conviction-head">
+      <div class="conviction-eyebrow">${cb.eyebrow}</div>
+      <div class="conviction-caption">${cb.caption}</div>
+    </div>
+    <p class="conviction-lead">${cb.leadBefore}<strong>${cb.leadStrong}</strong>${cb.leadAfter}</p>
+    <div class="conviction-scores">
+      <div class="conviction-score">
+        <div class="conviction-figure">${cb.picked}</div>
+        <div class="conviction-score-label">horses picked</div>
+      </div>
+      <div class="conviction-arrow">→</div>
+      <div class="conviction-score">
+        <div class="conviction-figure conviction-figure--green">${cb.ranAtMeeting}</div>
+        <div class="conviction-score-label">ran at the Royal meeting</div>
       </div>
     </div>
-    <div class="sales-call-aside">
-      <div class="sales-call-rerate">${re.text}</div>
-      <div class="sales-call-rerate-label">since flagged</div>
-    </div>`;
+    <ul class="conviction-list">
+      ${pickRows}
+    </ul>
+    <div class="conviction-footer">${cb.footer}</div>`;
 }
 
 function switchTab(key) {
@@ -1018,17 +1094,6 @@ function switchTab(key) {
   document.querySelectorAll('.section').forEach(s => s.classList.toggle('active', s.dataset.key === key));
   document.getElementById('sortBar').style.display = key === 'sales-calls' ? 'none' : 'flex';
   syncBottomScrollAfterLayout();
-}
-
-function bindSalesCallBand() {
-  document.getElementById('salesCallBand').addEventListener('click', e => {
-    const btn = e.target.closest('[data-goto-tab]');
-    if (!btn) return;
-    switchTab(btn.dataset.gotoTab);
-    document.getElementById('sectionTabs').querySelectorAll('.stab').forEach(b => {
-      b.classList.toggle('active', b.dataset.key === btn.dataset.gotoTab);
-    });
-  });
 }
 
 function allHorses() {
@@ -1415,8 +1480,7 @@ function bindSortBar() {
 
 buildAll();
 renderStats();
-renderSalesCallBand();
-bindSalesCallBand();
+renderConvictionBuysPanel();
 bindSortBar();
 bindTabs();
 renderTabs();
