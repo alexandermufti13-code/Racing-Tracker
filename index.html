@@ -592,6 +592,8 @@
     td.record   { font-variant-numeric:tabular-nums; min-width:80px; text-align:center; }
     td.gender   { text-align:center; min-width:36px; font-size:0.72rem; font-weight:600; color:var(--text2); letter-spacing:0.06em; }
     td.gender.na { color:var(--text3); font-weight:400; }
+    td.age      { text-align:center; min-width:32px; font-size:0.72rem; font-weight:600; color:var(--text2); }
+    td.age.na   { color:var(--text3); font-weight:400; }
     td.rpr      { font-variant-numeric:tabular-nums; min-width:76px; text-align:center; color:var(--text2); font-size:0.74rem; }
     td.rpr.na   { color:var(--text3); font-style:italic; font-weight:400; }
 
@@ -751,6 +753,10 @@ const DATA = {
   lastUpdated: "2026-06-17",
   rprClaimPct: 39,
   rprMinRuns: 2,
+  // Northern-Hemisphere aging: every thoroughbred shares a 1 Jan birthday, so
+  // age = current calendar year − foal year and rolls over automatically each Jan 1.
+  // The tracked cohort are all 2yos in 2026 → foaled 2024. Per-horse `foaled` overrides this.
+  cohortFoalYear: 2024,
   salesLedger: [
     { name:"Kentucky Rain (IRE)", sire:"Lucky Vega", dam:"Equanimity", calledDate:"22 Apr 2026", saleDate:"15 Jun 2026", flaggedAt:58000, marketAt:380000, flaggedVenue:"Goffs · Lot 137", marketVenue:"London Sale", ownerThen:"LDS Bloodstock Ltd", ownerNow:"Amo Racing" },
   ],
@@ -775,68 +781,68 @@ const DATA = {
     {
       key:"runners", label:"Horses That Have Run",
       horses: [
-        { name:"Poseidons Warrior",  sire:"Sea The Stars",      dam:"Holy Amaretta",           owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:0, places:1, highestRpr:106, dateMentioned:"Apr-26" },
-        { name:"Talk Of New York",   sire:"Wootton Bassett",    dam:"Usherette",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:3, wins:2, places:1, highestLevel:"G1", highestRpr:118, gender:"C", calledIt:true, notes:"Black type — won Listed race. 3rd in G1 St James's Palace Stakes.", dateMentioned:"Apr-26" },
-        { name:"Cerro Blanco",       sire:"Wootton Bassett",    dam:"Duneflower",              owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:1, places:1, highestLevel:"Listed", highestRpr:101, gender:"C", calledIt:true, dateMentioned:"Apr-26" },
-        { name:"Sovereign Bay",      sire:"New Bay",            dam:"Holy Roman Empress",      owner:"China Horse Club International",    trainer:"Dr R Newland & J Insole",  runs:4, wins:0, places:0, highestRpr:73, dateMentioned:"Apr-26" },
-        { name:"Kings Cavalry",      sire:"Kingman",            dam:"Dynaformer",              owner:"Mr Saeed Manana",                   trainer:"J Tate",                   runs:4, wins:2, places:1, highestRpr:91, dateMentioned:"Apr-26" },
-        { name:"Beautify",           sire:"Wootton Bassett",    dam:"Words",                   owner:"Smith / Magnier / Tabor",           trainer:"Aidan O'Brien",            runs:2, wins:0, places:0, highestLevel:"G1", highestRpr:107, gender:"F", notes:"Latest: 6th in G1 (RPR 102).", dateMentioned:"Apr-26" },
-        { name:"Golden Palace",      sire:"Palace Pier",        dam:"Rioticism",               owner:"Sheikh Juma Dalmook Al Maktoum",    trainer:"R A Fahey",                runs:3, wins:0, places:1, highestLevel:"Listed", highestRpr:93, gender:"F", price:"175,000 gns yearling", notes:"Black type — 3rd in Listed race.", dateMentioned:"Apr-26" },
+        { name:"Poseidons Warrior", foaled:2023,  sire:"Sea The Stars",      dam:"Holy Amaretta",           owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:2, wins:0, places:1, highestRpr:106, dateMentioned:"Apr-26" },
+        { name:"Talk Of New York", foaled:2023,   sire:"Wootton Bassett",    dam:"Usherette",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:4, wins:2, places:2, highestLevel:"G1", highestRpr:118, gender:"C", calledIt:true, notes:"Black type — won Listed race. 3rd in G1 St James's Palace Stakes. Latest: placed in Group 3.", dateMentioned:"Apr-26" },
+        { name:"Cerro Blanco", foaled:2023,       sire:"Wootton Bassett",    dam:"Duneflower",              owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:3, wins:2, places:1, highestLevel:"Listed", highestRpr:101, gender:"C", calledIt:true, dateMentioned:"Apr-26" },
+        { name:"Sovereign Bay", foaled:2023,      sire:"New Bay",            dam:"Holy Roman Empress",      owner:"China Horse Club International",    trainer:"Dr R Newland & J Insole",  runs:4, wins:0, places:0, highestRpr:73, dateMentioned:"Apr-26" },
+        { name:"Kings Cavalry", foaled:2023,      sire:"Kingman",            dam:"Dynaformer",              owner:"Mr Saeed Manana",                   trainer:"J Tate",                   runs:4, wins:2, places:1, highestRpr:91, dateMentioned:"Apr-26" },
+        { name:"Beautify",           foaled:2023, sire:"Wootton Bassett",    dam:"Words",                   owner:"Smith / Magnier / Tabor",           trainer:"Aidan O'Brien",            runs:2, wins:0, places:0, highestLevel:"G1", highestRpr:107, gender:"F", notes:"Latest: 6th in G1 (RPR 102).", dateMentioned:"Apr-26" },
+        { name:"Golden Palace", foaled:2023,      sire:"Palace Pier",        dam:"Rioticism",               owner:"Sheikh Juma Dalmook Al Maktoum",    trainer:"R A Fahey",                runs:4, wins:0, places:1, highestLevel:"Listed", highestRpr:93, gender:"F", price:"175,000 gns yearling", notes:"Black type — 3rd in Listed race.", dateMentioned:"Apr-26" },
         { name:"Star Of Hope",       sire:"Dark Angel",         dam:"Futoon",                  owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:1, wins:0, places:0, highestRpr:61, price:"2,900,000 gns yearling", notes:"Sister to Charyn", dateMentioned:"Apr-26" },
-        { name:"Thursday Girl",      sire:"Pinatubo",           dam:"Dream Dana",              owner:"Chris Stedman",                     trainer:"E Walker",                 runs:2, wins:1, places:1, highestRpr:81, gender:"F", price:"240,000 gns foal", dateMentioned:"Apr-26" },
-        { name:"Hawk Mountain",      sire:"Wootton Bassett",    dam:"Hydrangea (Galileo)",     owner:"Smith / Magnier / Tabor",           trainer:"Aidan O'Brien",            runs:2, wins:1, places:1, highestLevel:"G1", highestRpr:119, gender:"C", notes:"2nd in Prix du Jockey Club (French Classic, G1) · €300,000 for 2nd.", dateMentioned:"Apr-26" },
-        { name:"Cap Santa Lucia",    sire:"Persian King",       dam:"Cap Verite",              owner:"Sam Sangster And Partner",          trainer:"B J Meehan",               runs:3, wins:1, places:1, highestLevel:"Listed", highestRpr:106, gender:"F", price:"€20,000 yearling", notes:"Black type — 2nd in Listed race.", dateMentioned:"Apr-26" },
-        { name:"Alfaraz",            sire:"Nathaniel",          dam:"Sequillia",               owner:"Mr Saeed Suhail",                   trainer:"A M Balding",              runs:4, wins:1, places:1, highestRpr:97, gender:"C", price:"300,000 gns", dateMentioned:"Apr-26" },
-        { name:"Midnight Steppers",  sire:"Blue Point",         dam:"Victoria Regina",         owner:"Mrs Paul Shanahan",                 trainer:"E A L Dunlop",             runs:3, wins:0, places:0, highestRpr:20, gender:"F", price:"75,000 gns", dateMentioned:"Apr-26" },
-        { name:"Botagoz",            sire:"Mehmas",             dam:"Bocca Baciata",           owner:"Mr Nurlan Bizakov",                 trainer:"R Varian",                 runs:3, wins:2, places:1, highestLevel:"G3", highestRpr:110, gender:"F", calledIt:true, notes:"Black type — placed in Listed race; won Group 3.", dateMentioned:"Apr-26" },
-        { name:"Siwa Oasis",         sire:"Sottsass",           dam:"Mirage",                  owner:"Mrs Fitri Hay",                     trainer:"C Hills",                  runs:2, wins:0, places:0, highestRpr:75, dateMentioned:"Apr-26" },
-        { name:"Albert Einstein",    sire:"Wootton Bassett",    dam:"Yet",                     owner:"Smith / Magnier / Tabor / Westerberg", trainer:"Aidan O'Brien",         runs:1, wins:0, places:1, highestRpr:105, gender:"C", dateMentioned:"Apr-26" },
-        { name:"According To Mark",  sire:"St Mark's Basilica", dam:"Maimara",                 owner:"Mr Peter Jeffers",                  trainer:"E Bethell",                runs:3, wins:0, places:3, highestRpr:84, gender:"G", price:"85,000 gns yearling", dateMentioned:"Apr-26" },
+        { name:"Thursday Girl", foaled:2023,      sire:"Pinatubo",           dam:"Dream Dana",              owner:"Chris Stedman",                     trainer:"E Walker",                 runs:3, wins:1, places:2, highestRpr:81, gender:"F", price:"240,000 gns foal", dateMentioned:"Apr-26" },
+        { name:"Hawk Mountain", foaled:2023,      sire:"Wootton Bassett",    dam:"Hydrangea (Galileo)",     owner:"Smith / Magnier / Tabor",           trainer:"Aidan O'Brien",            runs:2, wins:1, places:1, highestLevel:"G1", highestRpr:119, gender:"C", notes:"2nd in Prix du Jockey Club (French Classic, G1) · €300,000 for 2nd.", dateMentioned:"Apr-26" },
+        { name:"Cap Santa Lucia", foaled:2023,    sire:"Persian King",       dam:"Cap Verite",              owner:"Sam Sangster And Partner",          trainer:"B J Meehan",               runs:3, wins:1, places:1, highestLevel:"Listed", highestRpr:106, gender:"F", price:"€20,000 yearling", notes:"Black type — 2nd in Listed race.", dateMentioned:"Apr-26" },
+        { name:"Alfaraz", foaled:2023,            sire:"Nathaniel",          dam:"Sequillia",               owner:"Mr Saeed Suhail",                   trainer:"A M Balding",              runs:4, wins:1, places:1, highestRpr:97, gender:"C", price:"300,000 gns", dateMentioned:"Apr-26" },
+        { name:"Midnight Steppers", foaled:2023,  sire:"Blue Point",         dam:"Victoria Regina",         owner:"Mrs Paul Shanahan",                 trainer:"E A L Dunlop",             runs:3, wins:0, places:0, highestRpr:20, gender:"F", price:"75,000 gns", dateMentioned:"Apr-26" },
+        { name:"Botagoz", foaled:2023,            sire:"Mehmas",             dam:"Bocca Baciata",           owner:"Mr Nurlan Bizakov",                 trainer:"R Varian",                 runs:4, wins:2, places:1, highestLevel:"G1", highestRpr:110, gender:"F", calledIt:true, notes:"Black type — placed in Listed race; won Group 3. Latest: unplaced in Group 1.", dateMentioned:"Apr-26" },
+        { name:"Siwa Oasis", foaled:2023,         sire:"Sottsass",           dam:"Mirage",                  owner:"Mrs Fitri Hay",                     trainer:"C Hills",                  runs:3, wins:1, places:0, highestRpr:78, dateMentioned:"Apr-26" },
+        { name:"Albert Einstein",    foaled:2023, sire:"Wootton Bassett",    dam:"Yet",                     owner:"Smith / Magnier / Tabor / Westerberg", trainer:"Aidan O'Brien",         runs:1, wins:0, places:1, highestRpr:105, gender:"C", dateMentioned:"Apr-26" },
+        { name:"According To Mark", foaled:2023,  sire:"St Mark's Basilica", dam:"Maimara",                 owner:"Mr Peter Jeffers",                  trainer:"E Bethell",                runs:4, wins:0, places:3, highestRpr:84, gender:"G", price:"85,000 gns yearling", dateMentioned:"Apr-26" },
         { name:"Bay Of Myths",       sire:"New Bay",            dam:"Magic Nymph",             owner:"Commercium II & Partners",          trainer:"Dr R Newland & J Insole",  runs:1, wins:0, places:0, highestRpr:77, gender:"G", price:"€100,000 yearling", dateMentioned:"Apr-26" },
-        { name:"Cold Fish",          sire:"No Nay Never",       dam:"Emotion",                 owner:"Nibras Racing",                     trainer:"H Kobeissi",               runs:3, wins:0, places:3, highestRpr:76, gender:"C", price:"40,000 gns yearling", dateMentioned:"May-26" },
-        { name:"Big Eagle",          sire:"Sioux Nation",       dam:"Gather",                  owner:"Jim and Claire Limited",            trainer:"W Greatrex",               runs:2, wins:0, places:0, highestRpr:79, gender:"G", dateMentioned:"May-26" },
+        { name:"Cold Fish", foaled:2023,          sire:"No Nay Never",       dam:"Emotion",                 owner:"Nibras Racing",                     trainer:"H Kobeissi",               runs:3, wins:0, places:3, highestRpr:76, gender:"C", price:"40,000 gns yearling", dateMentioned:"May-26" },
+        { name:"Big Eagle", foaled:2023,          sire:"Sioux Nation",       dam:"Gather",                  owner:"Jim and Claire Limited",            trainer:"W Greatrex",               runs:2, wins:0, places:0, highestRpr:79, gender:"G", dateMentioned:"May-26" },
         { name:"Menzies",            sire:"Australia",          dam:"Voice Of Truth",           owner:"OTI Racing",                        trainer:"Harry Eustance",           runs:1, wins:0, places:0, highestRpr:80, notes:"Listed run, unplaced", dateMentioned:"May-26" },
         { name:"Martagny",           sire:"Zarak",              dam:"Montviette",               owner:"G. Augustin-Normand",               trainer:"J. Reynier",               runs:1, wins:0, places:0, highestRpr:95, notes:"Listed run, unplaced", dateMentioned:"May-26" },
-        { name:"Euston Hall",        sire:"Dark Angel",         dam:"Create A Dream",           owner:"West Paces Racing UK 2024 LLC",     trainer:"Ed Walker",                runs:3, wins:2, places:0, highestRpr:88, gender:"C", price:"130,000 gns yearling", dateMentioned:"May-26" },
-        { name:"Tales Of Wisdom",    sire:"Blue Point",         dam:"La Rosetta",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:4, wins:1, places:0, highestRpr:103, price:"€250,000 foal", dateMentioned:"May-26" },
-        { name:"Brave New World",    sire:"Siyouni",            dam:"Walk In Beauty",           owner:"TBT Racing",                        trainer:"Ed Walker",                runs:3, wins:0, places:0, highestRpr:53, price:"220,000 gns yearling", dateMentioned:"May-26" },
-        { name:"Pure Moon Sea",      sire:"Sea The Moon",       dam:"Pure Line",                owner:"Hambleton Racing LVII & Mrs G Jarvis", trainer:"Tom Clover",             runs:1, wins:0, places:0, highestRpr:74, price:"35,000 gns yearling", dateMentioned:"May-26" },
-        { name:"Lyneham",            sire:"Wootton Bassett",    dam:"The Tooth Fairy",          owner:"Amo Racing",                        trainer:"Ralph Beckett",            runs:1, wins:0, places:0, highestRpr:95, price:"425,000 gns", notes:"Listed run, unplaced", dateMentioned:"May-26" },
+        { name:"Euston Hall", foaled:2023,        sire:"Dark Angel",         dam:"Create A Dream",           owner:"West Paces Racing UK 2024 LLC",     trainer:"Ed Walker",                runs:4, wins:2, places:1, highestRpr:90, gender:"C", price:"130,000 gns yearling", dateMentioned:"May-26" },
+        { name:"Tales Of Wisdom", foaled:2023,    sire:"Blue Point",         dam:"La Rosetta",               owner:"Godolphin",                         trainer:"Charlie Appleby",          runs:4, wins:1, places:0, highestRpr:103, price:"€250,000 foal", dateMentioned:"May-26" },
+        { name:"Brave New World", foaled:2023,    sire:"Siyouni",            dam:"Walk In Beauty",           owner:"TBT Racing",                        trainer:"Ed Walker",                runs:4, wins:0, places:0, highestRpr:53, price:"220,000 gns yearling", dateMentioned:"May-26" },
+        { name:"Pure Moon Sea", foaled:2023,      sire:"Sea The Moon",       dam:"Pure Line",                owner:"Hambleton Racing LVII & Mrs G Jarvis", trainer:"Tom Clover",             runs:2, wins:0, places:0, highestRpr:74, price:"35,000 gns yearling", dateMentioned:"May-26" },
+        { name:"Lyneham", foaled:2023,            sire:"Wootton Bassett",    dam:"The Tooth Fairy",          owner:"Amo Racing",                        trainer:"Ralph Beckett",            runs:1, wins:0, places:0, highestRpr:95, price:"425,000 gns", notes:"Listed run, unplaced", dateMentioned:"May-26" },
         { name:"Victorious (IRE)",   sire:"Wootton Bassett",    dam:"Heaven On Earth",         damSire:"Galileo", owner:"Smith / Magnier / Tabor", trainer:"Aidan O'Brien", runs:3, wins:3, places:0, highestLevel:"G2", highestRpr:109, gender:"F", family:"From the Minding / Tuesday / Empress Josephine family; half-sister to G3 winner Sugar Island; close relation to Babouche", notes:"Black type — won Group 3; won Queen Mary G2, Royal Ascot.", dateMentioned:"Apr-26" },
-        { name:"Crownright",         sire:"Frankel",            dam:"Environs",                 owner:"Juddmonte",                         trainer:"Ralph Beckett",            runs:4, wins:1, places:2, highestRpr:79, gender:"F", dateMentioned:"May-26" },
-        { name:"Archers Bay",        sire:"Wootton Bassett",    dam:"Foxtrot Liv",              owner:"Walter Moraes & Ajay Anne",         trainer:"Marco Botti",              runs:2, wins:0, places:0, highestRpr:99, gender:"C", dateMentioned:"May-26" },
-        { name:"Jazzy Blue (IRE)",   sire:"Showcasing",         dam:"Jasmine Blue",             damSire:"Galileo", owner:"The Legacy Group Racing Club", trainer:"Charlie Fellowes", runs:3, wins:0, places:1, highestRpr:74, price:"€20,000", notes:"Dam a Listed-placed 10f winner. Grandam half-sister to Secret Garden (106) — dam of Irish 2000 Guineas winner Roderic O'Connor (119).", dateMentioned:"May-26" },
+        { name:"Crownright", foaled:2023,         sire:"Frankel",            dam:"Environs",                 owner:"Juddmonte",                         trainer:"Ralph Beckett",            runs:4, wins:1, places:2, highestRpr:79, gender:"F", dateMentioned:"May-26" },
+        { name:"Archers Bay", foaled:2023,        sire:"Wootton Bassett",    dam:"Foxtrot Liv",              owner:"Walter Moraes & Ajay Anne",         trainer:"Marco Botti",              runs:3, wins:1, places:0, highestRpr:102, gender:"C", dateMentioned:"May-26" },
+        { name:"Jazzy Blue (IRE)",   sire:"Showcasing",         dam:"Jasmine Blue",             damSire:"Galileo", owner:"The Legacy Group Racing Club", trainer:"Charlie Fellowes", runs:5, wins:0, places:2, highestRpr:74, price:"€20,000", notes:"Dam a Listed-placed 10f winner. Grandam half-sister to Secret Garden (106) — dam of Irish 2000 Guineas winner Roderic O'Connor (119).", dateMentioned:"May-26" },
         { name:"Lady Blanche (IRE)", sire:"Persian Force",      dam:"Hawafez",                  damSire:"Shamardal", owner:"Amo Racing", trainer:"Karl Burke", runs:3, wins:1, places:1, highestRpr:80, notes:"Early speed, Guineas miler profile.", dateMentioned:"May-26" },
-        { name:"English Time",       runs:3, wins:1, places:1, highestRpr:86, dateMentioned:"May-26" },
-        { name:"Zynak",              sire:"Zarak",              dam:"Zanatiya",                 owner:"Jayar Investments",                 trainer:"Kevin Philippart de Foy", runs:3, wins:0, places:0, highestRpr:57, gender:"G", price:"€100,000 yearling", dateMentioned:"May-26" },
+        { name:"English Time",       foaled:2023, sire:"Hello Youmzain", dam:"Danega", runs:3, wins:1, places:1, highestRpr:86, dateMentioned:"May-26" },
+        { name:"Zynak", foaled:2023,              sire:"Zarak",              dam:"Zanatiya",                 owner:"Jayar Investments",                 trainer:"Kevin Philippart de Foy", runs:3, wins:0, places:0, highestRpr:57, gender:"G", price:"€100,000 yearling", dateMentioned:"May-26" },
         { name:"Queencard (IRE)",    sire:"Blue Point",         dam:"Shang Shang Shang",        owner:"Amo Racing",                        trainer:"George Boughey",           runs:2, wins:0, places:0, highestRpr:73, notes:"Speed now, stretch later.", dateMentioned:"May-26" },
         { name:"Guardian Of Realm",    sire:"Kingman",            dam:"Principle Role",           owner:"Juddmonte",                         trainer:"G M Lyons",                  runs:1, wins:0, places:0, highestRpr:80, dateMentioned:"May-26" },
         { name:"Wedding",              sire:"No Nay Never",       dam:"Sweet Charity",            owner:"Mrs John Magnier, Michael Tabor & Derrick Smith", trainer:"Aidan O'Brien", runs:1, wins:0, places:0, highestRpr:63, dateMentioned:"May-26" },
         { name:"Royal Bay Cen",        sire:"New Bay",            dam:"Royal Razalma",            owner:"David A Skelly",                    trainer:"J P Murtagh",              runs:1, wins:0, places:0, highestRpr:111, dateMentioned:"May-26" },
-        { name:"Charles Darwin",       sire:"No Nay Never",       dam:"Muirin",                   owner:"Mrs J Magnier / M Tabor / D Smith / Westerberg", trainer:"Aidan O'Brien", runs:3, wins:0, places:0, highestRpr:109, gender:"C", dateMentioned:"May-26" },
+        { name:"Charles Darwin", foaled:2023,       sire:"No Nay Never",       dam:"Muirin",                   owner:"Mrs J Magnier / M Tabor / D Smith / Westerberg", trainer:"Aidan O'Brien", runs:3, wins:0, places:0, highestRpr:109, gender:"C", dateMentioned:"May-26" },
         { name:"Imperial Nation",      sire:"Sioux Nation",       dam:"Roman Gal",                owner:"Mr Saeed Suhail",                   trainer:"Andrew Balding",           runs:1, wins:0, places:0, highestRpr:63, price:"150,000 gns", dateMentioned:"May-26" },
         { name:"Celtic Charioteer",    sire:"Mondialiste",        dam:"Just Jealous",             owner:"Ms L Mars",                         trainer:"J Ferguson",               runs:3, wins:1, places:0, highestRpr:84, dateMentioned:"May-26" },
         { name:"Dark Sovereign",       sire:"Dark Angel",         dam:"Mulkeyya",                 owner:"Valmont",                           trainer:"Ralph Beckett",            runs:1, wins:0, places:1, price:"145,000 gns yearling", dateMentioned:"May-26" },
-        { name:"Havana Lightning",     sire:"Havana Grey",        dam:"Persaria",                 owner:"Shapoor Mistry",                    trainer:"George Boughey",           runs:2, wins:1, places:0, highestRpr:83, notes:"Queen Mary G2, Royal Ascot — 18th, unplaced.", dateMentioned:"May-26" },
-        { name:"Regal Desire",         sire:"Masar",              dam:"Just Jealous",             owner:"Elwick Stud",                       trainer:"Brian Ellison",            runs:2, wins:0, places:2, highestRpr:76, gender:"F", dateMentioned:"May-26" },
+        { name:"Havana Lightning",     sire:"Havana Grey",        dam:"Persaria",                 owner:"Shapoor Mistry",                    trainer:"George Boughey",           runs:3, wins:1, places:0, highestRpr:83, notes:"Queen Mary G2, Royal Ascot — 18th, unplaced.", dateMentioned:"May-26" },
+        { name:"Regal Desire", foaled:2023,         sire:"Masar",              dam:"Just Jealous",             owner:"Elwick Stud",                       trainer:"Brian Ellison",            runs:2, wins:0, places:2, highestRpr:76, gender:"F", dateMentioned:"May-26" },
         { name:"Mussab",               sire:"Ten Sovereigns",     dam:"Excuding",                 owner:"D J And Mrs Deer",                  trainer:"Richard & Peter Fahey",    runs:2, wins:0, places:2, highestLevel:"G2", highestRpr:93, gender:"C", notes:"Black type — 3rd in G2 Norfolk Stakes.", dateMentioned:"May-26" },
         { name:"Captaincy",            sire:"Havana Grey",        dam:"Electric Love",            owner:"Isa Salman Al Khalifa",             trainer:"Clive Cox",                  runs:2, wins:1, places:1, highestRpr:76, dateMentioned:"May-26" },
-        { name:"Cheeky Chesca",        sire:"Invincible Army",    dam:"Bear Cheek",               owner:"Reality Partnerships XIV",           trainer:"Tim Easterby",              runs:5, wins:0, places:2, highestRpr:67, dateMentioned:"May-26" },
-        { name:"Asset",                sire:"Wootton Bassett",    dam:"Assisi",                   owner:"Gestuet Schlenderhan GmbH u. Co. KG", trainer:"Sir Mark Prescott",        runs:3, wins:0, places:2, gender:"F", dateMentioned:"May-26" },
-        { name:"Kentucky Rain (IRE)",        sire:"Lucky Vega",         dam:"Equanimity",               owner:"Amo Racing",                        trainer:"Lemos De Souza",           runs:2, wins:0, places:1, highestRpr:84, gender:"F", lot:"Lot 137", price:"£380,000", calledIt:true, notes:"Flagged at Goffs 22 Apr when passed unsold (58k bid). London Sale 15 Jun — £380,000 to Amo Racing. Queen Mary G2, Royal Ascot — 16th, unplaced. Top speed 44.4 mph — joint fastest 2yo at the track this year.", dateMentioned:"Apr-26" },
-        { name:"Blue Sign (GB)",            sire:"Blue Point",         dam:"Intisaar",                 owner:"Mr Abdulla Al Mansoori",             trainer:"Ismail Mohammed & Jose Santos",          runs:3, wins:0, places:0, highestRpr:64, gender:"F", price:"€50,000", notes:"Purchased by Rabbah Bloodstock (Goffs Lot 163).", dateMentioned:"Apr-26" },
-        { name:"Thankfully",           sire:"St Mark's Basilica", dam:"Drumfad Bay",               owner:"Mrs Tabor, Mrs MV Magnier, Mrs Shanahan", trainer:"Karl Burke",          runs:4, wins:1, places:0, highestRpr:83, gender:"F", dateMentioned:"Jun-26" },
-        { name:"Sunshine Star",        sire:"Sea The Stars",      dam:"Dream Peace",              owner:"Lady Bamford",                      trainer:"John & Thady Gosden",    runs:2, wins:1, places:0, highestRpr:83, dateMentioned:"Jun-26" },
-        { name:"Musical Accord",       sire:"Camelot",            dam:"Bonhomie",                 owner:"Mrs Doreen Tabor",                  trainer:"Ralph Beckett",            runs:2, wins:0, places:0, highestRpr:68, dateMentioned:"Jun-26" },
+        { name:"Cheeky Chesca",        sire:"Invincible Army",    dam:"Bear Cheek",               owner:"Reality Partnerships XIV",           trainer:"Tim Easterby",              runs:7, wins:0, places:3, highestRpr:67, dateMentioned:"May-26" },
+        { name:"Asset", foaled:2023,                sire:"Wootton Bassett",    dam:"Assisi",                   owner:"Gestuet Schlenderhan GmbH u. Co. KG", trainer:"Sir Mark Prescott",        runs:5, wins:1, places:3, highestRpr:83, gender:"F", dateMentioned:"May-26" },
+        { name:"Kentucky Rain (IRE)",        sire:"Lucky Vega",         dam:"Equanimity",               owner:"Amo Racing",                        trainer:"Lemos De Souza",           runs:4, wins:1, places:1, highestRpr:85, gender:"F", lot:"Lot 137", price:"£380,000", calledIt:true, notes:"Flagged at Goffs 22 Apr when passed unsold (58k bid). London Sale 15 Jun — £380,000 to Amo Racing. Queen Mary G2, Royal Ascot — 16th, unplaced. Top speed 44.4 mph — joint fastest 2yo at the track this year.", dateMentioned:"Apr-26" },
+        { name:"Blue Sign (GB)",            sire:"Blue Point",         dam:"Intisaar",                 owner:"Mr Abdulla Al Mansoori",             trainer:"Ismail Mohammed & Jose Santos",          runs:4, wins:0, places:0, highestRpr:64, gender:"F", price:"€50,000", notes:"Purchased by Rabbah Bloodstock (Goffs Lot 163).", dateMentioned:"Apr-26" },
+        { name:"Thankfully", foaled:2023,           sire:"St Mark's Basilica", dam:"Drumfad Bay",               owner:"Mrs Tabor, Mrs MV Magnier, Mrs Shanahan", trainer:"Karl Burke",          runs:5, wins:1, places:0, highestRpr:83, gender:"F", dateMentioned:"Jun-26" },
+        { name:"Sunshine Star", foaled:2023,        sire:"Sea The Stars",      dam:"Dream Peace",              owner:"Lady Bamford",                      trainer:"John & Thady Gosden",    runs:4, wins:1, places:1, highestRpr:99, dateMentioned:"Jun-26" },
+        { name:"Musical Accord", foaled:2023,       sire:"Camelot",            dam:"Bonhomie",                 owner:"Mrs Doreen Tabor",                  trainer:"Ralph Beckett",            runs:2, wins:0, places:0, highestRpr:68, dateMentioned:"Jun-26" },
         { name:"Galipi",               sire:"Galiway",            dam:"Petunia",                  owner:"Forty Winks Bloodstock",            trainer:"Charlie Hills",            runs:2, wins:0, places:0, highestRpr:60, gender:"C", dateMentioned:"Jun-26" },
-        { name:"Eagle Bay",            sire:"Cable Bay",          dam:"Fondie",                   owner:"Daniel Hunt Wrigleys And Cassels", trainer:"Harriet Bethell",          runs:1, wins:1, places:0, highestRpr:89, dateMentioned:"Jun-26" },
+        { name:"Eagle Bay", foaled:2023,            sire:"Cable Bay",          dam:"Fondie",                   owner:"Daniel Hunt Wrigleys And Cassels", trainer:"Harriet Bethell",          runs:3, wins:2, places:0, highestRpr:92, dateMentioned:"Jun-26" },
         { name:"Cleodolinda",          sire:"Ten Sovereigns",     dam:"Eria",                     owner:"Mrs A M O'Brien",                   trainer:"Donnacha O'Brien",           runs:1, wins:1, places:0, highestRpr:81, gender:"F", dateMentioned:"Jun-26" },
-        { name:"Delightfully Hot",     sire:"Too Darn Hot",       dam:"Reassure",                 owner:"Mrs S Nicholls",                    trainer:"James Owen",               runs:2, wins:0, places:1, highestRpr:57, dateMentioned:"Jun-26" },
-        { name:"Light Of Dawn (GB)",        sire:"Showcasing",         dam:"An Ghalanta",              owner:"Wathnan Racing",                    trainer:"Karl Burke",               runs:2, wins:1, places:1, highestLevel:"G3", highestRpr:95, gender:"F", price:"€625,000", lot:"Lot 166", notes:"Black type — 3rd in Fillies G3 Albany Stakes. Arqana Breeze Up Sale.", dateMentioned:"June-26" },
-        { name:"Regal Tiger",          sire:"Kingman",            dam:"Tiger Eye",                owner:"Roudee Racing 20 & Mrs E Palmer",   runs:2, wins:0, places:1, highestRpr:62, price:"£50,000 (Sackville Donald/Manor House Stables)", dateMentioned:"June-26" },
-        { name:"Osterode",             sire:"Profitable",         dam:"Ostatnia",                 owner:"Michael Rosenfeld",                 trainer:"W McCreery",               runs:1, wins:0, places:0, highestRpr:68, gender:"F", dateMentioned:"June-26" },
-        { name:"Baby G",               sire:"Havana Grey",        dam:"Despacito",                owner:"Mr Salvo Giannini",                 trainer:"A W Carroll",              runs:2, wins:0, places:0, highestRpr:24, gender:"F", dateMentioned:"June-26" },
-        { name:"Drazinda",             sire:"Sioux Nation",       dam:"Darbanza",                 owner:"Princess Zahra Aga Khan",           trainer:"F Graffard",               runs:3, wins:1, places:1, highestLevel:"Listed", highestRpr:96, gender:"F", notes:"Black type — 2nd in Listed race. Queen Mary G2, Royal Ascot — 12th, unplaced.", dateMentioned:"June-26" },
+        { name:"Delightfully Hot",     sire:"Too Darn Hot",       dam:"Reassure",                 owner:"Mrs S Nicholls",                    trainer:"James Owen",               runs:4, wins:0, places:2, highestRpr:75, dateMentioned:"Jun-26" },
+        { name:"Light Of Dawn (GB)",        sire:"Showcasing",         dam:"An Ghalanta",              owner:"Wathnan Racing",                    trainer:"Karl Burke",               runs:3, wins:1, places:2, highestLevel:"G3", highestRpr:95, gender:"F", price:"€625,000", lot:"Lot 166", notes:"Black type — 3rd in Fillies G3 Albany Stakes; placed in Group 3. Arqana Breeze Up Sale.", dateMentioned:"June-26" },
+        { name:"Regal Tiger",          sire:"Kingman",            dam:"Tiger Eye",                owner:"Roudee Racing 20 & Mrs E Palmer",   runs:3, wins:0, places:2, highestRpr:70, price:"£50,000 (Sackville Donald/Manor House Stables)", dateMentioned:"June-26" },
+        { name:"Osterode", foaled:2023,             sire:"Profitable",         dam:"Ostatnia",                 owner:"Michael Rosenfeld",                 trainer:"W McCreery",               runs:2, wins:0, places:0, highestRpr:68, gender:"F", dateMentioned:"June-26" },
+        { name:"Baby G", foaled:2023,               sire:"Havana Grey",        dam:"Despacito",                owner:"Mr Salvo Giannini",                 trainer:"A W Carroll",              runs:3, wins:0, places:0, highestRpr:27, gender:"F", dateMentioned:"June-26" },
+        { name:"Drazinda",             sire:"Sioux Nation",       dam:"Darbanza",                 owner:"Princess Zahra Aga Khan",           trainer:"F Graffard",               runs:4, wins:2, places:1, highestLevel:"Listed", highestRpr:101, gender:"F", notes:"Black type — won Listed race; also 2nd in a Listed race. Queen Mary G2, Royal Ascot — 12th, unplaced.", dateMentioned:"June-26" },
       ]
     },
     { key:"unraced", label:"Unraced" },
@@ -845,10 +851,10 @@ const DATA = {
       key:"goffs", label:"Goffs Sale",
       horses: [
         { name:"Mehmas Filly",        sire:"Mehmas",         dam:"Outside Inside",       lot:"Lot 218", price:"€28,000",                  owner:"Abubaker Kadoura",    dateMentioned:"Apr-26" },
-        { name:"Glamorize (IRE)",     sire:"Starman",        dam:"Karalara",             lot:"Lot 173", price:"€155,000",                 owner:"Amo Racing",          trainer:"George Scott",     runs:3, wins:1, places:1, highestRpr:74, gender:"F", dateMentioned:"Apr-26" },
-        { name:"Nicely (IRE)",              sire:"Persian Force",  dam:"Kakashan",             lot:"Lot 172", price:"€95,000",                  owner:"Amo Racing",          trainer:"Kevin Philippart de Foy", runs:2, wins:1, places:1, highestRpr:76, gender:"F", notes:"Goffs Sale · formerly Persian Force filly.", dateMentioned:"Apr-26" },
-        { name:"Blue Sign (GB)",           sire:"Blue Point",     dam:"Intisaar",             lot:"Lot 163", price:"€50,000",                  owner:"Mr Abdulla Al Mansoori", trainer:"Ismail Mohammed & Jose Santos", runs:3, wins:0, places:0, highestRpr:64, gender:"F", notes:"Purchased by Rabbah Bloodstock.", dateMentioned:"Apr-26" },
-        { name:"Kentucky Rain (IRE)",       sire:"Lucky Vega",     dam:"Equanimity",           lot:"Lot 137", price:"Not Sold (58k bid)", ns:true, owner:"LDS Bloodstock Ltd", trainer:"Lemos De Souza", gender:"F", notes:"Goffs Sale · 22 Apr 2026 · formerly Lucky Vega filly. Later £380,000 at London Sale (15 Jun 26).", dateMentioned:"Apr-26" },
+        { name:"Glamorize (IRE)",     sire:"Starman",        dam:"Karalara",             lot:"Lot 173", price:"€155,000",                 owner:"Amo Racing",          trainer:"George Scott",     runs:5, wins:2, places:1, highestRpr:85, gender:"F", dateMentioned:"Apr-26" },
+        { name:"Nicely (IRE)",              sire:"Persian Force",  dam:"Kakashan",             lot:"Lot 172", price:"€95,000",                  owner:"Amo Racing",          trainer:"Kevin Philippart de Foy", runs:3, wins:1, places:1, highestLevel:"G3", highestRpr:85, gender:"F", notes:"Goffs Sale · formerly Persian Force filly. Latest: unplaced in Group 3.", dateMentioned:"Apr-26" },
+        { name:"Blue Sign (GB)",           sire:"Blue Point",     dam:"Intisaar",             lot:"Lot 163", price:"€50,000",                  owner:"Mr Abdulla Al Mansoori", trainer:"Ismail Mohammed & Jose Santos", runs:4, wins:0, places:0, highestRpr:64, gender:"F", notes:"Purchased by Rabbah Bloodstock.", dateMentioned:"Apr-26" },
+        { name:"Kentucky Rain (IRE)",       sire:"Lucky Vega",     dam:"Equanimity",           lot:"Lot 137", price:"Not Sold (58k bid)", ns:true, owner:"LDS Bloodstock Ltd", trainer:"Lemos De Souza", runs:4, wins:1, places:1, highestRpr:85, gender:"F", notes:"Goffs Sale · 22 Apr 2026 · formerly Lucky Vega filly. Later £380,000 at London Sale (15 Jun 26).", dateMentioned:"Apr-26" },
         { name:"Adeel (GB)",               sire:"Havana Grey",    dam:"Aquarius",             lot:"Lot 93",  price:"€70,000",                  owner:"Mr Abdulla Al Mansoori", trainer:"Ismail Mohammed & Jose Santos", runs:1, wins:0, places:0, highestRpr:57, gender:"C", notes:"Purchased by Rabbah Bloodstock.", dateMentioned:"Apr-26" },
         { name:"Calyx Colt",          sire:"Calyx",          dam:"Via Aurelia",          lot:"Lot 63",  price:"Not Sold (13k bid)", ns:true,                           dateMentioned:"Apr-26" },
         { name:"Sioux Nation Filly",  sire:"Sioux Nation",   dam:"Cutie Pie",            lot:"Lot 123", price:"Withdrawn",         ns:true,                           dateMentioned:"Apr-26" },
@@ -875,14 +881,14 @@ const DATA = {
       horses: [
         { name:"Lot 121", sire:"Study Of Man (IRE)", dam:"So In Love (GB)", damSire:"Smart Strike", lot:"Lot 121", price:"Withdrawn", ns:true, notes:"Arqana Breeze Up Sale", dateMentioned:"May-26" },
         { name:"Lot 154", sire:"Lope de Vega (IRE)", dam:"What Say You (IRE)", damSire:"Galileo (IRE)", lot:"Lot 154", price:"Withdrawn", ns:true, notes:"Arqana Breeze Up Sale", dateMentioned:"May-26" },
-        { name:"Light Of Dawn (GB)", sire:"Showcasing", dam:"An Ghalanta", lot:"Lot 166", price:"€625,000", owner:"Wathnan Racing", trainer:"Karl Burke", runs:2, wins:1, places:1, highestLevel:"G3", highestRpr:95, gender:"F", notes:"Black type — 3rd in Fillies G3 Albany Stakes. Arqana Breeze Up Sale", dateMentioned:"June-26" },
+        { name:"Light Of Dawn (GB)", sire:"Showcasing", dam:"An Ghalanta", lot:"Lot 166", price:"€625,000", owner:"Wathnan Racing", trainer:"Karl Burke", runs:3, wins:1, places:2, highestLevel:"G3", highestRpr:95, gender:"F", notes:"Black type — 3rd in Fillies G3 Albany Stakes; placed in Group 3. Arqana Breeze Up Sale", dateMentioned:"June-26" },
         { name:"Lot 179", sire:"Sioux Nation", dam:"Braided", damSire:"Elusive Quality", lot:"Lot 179", price:"€130,000", owner:"Sackville Donald", notes:"Colt · Arqana Breeze Up Sale", dateMentioned:"May-26" },
       ]
     },
     {
       key:"tattersalls-ire", label:"Tattersalls Ireland Breeze Up Sale 2026",
       horses: [
-        { name:"Inca Warrior (IRE)", sire:"Invincible Army", dam:"Inca Husky", lot:"Lot 31", price:"€65,000 (vendor buy-back)", owner:"The Invincible Five Partnership", trainer:"N Tinkler", runs:2, wins:0, places:0, highestRpr:47, gender:"C", notes:"Consigned by Mocklershill · Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
+        { name:"Inca Warrior (IRE)", sire:"Invincible Army", dam:"Inca Husky", lot:"Lot 31", price:"€65,000 (vendor buy-back)", owner:"The Invincible Five Partnership", trainer:"N Tinkler", runs:2, wins:0, places:0, highestRpr:63, gender:"C", notes:"Consigned by Mocklershill · Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
         { name:"Lot 35", sire:"Cotai Glory", dam:"Inuk", lot:"Lot 35", price:"€26,000", owner:"Martul CB", gender:"F", notes:"Consigned by Tally-Ho Stud · Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
         { name:"Lot 36", sire:"Churchill", dam:"Isanous", lot:"Lot 36", price:"€42,000", owner:"Apollo Bloodstock", gender:"F", notes:"Consigned by Lynn Lodge Stud · Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
         { name:"Lot 40", sire:"Sioux Nation", dam:"Jira", lot:"Lot 40", price:"€72,000", owner:"Stroud Coleman Bloodstock / James Keane", gender:"C", notes:"Consigned by Kingsfield Stud · Tattersalls Ireland Breeze Up 2026", dateMentioned:"May-26" },
@@ -912,7 +918,7 @@ const BUNDLE_ONLY_ALL = [
       { name:"Cannes Cannes", sire:"Frankel", dam:"Shambolic", damSire:"Shamardal", trainer:"William Haggas", family:"Full sister to G1 winner Ylang Ylang", notes:"Rank #1 (Elite/Strong)", dateMentioned:"Apr-26" },
       { name:"Complice", sire:"Frankel", dam:"Incahoots", damSire:"Oasis Dream", trainer:"Yan Barberot", family:"Full brother to Kelina", notes:"Rank #2 (Elite/Strong)", dateMentioned:"Apr-26" },
       { name:"Loop", sire:"Frankel", dam:"Left Hand", damSire:"Dubawi", trainer:"Andre Fabre", family:"Full brother to Left Sea; family of Gaucher", notes:"Rank #3 (Elite/Strong)", dateMentioned:"Apr-26" },
-      { name:"Porto Vecchio", sire:"Frankel", dam:"Joailliere", damSire:"Dubawi", trainer:"D K Weld", owner:"Moyglare Stud Farm", runs:1, wins:1, places:0, gender:"C", family:"Full brother to Classic winner Homeless Songs", notes:"Rank #4 (Elite/Strong)", dateMentioned:"Apr-26" },
+      { name:"Porto Vecchio", sire:"Frankel", dam:"Joailliere", damSire:"Dubawi", trainer:"D K Weld", owner:"Moyglare Stud Farm", runs:1, wins:1, places:0, highestRpr:78, gender:"C", family:"Full brother to Classic winner Homeless Songs", notes:"Rank #4 (Elite/Strong)", dateMentioned:"Apr-26" },
       { name:"Unnamed (Attire)", sire:"Frankel", dam:"Attire", damSire:"Danehill Dancer", family:"Half sister to multiple G1 winner Luxembourg", notes:"Rank #5 (Elite/Strong)", dateMentioned:"Apr-26" },
       { name:"Unnamed (Siyarafina)", sire:"Frankel", dam:"Siyarafina", damSire:"Pivotal", trainer:"Francis Henri Graffard", notes:"Rank #6 (Elite/Strong)", dateMentioned:"Apr-26" },
       { name:"Unnamed (Anna Law)", sire:"Frankel", dam:"Anna Law", damSire:"Lawman", trainer:"In Japan", family:"Half brother to champion sprinter Battaash", notes:"Rank #7 (Elite/Strong)", dateMentioned:"Apr-26" },
@@ -926,10 +932,10 @@ const BUNDLE_ONLY_ALL = [
     horses: [
       { name:"Wildlark",           sire:"Dubawi",             dam:"Waldlerche",               owner:"Newsells Park Stud",                trainer:"John & Thady Gosden",      runs:0, price:"900,000 gns", notes:"Elite pedigree (Waldgeist family)", dateMentioned:"May-26" },
       { name:"Unnamed (IRE)",      sire:"Camelot",            dam:"Jazz Cat",                 owner:"Eric Chen",                         trainer:"John & Thady Gosden",      runs:0, price:"135,000 gns", notes:"Deep Classic family (Kew Gardens line)", dateMentioned:"May-26" },
-      { name:"Partying",           sire:"Frankel",            dam:"Aljazzi", damSire:"Shamardal", owner:"Amo Racing",                   trainer:"Kevin Philippart de Foy",  runs:0, notes:"Flagship — elite Classic model", dateMentioned:"May-26" },
+      { name:"Partying", foaled:2023,           sire:"Frankel",            dam:"Aljazzi", damSire:"Shamardal", owner:"Amo Racing",                   trainer:"Kevin Philippart de Foy",  runs:1, wins:0, places:1, highestRpr:71, notes:"Flagship — elite Classic model. 2nd on debut.", dateMentioned:"May-26" },
       { name:"Sea The Stars Colt", sire:"Sea The Stars",      dam:"Baino Hope", damSire:"Jeremy", owner:"Amo Racing",                   trainer:"Kevin Philippart de Foy",  runs:0, notes:"Stamina, late developer", dateMentioned:"May-26" },
       { name:"Wootton Bassett Colt", sire:"Wootton Bassett",  dam:"Luna Mare", damSire:"Galileo", owner:"Amo Racing",                   trainer:"Kevin Philippart de Foy",  runs:0, notes:"Mile+ upside, sleeper", dateMentioned:"May-26" },
-      { name:"Spring Sprinter",    sire:"Elzaam",             dam:"Windsor Royal",            owner:"Mrs Margaret O'Rourke",              trainer:"A Slattery",               runs:3, wins:0, places:0, highestRpr:50, dateMentioned:"May-26" },
+      { name:"Spring Sprinter", foaled:2023,    sire:"Elzaam",             dam:"Windsor Royal",            owner:"Mrs Margaret O'Rourke",              trainer:"A Slattery",               runs:4, wins:0, places:0, highestRpr:54, dateMentioned:"May-26" },
       { name:"Apasionata",         sire:"Golden Horn",        dam:"Allegretto",               damSire:"Galileo", owner:"Cheveley Park Stud", trainer:"Sir Mark Prescott", runs:0, notes:"Three-year-old project. Daughter of Prix Royal-Oak winner Allegretto; Golden Horn × Galileo cross produced stayers (Gregory, East India Dock, Stag Horn).", dateMentioned:"May-26" },
       { name:"War Chest",          sire:"Saxon Warrior",      dam:"Some Spirit",              damSire:"Invincible Spirit", owner:"First of Many", trainer:"Eve Johnson Houghton", runs:0, gender:"C", price:"5,500 gns", notes:"Half-brother to French 9.5f Listed winner Some Skye (98). Dam a Group 3-placed Irish 7f winner (106).", dateMentioned:"May-26" },
       { name:"Rough Guess",        sire:"Siyouni",            dam:"Estimate",                 damSire:"Monsun", owner:"His Majesty The King", runs:0, dateMentioned:"May-26" },
@@ -941,11 +947,10 @@ const BUNDLE_ONLY_ALL = [
       { name:"Gonewittheflag (IRE)", sire:"Starspangledbanner", dam:"Tarasila",               damSire:"Shamardal", owner:"Commercium & Partners", trainer:"Jamie Insole", runs:0, price:"55,000 gns (Houldsworth/Insole)", notes:"Unraced. Trained with half an eye towards his three-year-old campaign.", dateMentioned:"May-26" },
       { name:"Ever Flowing",         sire:"Australia",          dam:"Blazing Beau",           owner:"Merry Fox Stud Limited", trainer:"Harry Charlton", runs:0, notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Royal Artisan",        sire:"Camelot",            dam:"Honey Hunter",           owner:"Valmont", trainer:"George Scott", runs:0, price:"120,000 gns (A C Elliott, Agent)", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Blue Flight",          sire:"Blue Point",         dam:"Spatial",                owner:"Cheveley Park Stud", trainer:"J R Fanshawe", runs:1, wins:1, places:0, highestRpr:78, gender:"F", dateMentioned:"June-26" },
       { name:"Show The Sky",         sire:"Showcasing",         dam:"Astrologer",             owner:"Cheveley Park Stud", trainer:"David O'Meara", runs:0, notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Sayaarr",              sire:"Dark Angel",         dam:"Nawassi",                owner:"Sheikh Ahmed Al Maktoum", trainer:"E Bethell", runs:0, gender:"C", price:"170,000 gns (Federico Barberini)", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Too Darn Regal",       sire:"Too Darn Hot",       dam:"My Twinkle",             owner:"Gullwing Enterprises W.L.L.", trainer:"Harry Eustance", runs:0, price:"180,000 gns (Harry Eustace Racing)", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Wunderschon",          sire:"Sea The Moon",       dam:"Wonderful Filly",        owner:"Omega Racing & Seamus McGowan & Niall McInerney", trainer:"Jessica Harrington", runs:0, price:"65,000 gns (Omega Racing)", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Wunderschon",          sire:"Sea The Moon",       dam:"Wonderful Filly",        owner:"Omega Racing & Seamus McGowan & Niall McInerney", trainer:"Jessica Harrington", runs:1, wins:0, places:0, highestRpr:70, gender:"F", price:"65,000 gns (Omega Racing)", notes:"Ran once, unplaced.", dateMentioned:"June-26" },
       { name:"Chymbulak",            sire:"Dark Angel",         dam:"Futoon",                 owner:"Mr Nurlan Bizakov", trainer:"R Varian", runs:0, gender:"C", price:"450,000 gns (Sumbe)", family:"Full brother to triple 1m Group 1 winner Charyn (127).", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Miss Miniver",         sire:"Wootton Bassett",    dam:"Jawlaat",                owner:"Godolphin", trainer:"R Varian", runs:0, gender:"F", price:"800,000 gns (Godolphin)", family:"Closely related to UAE 1m 1f Group 1 winner Facteur Cheval (122; by Ribchester).", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"River Glen",           sire:"Gleneagles",         dam:"Enjoy Life",             owner:"Mrs Christie Thompson", trainer:"Rebecca Menzies", runs:0, gender:"C", price:"€33,000 (Stroud Coleman Bloodstock/Rebecca Menzies)", notes:"Unraced.", dateMentioned:"June-26" },
@@ -954,26 +959,27 @@ const BUNDLE_ONLY_ALL = [
       { name:"Forbidden Fire",       sire:"No Nay Never",       dam:"Arabian Queen",          owner:"J C Smith", trainer:"Andrew Balding", runs:0, gender:"F", family:"Half-sister to 2025 10.5f Group 2 winner See The Fire (116).", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Decem Carolinae",      sire:"Showcasing",         dam:"Carolinae",              owner:"Mr Jack Jones", trainer:"Jack Jones", runs:1, wins:0, places:0, highestRpr:59, gender:"F", dateMentioned:"June-26" },
       { name:"Glory Of Legend",      sire:"Blackbeard",         dam:"Gouache",                owner:"Millennium Stud SP.ZO.O", trainer:"Joseph O'Brien", runs:0, price:"290,000 gns (Not Sold)", ns:true, family:"Half-sister to King George winner Goliath (127).", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Suomenlinna",          sire:"Too Darn Hot",       dam:"Quads",                  owner:"Wells Watson", trainer:"Joseph O'Brien", runs:0, price:"€350,000 (Cary Bloodstock for Wells Watson)", family:"Dam an unraced half-sister to Sussex Stakes winner Here Comes When (121).", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Suomenlinna",          sire:"Too Darn Hot",       dam:"Quads",                  damSire:"Shamardal", gender:"F", owner:"Wells Watson", trainer:"Joseph O'Brien", runs:1, wins:0, places:0, highestRpr:73, price:"€350,000 (Cary Bloodstock for Wells Watson)", family:"Dam an unraced half-sister to Sussex Stakes winner Here Comes When (121).", notes:"Ran once, unplaced.", dateMentioned:"June-26" },
       { name:"Snow Warrior",         sire:"Sioux Nation",       dam:"Crystal Snowflake",      owner:"SVG & Exact Lifestyle Partnership", trainer:"Hugo Palmer", runs:0, price:"110,000 gns (Sackville Donald/Manor House Stables)", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"High Tower",           sire:"Havana Grey",        dam:"Abraj Dubai",            owner:"Teme Valley", trainer:"George Boughey", runs:0, price:"55,000 gns (Richard Ryan)", family:"Full brother to 5.5f Listed winner Star of Lady M (108).", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"High Tower",           sire:"Havana Grey",        dam:"Abraj Dubai",            owner:"Teme Valley", trainer:"George Boughey", runs:1, wins:0, places:1, highestRpr:53, price:"55,000 gns (Richard Ryan)", family:"Full brother to 5.5f Listed winner Star of Lady M (108).", notes:"Placed on debut.", dateMentioned:"June-26" },
       { name:"Carpe Portus",         sire:"Kingman",            dam:"Playing Trix",           owner:"Mr V I Araci", trainer:"George Boughey", runs:1, wins:0, places:0, highestRpr:58, gender:"F", dateMentioned:"June-26" },
-      { name:"Love Tanya",           sire:"Blue Point",         dam:"Mireille",               owner:"Mr R Daryanani", trainer:"E Bethell", runs:1, wins:0, places:0, highestRpr:31, gender:"F", price:"€110,000 yearling", dateMentioned:"June-26" },
-      { name:"Camelot Champion",     sire:"Camelot",            dam:"Attire",                 owner:"Mr Jaber Abdullah", trainer:"Charlie Johnston", runs:0, gender:"C", notes:"Unraced.", dateMentioned:"June-26" },
-      { name:"Shadow Brigade",       sire:"Acclamation",        dam:"Mohassan",               owner:"Victorious Forever", trainer:"George Scott", runs:2, wins:0, places:0, highestRpr:76, gender:"G", price:"500,000 gns yearling", dateMentioned:"June-26" },
-      { name:"Noccalula Falls",      sire:"Soldier's Call",     dam:"Alabama Grace",          owner:"Sandfield Racing", trainer:"P T Midgley", runs:1, wins:0, places:0, highestRpr:34, gender:"F", dateMentioned:"June-26" },
-      { name:"Soldier's Echo",       sire:"Soldier's Call",     dam:"Copperbeech",            owner:"Brighton Beaches Syndicate", trainer:"Hugo Palmer", runs:2, wins:0, places:0, highestRpr:53, gender:"F", dateMentioned:"June-26" },
-      { name:"Marsala",              sire:"Mehmas",             dam:"Di Fede",                owner:"Mr Robert Ng", trainer:"Ralph Beckett", runs:1, wins:0, places:0, highestRpr:70, gender:"F", dateMentioned:"June-26" },
-      { name:"Spirit Of Progress",   sire:"Showcasing",         dam:"Titi Makfi",             owner:"Mr Benedict Blatch", trainer:"Daisy Hitchins", runs:1, wins:0, places:0, highestRpr:22, gender:"F", price:"5,000 gns foal", dateMentioned:"June-26" },
-      { name:"Off The Peg",          sire:"No Nay Never",       dam:"Czabo",                  owner:"B Dickson, P Cook & R Rexton", trainer:"Richard Hughes", runs:1, wins:0, places:0, highestRpr:67, gender:"C", price:"150,000 gns (Durcan Bloodstock/R Hughes Racing)", family:"Full brother to Irish 5f 2yo Listed winner His Majesty (104) and a half-brother to useful Irish dual 6f winner Coill Avon (103p). Dam an Irish 1m Group 3 winner (107) who was the daughter of a Listed-placed 1m 2yo winner (96).", dateMentioned:"June-26" },
-      { name:"Storm Blade",          sire:"Night Of Thunder",   dam:"Dancing Star",           owner:"Mr J C Smith", trainer:"Andrew Balding", runs:1, wins:0, places:0, highestRpr:67, gender:"C", dateMentioned:"June-26" },
-      { name:"Jimtrott",             sire:"No Nay Never",       dam:"Aspirante",              owner:"HVO Property Investments", trainer:"Eve Johnson Houghton", runs:2, wins:0, places:2, highestRpr:77, price:"110,000 gns", dateMentioned:"June-26" },
+      { name:"Love Tanya",           sire:"Blue Point",         dam:"Mireille",               owner:"Mr R Daryanani", trainer:"E Bethell", runs:3, wins:0, places:2, highestRpr:67, gender:"F", price:"€110,000 yearling", dateMentioned:"June-26" },
+      { name:"Camelot Champion", foaled:2023,     sire:"Camelot",            dam:"Attire",                 owner:"Mr Jaber Abdullah", trainer:"Charlie Johnston", runs:0, gender:"C", notes:"Unraced.", dateMentioned:"June-26" },
+      { name:"Shadow Brigade", foaled:2023,       sire:"Acclamation",        dam:"Mohassan",               owner:"Victorious Forever", trainer:"George Scott", runs:4, wins:1, places:0, highestRpr:81, gender:"G", price:"500,000 gns yearling", dateMentioned:"June-26" },
+      { name:"Noccalula Falls",      sire:"Soldier's Call",     dam:"Alabama Grace",          owner:"Sandfield Racing", trainer:"P T Midgley", runs:2, wins:0, places:0, highestRpr:34, gender:"F", dateMentioned:"June-26" },
+      { name:"Soldier's Echo",       sire:"Soldier's Call",     dam:"Copperbeech",            owner:"Brighton Beaches Syndicate", trainer:"Hugo Palmer", runs:4, wins:0, places:0, highestRpr:53, gender:"F", dateMentioned:"June-26" },
+      { name:"Marsala",              sire:"Mehmas",             dam:"Di Fede",                owner:"Mr Robert Ng", trainer:"Ralph Beckett", runs:2, wins:0, places:0, highestRpr:70, gender:"F", dateMentioned:"June-26" },
+      { name:"Spirit Of Progress",   sire:"Showcasing",         dam:"Titi Makfi",             owner:"Mr Benedict Blatch", trainer:"Daisy Hitchins", runs:2, wins:0, places:0, highestRpr:44, gender:"F", price:"5,000 gns foal", dateMentioned:"June-26" },
+      { name:"Off The Peg",          sire:"No Nay Never",       dam:"Czabo",                  owner:"B Dickson, P Cook & R Rexton", trainer:"Richard Hughes", runs:2, wins:1, places:0, highestRpr:84, gender:"C", price:"150,000 gns (Durcan Bloodstock/R Hughes Racing)", family:"Full brother to Irish 5f 2yo Listed winner His Majesty (104) and a half-brother to useful Irish dual 6f winner Coill Avon (103p). Dam an Irish 1m Group 3 winner (107) who was the daughter of a Listed-placed 1m 2yo winner (96).", dateMentioned:"June-26" },
+      { name:"Storm Blade",          sire:"Night Of Thunder",   dam:"Dancing Star",           owner:"Mr J C Smith", trainer:"Andrew Balding", runs:2, wins:0, places:1, highestRpr:75, gender:"C", dateMentioned:"June-26" },
+      { name:"Jimtrott",             sire:"No Nay Never",       dam:"Aspirante",              owner:"HVO Property Investments", trainer:"Eve Johnson Houghton", runs:3, wins:1, places:2, highestRpr:90, price:"110,000 gns", dateMentioned:"June-26" },
       { name:"Percy Shaw",           sire:"Bated Breath",       dam:"Cats Eyes",              owner:"Rosehill Racing Iv", trainer:"Charlie Hills", runs:3, wins:0, places:0, highestRpr:55, price:"40,000 gns", dateMentioned:"June-26" },
-      { name:"Queen's Hame",         sire:"Gleneagles",         dam:"Putois Peace",           owner:"Bloomsbury", trainer:"William Haggas", runs:1, wins:0, places:1, gender:"F", dateMentioned:"July-26" },
-      { name:"Seacole",              sire:"Sea The Stars",      dam:"Crimean Queen",          owner:"Marcstown Ltd", trainer:"Ralph Beckett", runs:1, wins:0, places:0, highestRpr:76, gender:"F", dateMentioned:"July-26" },
+      { name:"Queen's Hame", foaled:2023,         sire:"Gleneagles",         dam:"Putois Peace",           owner:"Bloomsbury", trainer:"William Haggas", runs:2, wins:1, places:1, highestRpr:84, gender:"F", dateMentioned:"July-26" },
+      { name:"Seacole", foaled:2023,              sire:"Sea The Stars",      dam:"Crimean Queen",          owner:"Marcstown Ltd", trainer:"Ralph Beckett", runs:2, wins:0, places:1, highestRpr:76, gender:"F", dateMentioned:"July-26" },
       { name:"Boomshakalak",         sire:"Walzertakt",         dam:"Aspidistra",             owner:"Oliver and Sasha Brendon", trainer:"Zoe Hawkins", runs:1, wins:0, places:0, gender:"F", dateMentioned:"July-26" },
+      { name:"The Good Wife",        sire:"Zarak",              dam:"My Fairy",               owner:"CDL Racing Limited", trainer:"P Twomey", runs:1, wins:0, places:0, highestRpr:73, gender:"F", dateMentioned:"Aug-26" },
       { name:"Thairish (IRE)",       sire:"Territories",        dam:"Red Halo",               owner:"C R Hirst", trainer:"Jack Channon", runs:0, notes:"Unraced.", dateMentioned:"July-26" },
-      { name:"Colonnade (IRE)",      sire:"Teofilo",            dam:"Alanza",                 owner:"The Royal Ascot Racing Club", trainer:"Simon and Ed Crisford", runs:1, wins:0, places:1, highestRpr:78, dateMentioned:"July-26" },
+      { name:"Colonnade (IRE)", foaled:2023,      sire:"Teofilo",            dam:"Alanza",                 owner:"The Royal Ascot Racing Club", trainer:"Simon and Ed Crisford", runs:2, wins:0, places:1, highestRpr:82, dateMentioned:"July-26" },
       { name:"Unnamed (Precieuse)",  sire:"Frankel",            dam:"Precieuse",              owner:"Mr Saeed Suhail", trainer:"Andrew Balding", runs:0, gender:"C", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Unnamed (Maid To Master)", sire:"Sioux Nation",   dam:"Maid To Master",         owner:"Ziad A Galadari", trainer:"E Bethell", runs:0, gender:"F", price:"70,000 gns (Ziad A Galadari)", family:"Half-sister to 14f 3yo winner Sefton Warrior (71). Dam a maiden (73p) sister to four-time 6f-1m Group 1 winner Mastercraftsman (129) and Group 1-placed Irish 7f 2yo winner Famous (102) and close relation to US 1m Grade 3 winner Genuine Devotion (110).", notes:"Unraced.", dateMentioned:"June-26" },
       { name:"Unnamed (Miss Sienna)",  sire:"Havana Grey",      dam:"Miss Sienna",            owner:"Shapoor Mistry", trainer:"Joseph O'Brien", runs:0, gender:"F", price:"€150,000 (Stroud Coleman Bloodstock)", notes:"Unraced.", dateMentioned:"June-26" },
@@ -1194,6 +1200,22 @@ function genderCell(h) {
   return { letter: g, label: GENDER_LABELS[g], cls: '' };
 }
 
+// Age = current calendar year − foal year (NH thoroughbred convention: shared 1 Jan
+// birthday, so every horse gains a year on 1 Jan). Per-horse `foaled` wins; otherwise
+// the tracked cohort's default foal year is used.
+function horseAge(h) {
+  const foaled = Number(h && h.foaled) || Number(DATA.cohortFoalYear);
+  if (!foaled) return null;
+  const age = new Date().getFullYear() - foaled;
+  return age > 0 && age < 40 ? age : null;
+}
+
+function ageCell(h) {
+  const a = horseAge(h);
+  if (a == null) return { text: '—', label: '', cls: 'na' };
+  return { text: String(a), label: `${a}yo`, cls: '' };
+}
+
 function rprCell(h) {
   const v = h.highestRpr;
   if (v !== undefined && v !== null && String(v).trim() !== '')
@@ -1304,6 +1326,7 @@ function renderSalesRow(h, idx, sectionKey) {
   const expId = `exp-${sectionKey}-${idx}`;
   const rpr = rprCell(h);
   const gender = genderCell(h);
+  const age = ageCell(h);
   const re = fmtReRate(h.reRate);
   const recHtml = h.runs !== undefined
     ? `<span class="rec-nums"><span class="${wins>0?'w':''}">${wins}</span>W&nbsp;${places}P&nbsp;/&nbsp;${runs}R</span>`
@@ -1315,6 +1338,7 @@ function renderSalesRow(h, idx, sectionKey) {
   <td class="td-name">${h.name}</td>
   <td class="breeding">${breeding}</td>
   <td class="gender ${gender.cls}" title="${gender.label}">${gender.letter}</td>
+  <td class="age ${age.cls}" title="${age.label}">${age.text}</td>
   <td class="called-date">${h.calledDate || '—'}</td>
   <td class="market-col" style="color:var(--text2)">${fmtMoneyShort(h.flaggedAt)}</td>
   <td>${h.flaggedVenue || h.lot || '—'}</td>
@@ -1328,7 +1352,7 @@ function renderSalesRow(h, idx, sectionKey) {
   <td class="toggle-col">▾</td>
 </tr>
 <tr class="expand-row" id="${expId}">
-  <td colspan="15">
+  <td colspan="16">
     <div class="expand-inner">
       <div class="ei-item"><div class="ei-label">Flagged</div><div class="ei-val">${h.calledDate || '—'} · ${fmtMoneyShort(h.flaggedAt)} · ${h.flaggedVenue || h.lot || '—'}</div></div>
       <div class="ei-item"><div class="ei-label">Resold</div><div class="ei-val">${h.saleDate || '—'} · ${fmtMoneyShort(h.marketAt)} · ${h.marketVenue || '—'}</div></div>
@@ -1373,6 +1397,7 @@ function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTra
 
   const rpr = rprCell(h);
   const gender = genderCell(h);
+  const age = ageCell(h);
 
   return `
 <tr class="data-row" id="${rowId}" onclick="toggleRow('${rowId}','${expId}')">
@@ -1380,6 +1405,7 @@ function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTra
   <td class="td-name">${h.name}${sourceTag}</td>
   <td class="breeding">${breeding}</td>
   <td class="gender ${gender.cls}" title="${gender.label}">${gender.letter}</td>
+  <td class="age ${age.cls}" title="${age.label}">${age.text}</td>
   ${showLot ? `<td class="lot">${h.lot||'—'}</td>` : ''}
   <td class="${isFamilyTab ? 'owner' : `price${h.ns?' ns':''}`}">${isFamilyTab ? familyInfo : (h.price||'—')}</td>
   ${showOwner ? `<td class="owner">${h.owner||'—'}</td>` : ''}
@@ -1390,7 +1416,7 @@ function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTra
   <td class="toggle-col">▾</td>
 </tr>
 <tr class="expand-row" id="${expId}">
-  <td colspan="${9 + (showLot ? 1 : 0) + (showOwner ? 1 : 0) + (showTrainer ? 1 : 0)}">
+  <td colspan="${10 + (showLot ? 1 : 0) + (showOwner ? 1 : 0) + (showTrainer ? 1 : 0)}">
     <div class="expand-inner">
       ${hasRecord ? `<div class="ei-item"><div class="ei-label">Race Record</div><div class="ei-record">
         <div class="ei-box"><div class="bv">${runs}</div><div class="bl">Runs</div></div>
@@ -1404,6 +1430,7 @@ function renderRow(h, idx, sectionKey, showLot = true, showOwner = true, showTra
       ${h.sire    ?`<div class="ei-item"><div class="ei-label">Sire</div><div class="ei-val">${h.sire}</div></div>`:''}
       ${h.dam     ?`<div class="ei-item"><div class="ei-label">Dam</div><div class="ei-val">${h.dam}${h.damSire?` (${h.damSire})`:''}</div></div>`:''}
       ${gender.label ?`<div class="ei-item"><div class="ei-label">Gender</div><div class="ei-val">${gender.label} (${gender.letter})</div></div>`:''}
+      ${age.label ?`<div class="ei-item"><div class="ei-label">Age</div><div class="ei-val">${age.label}</div></div>`:''}
       ${h.dateMentioned?`<div class="ei-item"><div class="ei-label">Date Mentioned</div><div class="ei-val">${h.dateMentioned}</div></div>`:''}
       ${((Number(h.runs)||0) > 0 || (h.highestRpr != null && String(h.highestRpr).trim() !== '')) ? `<div class="ei-item"><div class="ei-label">Highest RPR</div><div class="ei-val">${h.highestRpr != null && String(h.highestRpr).trim() !== '' ? String(h.highestRpr).trim() : '—'}</div></div>` : ''}
       ${h.notes   ?`<div class="ei-item" style="grid-column:1/-1"><div class="ei-label">Notes</div><div class="ei-val">${h.notes}</div></div>`:''}
@@ -1425,6 +1452,7 @@ function renderSections() {
         <th>Horse</th>
         <th>Breeding</th>
         <th>Sex</th>
+        <th>Age</th>
         <th>Flagged</th>
         <th>Then</th>
         <th>Sale</th>
@@ -1455,6 +1483,7 @@ function renderSections() {
         <th>Horse</th>
         <th>Breeding</th>
         <th>Sex</th>
+        <th>Age</th>
         ${isRunnerStyleTab(s.key) ? '' : '<th>Lot</th>'}
         <th>Price / Sale</th>
         <th>Owner / Purchaser</th>
